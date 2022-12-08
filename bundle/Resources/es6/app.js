@@ -48,7 +48,6 @@ const connectBlockAndContent = async () => {
     }
 };
 
-// https://layouts-enterprise-bold-ms.dev9.netgen.biz/adminui/view/content/597/full/1/465#ngl-component/689ce6cf-5bb8-4574-9b11-8d3a790bd154
 window.addEventListener('DOMContentLoaded', () => {
     connectBlockAndContent();
 });
