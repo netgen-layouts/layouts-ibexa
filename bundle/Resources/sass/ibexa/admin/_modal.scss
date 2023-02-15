@@ -94,7 +94,10 @@
             background:transparent;
             text-decoration:none;
             @extend %material-icons !optional;
+            z-index: 1;
+            
             &::before {
+                @extend %material-icons !optional;
                 content:"clear";
             }
         }
@@ -134,7 +137,6 @@
             position: relative;
             display: flex;
             padding-left: 15px;
-            color: #666;
             align-items: center;
         }
         .nl-modal-actions {
