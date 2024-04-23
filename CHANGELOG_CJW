@@ -1,0 +1,14 @@
+Changelogfor CJW Stack
+===========================================================
+
+20240423 - Extend ContentSearchHandler > ParentLocationTrait
+------------------------------------------------------------
+
+Set new boolean attribute "use_parent_location" for ParentLocationTrait:
+vendor/netgen/layouts-ibexa/lib/Collection/QueryType/Handler/Traits/ParentLocationTrait.php
+
+Extend ContentSearchHandler:
+vendor/netgen/layouts-ibexa/lib/Collection/QueryType/Handler/ContentSearchHandler.php
+
+Set translation for new attribute:
+vendor/netgen/layouts-ibexa/bundle/Resources/translations/nglayouts.en.yaml
