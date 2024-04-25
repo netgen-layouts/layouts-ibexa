@@ -42,10 +42,6 @@ trait ParentLocationTrait
      */
     private function buildParentLocationParameters(ParameterBuilderInterface $builder, array $groups = []): void
     {
-        //
-        // CJW Stack
-        //
-
         $builder->add(
             'use_parent_location',
             ParameterType\Compound\BooleanType::class,
@@ -53,8 +49,6 @@ trait ParentLocationTrait
                 'groups' => $groups,
             ],
         );
-
-        // -- CJW Stack
 
         $builder->add(
             'use_current_location',
@@ -83,12 +77,16 @@ trait ParentLocationTrait
         if ($parameterCollection->getParameter('use_current_location')->getValue() === true) {
             return $this->contentProvider->provideLocation();
         }
-        // CJW Stack
         elseif ( $parameterCollection->getParameter('use_parent_location')->getValue() === true )
         {
-            return $this->contentProvider->provideLocation()->getParentLocation();
+            $currentLocation = $this->contentProvider->provideLocation();
+
+            if ( $currentLocation instanceof Location )
+            {
+                return $currentLocation->getParentLocation();
+            }
+
         }
-        // -- CJW Stack
 
         $parentLocationId = $parameterCollection->getParameter('parent_location_id')->getValue();
         if ($parentLocationId === null) {
