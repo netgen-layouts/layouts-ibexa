@@ -1,0 +1,9 @@
+block.notice.empty_ibexa_content_field: 'Dieser Block ist noch nicht konfiguriert. Bitte definieren Sie den eZ-Inhaltsfeld-Bezeichner, der zum Rendern des Blocks verwendet wird.'
+block.notice.empty_ibexa_component: 'Dieser Block ist noch nicht konfiguriert. Bitte definieren Sie den Ibexa-Inhalt, der zum Rendern des Blocks verwendet wird.'
+
+block.info.ibexa_content_field: 'Ibexa Inhaltsfeld mit Bezeichner "%field%" wird hier gerendert.'
+
+block.ngcb.view_in_cms: 'Im CMS ansehen'
+
+block.ibexa_component.edit_content: 'Bearbeiten'
+block.ibexa_component.create_content: '+ Neu erstellen'

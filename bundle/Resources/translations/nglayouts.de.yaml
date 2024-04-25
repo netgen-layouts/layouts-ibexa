@@ -1,0 +1,34 @@
+block.ibexa_content_field.field_identifier: 'Feld-Bezeichner'
+
+block.ibexa_component.content: 'Inhalt'
+
+query.ibexa_content_search.use_current_location: 'Nutze aktuellen Ort als übergeordneten Ort'
+
+query.ibexa_content_search.use_parent_location: 'Nutze übergeordnenten Ort als übergeordneten Ort'
+
+query.ibexa_content_search.parent_location_id: 'Übergeordnenter Ort'
+query.ibexa_content_search.sort_direction: 'Sortierung'
+query.ibexa_content_search.sort_type: 'Sortierungsart'
+query.ibexa_content_search.limit: 'Limit'
+query.ibexa_content_search.offset: 'Offset'
+query.ibexa_content_search.query_type: 'Fetch-Typ'
+query.ibexa_content_search.only_main_locations: 'Nur Hauptorte abrufen'
+query.ibexa_content_search.exclude_current_location: 'Aktuellen Ort aus den Ergebnissen ausschließen'
+query.ibexa_content_search.filter_by_content_type: 'Filtern nach Inhaltstyp'
+query.ibexa_content_search.content_types: 'Inhaltstypen'
+query.ibexa_content_search.content_types_filter: 'Filter-Typ'
+query.ibexa_content_search.filter_by_section: 'Filtern Nach Sektion'
+query.ibexa_content_search.sections: 'Sektionen'
+query.ibexa_content_search.filter_by_object_state: 'Filtern nach Objektzuständen'
+query.ibexa_content_search.object_states: 'Objektzustände'
+
+layout_resolver.target.ibexa_children: 'Ibexa-Kinder'
+layout_resolver.target.ibexa_subtree: 'Ibexa-Teilbaum'
+layout_resolver.target.ibexa_content: 'Ibexa-Inhalt'
+layout_resolver.target.ibexa_location: 'Ibexa-Ort'
+layout_resolver.target.ibexa_semantic_path_info: 'Ibexa semantische Pfadangabe'
+layout_resolver.target.ibexa_semantic_path_info_prefix: 'Ibexa semantisches Pfadinfopräfix'
+
+layout_resolver.condition.ibexa_site_access: 'Ibexa Siteaccess'
+layout_resolver.condition.ibexa_site_access_group: 'Ibexa Siteaccess-Gruppe'
+layout_resolver.condition.ibexa_content_type: 'Ibexa-Inhaltstyp'

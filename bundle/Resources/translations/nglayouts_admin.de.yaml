@@ -1,0 +1,6 @@
+layout_resolver.rule.target_header.ibexa_children: 'Angewandt auf Ibexa-Kinder'
+layout_resolver.rule.target_header.ibexa_subtree: 'Angewandt auf Ibexa-Teilbaum'
+layout_resolver.rule.target_header.ibexa_content: 'Angewandt auf Ibexa-Inhalte'
+layout_resolver.rule.target_header.ibexa_location: 'Angewandt auf Ibexa-Orte'
+layout_resolver.rule.target_header.ibexa_semantic_path_info: 'Angewandt auf Ibexa semantische Pfadangaben'
+layout_resolver.rule.target_header.ibexa_semantic_path_info_prefix: 'Angewandt auf semantisches Pfadinfopräfix'

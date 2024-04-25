@@ -1,0 +1,8 @@
+layout_wizard.action.new_layout: 'Wenden Sie ein völlig neues Layout an dieser Stelle an'
+layout_wizard.action.copy_layout: 'Bestehendes Layout duplizieren und anwenden'
+layout_wizard.layout_type: 'Völlig neuer Layout-Typ'
+layout_wizard.layout: 'Wählen Sie das vorhandene Layout'
+layout_wizard.layout_name: 'Neuer Layout-Name'
+layout_wizard.layout_description: 'Neue Layout-Beschreibung'
+layout_wizard.rule_group: 'Wählen Sie die Zuordnungs-Gruppe'
+layout_wizard.activate_rule: 'Zuordnung unmittelbar nach Veröffentlichung des Layouts aktivieren'
