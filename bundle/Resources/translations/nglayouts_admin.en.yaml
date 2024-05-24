@@ -4,3 +4,12 @@ layout_resolver.rule.target_header.ibexa_content: 'Applied to Ibexa content'
 layout_resolver.rule.target_header.ibexa_location: 'Applied to Ibexa location'
 layout_resolver.rule.target_header.ibexa_semantic_path_info: 'Applied to Ibexa semantic path info'
 layout_resolver.rule.target_header.ibexa_semantic_path_info_prefix: 'Applied to Ibexa semantic path info prefix'
+
+menu.main_menu.ibexa.components: 'Components'
+
+components.title: 'Components'
+components.filter_form.content_type.placeholder: 'Select content type'
+components.filter_form.content_type.label: 'Content type'
+components.filter_form.button.submit: 'Submit'
+components.no_components: 'No components'
+components.not_used: 'Not used in any layout'

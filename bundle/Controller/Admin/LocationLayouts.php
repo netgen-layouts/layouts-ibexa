@@ -8,6 +8,7 @@ use Ibexa\Contracts\Core\Repository\ContentService;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Core\MVC\Symfony\View\ContentView;
 use Netgen\Layouts\API\Values\LayoutResolver\Rule;
+use Netgen\Layouts\Ibexa\AdminUI\ComponentLayoutsLoader;
 use Netgen\Layouts\Ibexa\AdminUI\RelatedLayoutsLoader;
 use Netgen\Layouts\Layout\Resolver\LayoutResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,7 @@ final class LocationLayouts extends Controller
         private ContentService $contentService,
         private LayoutResolverInterface $layoutResolver,
         private RelatedLayoutsLoader $relatedLayoutsLoader,
+        private ComponentLayoutsLoader $componentLayoutsLoader,
     ) {}
 
     /**
@@ -41,6 +43,7 @@ final class LocationLayouts extends Controller
                 'rules' => $rules,
                 'rules_one_on_one' => $rulesOneOnOne,
                 'related_layouts' => $this->relatedLayoutsLoader->loadRelatedLayouts($location),
+                'component_layouts' => $this->componentLayoutsLoader->loadComponentLayouts($location->contentInfo),
                 'location' => $location,
             ],
         );

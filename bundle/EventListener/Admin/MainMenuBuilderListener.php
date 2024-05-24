@@ -73,6 +73,11 @@ final class MainMenuBuilderListener implements EventSubscriberInterface
             ->setLabel('menu.main_menu.transfer')
             ->setExtra('translation_domain', 'nglayouts_admin');
 
+        $layouts
+            ->addChild('components', ['route' => 'nglayouts_admin_ibexa_components_index'])
+            ->setLabel('menu.main_menu.ibexa.components')
+            ->setExtra('translation_domain', 'nglayouts_admin');
+
         $menu->reorderChildren($menuOrder);
     }
 
