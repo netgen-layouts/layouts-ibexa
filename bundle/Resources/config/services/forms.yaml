@@ -33,3 +33,11 @@ services:
             - "%netgen_layouts.ibexa.is_enterprise%"
         tags:
             - { name: form.type }
+
+    netgen_layouts.ibexa.form.component_filter:
+        class: Netgen\Layouts\Ibexa\Form\ComponentFilterType
+        arguments:
+            - "@ibexa.config.resolver"
+            - "@ibexa.api.service.content_type"
+        tags:
+            - { name: form.type }
