@@ -1,0 +1,62 @@
+{% extends nglayouts_admin.pageLayoutTemplate %}
+
+{% trans_default_domain 'nglayouts_admin' %}
+
+{% import '@NetgenLayoutsAdmin/admin/macros.html.twig' as macros %}
+
+{% block title %}
+    {{ 'components.title'|trans }} - {{ 'pagelayout.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div id="components">
+        <div class="layouts-header">
+            <h2 class="layouts-title">{{ 'components.title'|trans }}</h2>
+        </div>
+
+        <div class="nl-components-head">
+            <form method="get">
+                {{ form_row(filter_form.contentType, {placeholder: 'components.filter_form.content_type.placeholder'}) }}
+                {{ form_rest(filter_form) }}
+
+                <button type="submit">{{ 'components.filter_form.button.submit'|trans }}</button>
+            </form>
+        </div>
+
+        <div class="nl-components">
+            {% for component_type, content_list in components %}
+                <h1>{{ component_type }}</h1>
+
+                {% for content in content_list %}
+                    {% set has_layouts = component_layouts[content.id] is defined %}
+
+                    <div class="nl-component">
+                        <div class="nl-component-content{% if not has_layouts %} no-layouts{% endif %}">
+                            <a href="{{ ibexa_path(content) }}" target="_blank">{{ content.name }}</a>
+                        </div>
+
+                        <div class="nl-component-layouts{% if not has_layouts %} no-layouts{% endif %}">
+                            {% if has_layouts %}
+                                {% for layout in component_layouts[content.id]['layouts'] %}
+                                    <div class="nl-component-layout">
+                                        <a href="{{ macros.layout_path(layout.uuid) }}" class="js-open-ngl" target="_blank">{{ layout.name }}</a>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {{ 'components.not_used'|trans }}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="nl-no-items">{{ 'components.no_components'|trans }}</p>
+            {% endfor %}
+
+            {% if pager.haveToPaginate() %}
+                <div class="paging">
+                    {{ pagerfanta(pager) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

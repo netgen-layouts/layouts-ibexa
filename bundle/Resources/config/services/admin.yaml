@@ -14,6 +14,7 @@ services:
             - "@ibexa.api.service.content"
             - "@netgen_layouts.layout.resolver"
             - "@netgen_layouts.ibexa.admin.related_layouts_loader"
+            - "@netgen_layouts.ibexa.components.components_layout_loader"
         tags:
             - { name: container.service_subscriber }
 
@@ -62,6 +63,24 @@ services:
             - "@netgen_layouts.api.service.layout_resolver"
         tags:
             - { name: container.service_subscriber }
+
+    netgen_layouts.ibexa.admin.controller.components.index:
+        class: Netgen\Bundle\LayoutsIbexaBundle\Controller\Admin\Components\Index
+        public: true
+        parent: netgen_layouts.ibexa.admin.controller.base
+        arguments:
+            - "@netgen_layouts.ibexa.components.components_layout_loader"
+            - "@ibexa.config.resolver"
+            - "@netgen_layouts.ibexa.search_service"
+            - "%netgen_layouts.ibexa.components.limit%"
+        tags:
+            - { name: container.service_subscriber }
+
+    netgen_layouts.ibexa.components.components_layout_loader:
+        class: Netgen\Layouts\Ibexa\AdminUI\ComponentLayoutsLoader
+        arguments:
+            - "@netgen_layouts.api.service.layout"
+            - "@database_connection"
 
     netgen_layouts.ibexa.event_listener.admin.main_menu_builder:
         class: Netgen\Bundle\LayoutsIbexaBundle\EventListener\Admin\MainMenuBuilderListener
