@@ -16,7 +16,16 @@
 
         <div class="nl-components-head">
             <form method="get">
-                {{ form_row(filter_form.contentType, {placeholder: 'components.filter_form.content_type.placeholder'}) }}
+                <div class="filter">
+                    {{ form_row(filter_form.contentType, {placeholder: 'components.filter_form.content_type.placeholder'}) }}
+                    {{ form_row(filter_form.showOnlyUnused) }}
+                </div>
+
+                <div class="sort">
+                    {{ form_row(filter_form.sortType) }}
+                    {{ form_row(filter_form.sortDirection) }}
+                </div>
+
                 {{ form_rest(filter_form) }}
 
                 <button type="submit">{{ 'components.filter_form.button.submit'|trans }}</button>
@@ -24,36 +33,57 @@
         </div>
 
         <div class="nl-components">
-            {% for component_type, content_list in components %}
-                <h1>{{ component_type }}</h1>
-
+            {% if components|length > 0 %}
                 <table>
-                    {% for content in content_list %}
-                        {% set has_layouts = component_layouts[content.id] is defined %}
-
+                    <thead>
                         <tr>
-                            <td>
-                                <a href="{{ ibexa_path(content) }}" target="_blank">{{ content.name }}</a>
-                            </td>
-                            <td>
-                                {% if has_layouts %}
-                                    {% for layout in component_layouts[content.id]['layouts'] %}
-                                        <a href="{{ macros.layout_path(layout.uuid) }}" class="js-open-ngl" target="_blank">{{ layout.name }}</a><br>
-                                    {% endfor %}
-                                {% else %}
-                                    {{ 'components.not_used'|trans }}
-                                {% endif %}
-                            </td>
+                            <th>{{ 'components.component.name'|trans }}</th>
+                            <th>{{ 'components.component.content_type'|trans }}</th>
+                            <th>{{ 'components.component.last_modified'|trans }}</th>
+                            <th>{{ 'components.component.usage_count'|trans }}</th>
+                            <th>{{ 'components.component.used_in'|trans }}</th>
                         </tr>
-                    {% endfor %}
+                    </thead>
+                    <tbody>
+                        {% for component in components %}
+                            {% set has_layouts = component_layouts[component.content.id] is defined %}
+
+                            <tr>
+                                <td>
+                                    <a href="{{ ibexa_path(component) }}" target="_blank">{{ component.content.name }}</a>
+                                </td>
+                                <td>
+                                    {{ component.content.contentType.name }}
+                                </td>
+                                <td>
+                                    {{ component.content.contentInfo.modificationDate|nglayouts_format_datetime }}
+                                </td>
+                                <td>
+                                    {{ component_layouts[component.content.id].count|default(0) }}
+                                </td>
+                                <td>
+                                    {% if has_layouts %}
+                                        {% for layout_data in component_layouts[component.content.id]['layouts'] %}
+                                            <p>
+                                                <a href="{{ macros.layout_path(layout_data.uuid) }}" class="js-open-ngl" target="_blank">{{ layout_data.name }}</a><br>
+                                                {{ layout_data.view_types|map(v => v|humanize)|join(', ') }}
+                                            </p>
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ 'components.not_used'|trans }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             {% else %}
                 <p class="nl-no-items">{{ 'components.no_components'|trans }}</p>
-            {% endfor %}
+            {% endif %}
 
-            {% if pager.haveToPaginate() %}
+            {% if components.haveToPaginate() %}
                 <div class="paging">
-                    {{ pagerfanta(pager) }}
+                    {{ pagerfanta(components) }}
                 </div>
             {% endif %}
         </div>

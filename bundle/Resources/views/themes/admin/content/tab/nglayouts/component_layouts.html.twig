@@ -16,8 +16,13 @@
                     <div class="layout-dropdown"></div>
                 </li>
 
-                {% for component_layout in component_layouts %}
-                    {{ nglayouts_render_layout(component_layout, {}, 'ibexa_admin') }}
+                {% for layout_data in component_layouts %}
+                    {{ nglayouts_render_layout(
+                        layout_data.layout, {
+                            additional_data: layout_data.view_types|map(v => v|humanize)|join(', ')
+                        },
+                        'ibexa_admin'
+                    ) }}
                 {% endfor %}
             </ul>
         {% else %}
