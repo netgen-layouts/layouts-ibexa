@@ -14,6 +14,7 @@ use Ibexa\Core\Pagination\Pagerfanta\LocationSearchAdapter;
 use Netgen\Bundle\LayoutsIbexaBundle\Controller\Admin\Controller;
 use Netgen\Layouts\Ibexa\AdminUI\ComponentLayoutsLoader;
 use Netgen\Layouts\Ibexa\Form\ComponentFilterType;
+use Netgen\Layouts\Ibexa\Search\Contracts\Criterion\IsComponentUsed;
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\PagerfantaInterface;
@@ -23,7 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 use function array_keys;
 use function array_values;
-use function ksort;
 use function max;
 
 final class Index extends Controller
@@ -54,10 +54,9 @@ final class Index extends Controller
         return $this->render(
             '@NetgenLayoutsIbexa/admin/components/index.html.twig',
             [
-                'components' => $this->extractComponents($pager),
+                'components' => $pager,
                 'component_layouts' => $this->componentLayoutsLoader->loadLayoutsData(),
                 'filter_form' => $filterForm->createView(),
-                'pager' => $pager,
             ],
         );
     }
@@ -85,40 +84,32 @@ final class Index extends Controller
             'netgen_layouts',
         );
 
+        $criteria = [
+            new Criterion\ParentLocationId(array_values($parentLocationsConfig)),
+            new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+            new Criterion\ContentTypeIdentifier(
+                $form->get('contentType')->getData() ?? array_keys($parentLocationsConfig),
+            ),
+        ];
+
+        if ((bool) $form->get('showOnlyUnused')->getData()) {
+            $criteria[] = new IsComponentUsed(false);
+        }
+
         $locationQuery = new LocationQuery();
-        $locationQuery->filter = new Criterion\LogicalAnd(
-            [
-                new Criterion\ParentLocationId(array_values($parentLocationsConfig)),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-                new Criterion\ContentTypeIdentifier(
-                    $form->get('contentType')->getData() ?? array_keys($parentLocationsConfig),
-                ),
-            ],
-        );
+        $locationQuery->filter = new Criterion\LogicalAnd($criteria);
+
+        $sortClause = match ($form->get('sortType')->getData()) {
+            'name' => SortClause\ContentName::class,
+            'last_modified' => SortClause\DateModified::class,
+            default => SortClause\ContentName::class,
+        };
 
         $locationQuery->sortClauses = [
-            new SortClause\ContentName(Query::SORT_ASC),
+            new $sortClause($form->get('sortDirection')->getData() ?? Query::SORT_ASC),
         ];
 
         return $locationQuery;
-    }
-
-    /**
-     * @return array<string, \Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo[]>
-     */
-    private function extractComponents(PagerfantaInterface $pager): array
-    {
-        $components = [];
-
-        foreach ($pager->getCurrentPageResults() as $location) {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Location $location */
-            $contentTypeName = $location->getContentInfo()->getContentType()->getName();
-            $components[$contentTypeName][] = $location->getContentInfo();
-        }
-
-        ksort($components);
-
-        return $components;
     }
 
     private function buildPager(AdapterInterface $adapter, Request $request): PagerfantaInterface

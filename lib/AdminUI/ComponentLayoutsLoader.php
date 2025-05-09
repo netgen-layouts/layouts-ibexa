@@ -9,23 +9,19 @@ use Doctrine\DBAL\Types\Types;
 use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use JsonException;
 use Netgen\Layouts\API\Service\LayoutService;
-use Netgen\Layouts\API\Values\Layout\Layout;
 use Netgen\Layouts\API\Values\Value;
 use Ramsey\Uuid\Uuid;
 
+use function array_column;
 use function array_key_exists;
-use function array_map;
+use function array_merge;
+use function count;
 use function json_decode;
 
 use const JSON_THROW_ON_ERROR;
 
 final class ComponentLayoutsLoader
 {
-    /**
-     * @var array<int, array<string, array<int, array<string, mixed>>>>
-     */
-    private array $layoutsData;
-
     public function __construct(
         private LayoutService $layoutService,
         private Connection $databaseConnection,
@@ -34,30 +30,45 @@ final class ComponentLayoutsLoader
     /**
      * Returns all layouts in which the provided content is used as a component, sorted by name.
      *
-     * @return iterable<\Netgen\Layouts\API\Values\Layout\Layout>
+     * @return array<string, array{
+     *     layout?: \Netgen\Layouts\API\Values\Layout\Layout,
+     *     uuid: string,
+     *     name: string,
+     *     view_types: string[]
+     * }>
      */
     public function loadComponentLayouts(ContentInfo $contentInfo): iterable
     {
-        $this->layoutsData ??= $this->loadLayoutsData();
+        $layoutsData = $this->loadLayoutsData();
 
-        if (!array_key_exists($contentInfo->id, $this->layoutsData)) {
+        if (!array_key_exists($contentInfo->id, $layoutsData)) {
             return [];
         }
 
-        return array_map(
-            fn (array $layoutData): Layout => $this->layoutService->loadLayout(Uuid::fromString($layoutData['uuid'])),
-            $this->layoutsData[$contentInfo->id]['layouts'],
-        );
+        $componentData = $layoutsData[$contentInfo->id];
+
+        foreach ($componentData['layouts'] as $uuid => $layoutData) {
+            $componentData['layouts'][$uuid]['layout'] = $this->layoutService->loadLayout(Uuid::fromString($uuid));
+        }
+
+        return $componentData['layouts'];
     }
 
     /**
-     * @return array<int, array<string, array<int, array<string, mixed>>>>
+     * @return array<int, array{
+     *     layouts: array<string, array{
+     *         uuid: string,
+     *         name: string,
+     *         view_types: string[]
+     *     }>,
+     *     count: int
+     * }>
      */
     public function loadLayoutsData(): array
     {
         $query = $this->databaseConnection->createQueryBuilder();
 
-        $query->select('bt.parameters, l.uuid as layout_uuid, l.name as layout_name')
+        $query->select('b.view_type, bt.parameters, l.uuid as layout_uuid, l.name as layout_name')
             ->from('nglayouts_block', 'b')
             ->innerJoin(
                 'b',
@@ -95,10 +106,17 @@ final class ComponentLayoutsLoader
                 continue;
             }
 
-            $layoutsData[(int) $decodedParameters['content']]['layouts'][] = [
+            $layoutsData[(int) $decodedParameters['content']]['layouts'][$dataRow['layout_uuid']] ??= [
                 'uuid' => $dataRow['layout_uuid'],
                 'name' => $dataRow['layout_name'],
+                'view_types' => [],
             ];
+
+            $layoutsData[(int) $decodedParameters['content']]['layouts'][$dataRow['layout_uuid']]['view_types'][] = $dataRow['view_type'];
+        }
+
+        foreach ($layoutsData as $componentId => $componentData) {
+            $layoutsData[$componentId]['count'] = count(array_merge(...array_column($componentData['layouts'], 'view_types')));
         }
 
         return $layoutsData;
