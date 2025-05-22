@@ -16,7 +16,6 @@ final class ComponentNode implements ConfigurationNodeInterface
         $node = $treeBuilder->getRootNode();
 
         $node
-            ->addDefaultsIfNotSet()
             ->children()
                 ->integerNode('default_parent_location')
                     ->defaultValue(2)
