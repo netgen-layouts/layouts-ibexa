@@ -32,10 +32,6 @@ abstract class ConfigurationNodeTestBase extends TestCase
     private const DEFAULT_SYSTEM_CONFIG = [
         'view' => [],
         'design' => 'standard',
-        'ibexa_component' => [
-            'default_parent_location' => 2,
-            'parent_locations' => [],
-        ],
     ];
 
     protected NetgenLayoutsExtension $extension;

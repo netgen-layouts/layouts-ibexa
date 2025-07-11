@@ -59,12 +59,7 @@ final class ComponentNodeTest extends ConfigurationNodeTestBase
 
         $expectedConfig = [
             'system' => [
-                'default' => [
-                    'ibexa_component' => [
-                        'default_parent_location' => 2,
-                        'parent_locations' => [],
-                    ],
-                ],
+                'default' => [],
             ],
         ];
 
