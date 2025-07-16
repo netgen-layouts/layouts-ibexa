@@ -53,7 +53,7 @@ final class Subtree extends TargetType implements ValueObjectProviderInterface
         return $this->remoteIdConverter->toLocationRemoteId((int) $value);
     }
 
-    public function import(mixed $value): ?int
+    public function import(mixed $value): int
     {
         return $this->remoteIdConverter->toLocationId((string) $value) ?? 0;
     }

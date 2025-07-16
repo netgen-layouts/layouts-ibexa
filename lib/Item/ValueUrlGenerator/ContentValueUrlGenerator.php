@@ -15,7 +15,7 @@ final class ContentValueUrlGenerator implements ExtendedValueUrlGeneratorInterfa
 {
     public function __construct(private UrlGeneratorInterface $urlGenerator) {}
 
-    public function generateDefaultUrl(object $object): ?string
+    public function generateDefaultUrl(object $object): string
     {
         return $this->urlGenerator->generate(
             UrlAliasRouter::URL_ALIAS_ROUTE_NAME,
@@ -25,7 +25,7 @@ final class ContentValueUrlGenerator implements ExtendedValueUrlGeneratorInterfa
         );
     }
 
-    public function generateAdminUrl(object $object): ?string
+    public function generateAdminUrl(object $object): string
     {
         return $this->urlGenerator->generate(
             'ibexa.content.view',
@@ -35,7 +35,7 @@ final class ContentValueUrlGenerator implements ExtendedValueUrlGeneratorInterfa
         );
     }
 
-    public function generate(object $object): ?string
+    public function generate(object $object): string
     {
         return $this->generateDefaultUrl($object);
     }

@@ -10,4 +10,8 @@ parameters:
         - '#expects string\|null, Doctrine\\DBAL\\Query\\Expression\\CompositeExpression given#'
 
         # Ibexa CMS
-        - "#Casting to (int|string) something that's already (int|string).#"
+        - '#Casting to (int|string) something that''s already (int|string).#'
+
+        # Symfony
+        - '#with generic interface Symfony\\Component\\(Form|OptionsResolver)\\\w+ but does not specify its types: (TData|TArray)#'
+        - '#extends generic class Symfony\\Component\\Form\\\w+ but does not specify its types: TData#'

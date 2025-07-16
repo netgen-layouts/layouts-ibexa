@@ -16,6 +16,8 @@ use function str_starts_with;
 /**
  * Votes on Netgen Layouts attributes (ROLE_NGLAYOUTS_*) by matching corresponding access
  * rights in Ibexa CMS Repository.
+ *
+ * @extends \Symfony\Component\Security\Core\Authorization\Voter\Voter<string, \Netgen\Layouts\API\Values\Value|null>
  */
 final class RepositoryAccessVoter extends Voter
 {
