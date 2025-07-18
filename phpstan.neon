@@ -11,6 +11,7 @@ parameters:
 
         # Ibexa CMS
         - '#Casting to (int|string) something that''s already (int|string).#'
+        - '#Method .+::handle\(\) has parameter \$languageSettings with no value type specified in iterable type array.#'
 
         # Symfony
         - '#with generic interface Symfony\\Component\\(Form|OptionsResolver)\\\w+ but does not specify its types: (TData|TArray)#'

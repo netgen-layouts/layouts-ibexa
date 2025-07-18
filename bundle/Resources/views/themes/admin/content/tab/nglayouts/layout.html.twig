@@ -28,6 +28,12 @@
                 </ul>
             </div>
         {% endif %}
+
+        {% if additional_data|default('') is not empty %}
+            <div class="additional-data">
+                {{ additional_data }}
+            </div>
+        {% endif %}
     </div>
 
     {% if can_clear_cache %}
