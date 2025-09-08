@@ -1,5 +1,5 @@
 {% if app.request.attributes.get('_route') starts with 'nglayouts_admin' %}
-    {% include '@NetgenLayoutsAdmin/admin/stylesheets.html.twig' %}
+    {{ include('@NetgenLayoutsAdmin/admin/stylesheets.html.twig') }}
 {% endif %}
 
 <link rel="stylesheet" href="{{ asset('bundles/netgenlayoutsibexa/css/ibexa/admin/style.css') }}">
