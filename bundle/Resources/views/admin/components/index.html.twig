@@ -15,68 +15,77 @@
         </div>
 
         <div class="nl-components-head">
-            <form method="get">
+            <form method="get" class="layouts-form nl-components-filter-form">
                 <div class="filter">
-                    {{ form_row(filter_form.contentType, {placeholder: 'components.filter_form.content_type.placeholder'}) }}
-                    {{ form_row(filter_form.showOnlyUnused) }}
+                    <h3 class="row-title">{{ 'components.filter_form.filter.title'|trans }}</h3>
+                    <div class="row-input">
+                        {{ form_row(filter_form.contentType, {placeholder: 'components.filter_form.content_type.placeholder'}) }}
+                    </div>
+                    <div class="row-input">
+                        <div class="checkbox row-input{% if filter_form.showOnlyUnused.vars.disabled %} disabled-input{% endif %}">
+                            {{- form_errors(filter_form.showOnlyUnused) -}}
+                            {{- form_widget(filter_form.showOnlyUnused) -}}
+                            {{- form_label(filter_form.showOnlyUnused) -}}
+                        </div>
+                    </div>
                 </div>
 
                 <div class="sort">
-                    {{ form_row(filter_form.sortType) }}
-                    {{ form_row(filter_form.sortDirection) }}
+                    <h3 class="row-title">{{ 'components.filter_form.sort.title'|trans }}</h3>
+                    <div class="row-input">
+                        {{ form_row(filter_form.sortType) }}
+                    </div>
+                    <div class="row-input">
+                        {{ form_row(filter_form.sortDirection) }}
+                    </div>
                 </div>
 
                 {{ form_rest(filter_form) }}
 
-                <button type="submit">{{ 'components.filter_form.button.submit'|trans }}</button>
+                <div class="form-actions">
+                    <button type="submit" class="nl-btn nl-btn-primary">{{ 'components.filter_form.button.submit'|trans }}</button>
+                </div>
             </form>
         </div>
 
         <div class="nl-components">
             {% if components|length > 0 %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>{{ 'components.component.name'|trans }}</th>
-                            <th>{{ 'components.component.content_type'|trans }}</th>
-                            <th>{{ 'components.component.last_modified'|trans }}</th>
-                            <th>{{ 'components.component.usage_count'|trans }}</th>
-                            <th>{{ 'components.component.used_in'|trans }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for component in components %}
-                            {% set has_layouts = component_layouts[component.content.id] is defined %}
+                <ul class="nl-components-list">
+                    <li class="nl-component nl-component-header">
+                        <div class="nl-component__name">{{ 'components.component.name'|trans }}</div>
+                        <div class="nl-component__content-type">{{ 'components.component.content_type'|trans }}</div>
+                        <div class="nl-component__last-modified">{{ 'components.component.last_modified'|trans }}</div>
+                        <div class="nl-component__usage-count">{{ 'components.component.usage_count'|trans }}</div>
+                        <div class="nl-component__used-in">
+                            <div class="used-in-item">
+                                <span class="used-in-item-name">{{ 'components.component.used_in'|trans }}</span>
+                                <span class="used-in-item-style">{{ 'components.component.style'|trans }}</span>
+                            </div>
+                        </div>
+                    </li>
+                    {% for component in components %}
+                        {% set has_layouts = component_layouts[component.content.id] is defined %}
 
-                            <tr>
-                                <td>
-                                    <a href="{{ ibexa_path(component) }}" target="_blank">{{ component.content.name }}</a>
-                                </td>
-                                <td>
-                                    {{ component.content.contentType.name }}
-                                </td>
-                                <td>
-                                    {{ component.content.contentInfo.modificationDate|nglayouts_format_datetime }}
-                                </td>
-                                <td>
-                                    {{ component_layouts[component.content.id].count|default(0) }}
-                                </td>
-                                <td>
-                                    {% if has_layouts %}
-                                        {% for layout_data in component_layouts[component.content.id]['layouts'] %}
-                                            <p>
-                                                <a href="{{ macros.layout_path(layout_data.uuid) }}" class="js-open-ngl" target="_blank">{{ layout_data.name }}</a><br>
-                                                {{ layout_data.view_types|map(v => v|humanize)|join(', ') }}
-                                            </p>
-                                        {% endfor %}
-                                    {% else %}
-                                        {{ 'components.not_used'|trans }}
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        <li class="nl-component">
+                            <div class="nl-component__name" data-cell-title="{{ 'components.component.name'|trans }}"><a href="{{ ibexa_path(component) }}" target="_blank">{{ component.content.name }}</a></div>
+                            <div class="nl-component__content-type" data-cell-title="{{ 'components.component.content_type'|trans }}">{{ component.content.contentType.name|replace({' Component': ''}) }}</div>
+                            <div class="nl-component__last-modified" data-cell-title="{{ 'components.component.last_modified'|trans }}">{{ component.content.contentInfo.modificationDate|nglayouts_format_datetime }}</div>
+                            <div class="nl-component__usage-count" data-cell-title="{{ 'components.component.usage_count'|trans }}">{{ component_layouts[component.content.id].count|default(0) }}</div>
+                            <div class="nl-component__used-in">
+                                {% if has_layouts %}
+                                    {% for layout_data in component_layouts[component.content.id]['layouts'] %}
+                                        <div class="used-in-item">
+                                            <span class="used-in-item-name" data-cell-title="{{ 'components.component.used_in'|trans }}"><a href="{{ macros.layout_path(layout_data.uuid) }}" class="js-open-ngl" target="_blank">{{ layout_data.name }}</a></span>
+                                            <span class="used-in-item-style" data-cell-title="{{ 'components.component.style'|trans }}">{{ layout_data.view_types|map(v => v|humanize)|join(', ') }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ 'components.not_used'|trans }}
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
             {% else %}
                 <p class="nl-no-items">{{ 'components.no_components'|trans }}</p>
             {% endif %}
