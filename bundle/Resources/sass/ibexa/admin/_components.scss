@@ -208,6 +208,12 @@
                             }
                         }
                     }
+
+                    & + .used-in-item {
+                        border-top: 1px solid #e3e3e3;
+                        padding-top: .25rem;
+                        margin-top: .25rem;
+                    }
                 }
             }
         }
