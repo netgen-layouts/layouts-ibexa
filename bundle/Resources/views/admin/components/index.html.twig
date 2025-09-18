@@ -22,10 +22,10 @@
                         {{ form_row(filter_form.contentType, {placeholder: 'components.filter_form.content_type.placeholder'}) }}
                     </div>
                     <div class="row-input">
-                        <div class="checkbox row-input{% if filter_form.showOnlyUnused.vars.disabled %} disabled-input{% endif %}">
-                            {{- form_errors(filter_form.showOnlyUnused) -}}
-                            {{- form_widget(filter_form.showOnlyUnused) -}}
-                            {{- form_label(filter_form.showOnlyUnused) -}}
+                        <div class="checkbox row-input">
+                            {{ form_errors(filter_form.showOnlyUnused) }}
+                            {{ form_widget(filter_form.showOnlyUnused) }}
+                            {{ form_label(filter_form.showOnlyUnused) }}
                         </div>
                     </div>
                 </div>
