@@ -48,7 +48,7 @@
             </form>
         </div>
 
-        <div class="nl-components">
+        <div class="nl-components{% if components|length == 0 %} no-items{% endif %}">
             {% if components|length > 0 %}
                 <ul class="nl-components-list">
                     <li class="nl-component nl-component-header">

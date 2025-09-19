@@ -268,4 +268,10 @@
             }
         }
     }
+
+    &.no-items {
+        .nl-no-items {
+            display: block;
+        }
+    }
 }
