@@ -1,8 +1,11 @@
 .nl-components-head {
     container-type: inline-size;
     container-name: nl-components-head;
-    background-color: #f8f8f8;
-    padding: 2rem;
+    padding: 0;
+    padding-bottom: 0px;
+  background-color: transparent;
+  border-bottom: 1px solid #e3e3e3;
+  padding-bottom: 1rem;
     .layouts-form {
         margin-bottom: 0;
         input {
@@ -17,36 +20,76 @@
         }
     }
     .nl-components-filter-form {
+        display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 1rem;
         .row-title {
             font-size: .8125rem;
             font-weight: bold;
             margin-bottom: .5rem;
+            display: none;
         }
-        .row-input {
-            select {
-                width: 100%;
-                max-width: 200px;
-            }
-        }
-        @container nl-components-head (min-width: 800px) {
+        .filter,
+        .sort {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
+            align-items: flex-end;
+            width: calc(50% - .5rem);
+        }
+        .form-actions {
+            width: 100%;
+            text-align: left;
+        }
+        .row-input {
+            width: 100%;
+            max-width: 200px;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            > div {
+                width: 100%;
+            }
+            select {
+                width: 100%;
+                max-width: 200px;
+                margin: 0;
+            }
+        }
+        @container nl-components-head (min-width: 700px) {
+            gap: 0;
+            align-items: flex-end;
             .filter,
             .sort {
+                width: calc(50% - 50px);
+                gap: 0 1rem;
+            }
+            .form-actions {
+                width: 100px;
+                text-align: right;
+            }
+            .row-input {
                 width: calc(50% - .5rem);
             }
-            .actions {
+        }
+
+        @container nl-components-head (max-width: 300px) {
+            .filter,
+            .sort {
                 width: 100%;
+            }
+            .row-input {
+                max-width: 100%;
+                select {
+                    max-width: 100%;
+                }
             }
         }
     }
 
     & + .nl-components {
-        margin-top: 3rem;
-        @media (max-width: 991px) {
-            margin-top: 1rem;
-        }
+        margin-top: 1rem;
     }
 }
 
@@ -93,7 +136,6 @@
             &.nl-component-header {
                 font-weight: bold;
                 align-items: flex-end;
-                border-top: 1px solid #e3e3e3;
 
                 [class*="nl-component__"] {
                     font-size: .75rem;
