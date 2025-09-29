@@ -14,6 +14,12 @@ related_layouts.description: 'Description'
 related_layouts.modified: 'Last modified'
 related_layouts.no_related_layouts: 'No related layouts'
 
+component_layouts.title: 'List of layouts using this content as a component'
+component_layouts.layout_name: 'Name'
+component_layouts.description: 'Description'
+component_layouts.modified: 'Last modified'
+component_layouts.no_layouts: 'No layouts'
+
 layouts.edit_layout: 'Edit layout'
 layouts.cache_clear.question: 'Are you sure you want to clear caches for this layout?'
 layouts.cache_clear.cancel: 'Cancel'

@@ -1,31 +1,31 @@
 nglayouts_ibexa_admin_location_layouts:
     path: /nglayouts/ibexa/admin/layouts/{locationId}
     controller: netgen_layouts.ibexa.admin.controller.location_layouts
-    methods:  [GET]
+    methods: [GET]
     requirements:
         locationId: \d+
 
 nglayouts_ibexa_admin_layout_wizard:
     path: /nglayouts/ibexa/admin/layouts/{locationId}/wizard
     controller: netgen_layouts.ibexa.admin.controller.layout_wizard
-    methods:  [GET, POST]
+    methods: [GET, POST]
 
 nglayouts_ibexa_admin_layout_wizard_callback:
     path: /nglayouts/ibexa/admin/layouts/{locationId}/wizard/callback
     controller: netgen_layouts.ibexa.admin.controller.layout_wizard_callback
-    methods:  [GET]
+    methods: [GET]
 
 nglayouts_ibexa_admin_create_content:
     path: /nglayouts/ibexa/admin/blocks/{blockId}/{locale}/create-content/{contentTypeIdentifier}/{languageCode}/{parentLocationId}
     controller: netgen_layouts.ibexa.admin.controller.create_content
-    methods:  [GET]
+    methods: [GET]
     requirements:
         parentLocationId: \d+
 
 nglayouts_ibexa_admin_connect_component_content:
     path: /nglayouts/ibexa/admin/blocks/{blockId}/{locale}/connect-component-content/{contentId}
     controller: netgen_layouts.ibexa.admin.controller.connect_component_content
-    methods:  [POST]
+    methods: [POST]
     requirements:
         contentId: \d+
     defaults:
@@ -34,6 +34,11 @@ nglayouts_ibexa_admin_connect_component_content:
 nglayouts_ibexa_admin_delete_rule:
     path: /nglayouts/ibexa/admin/layouts/rules/{ruleId}/delete
     controller: netgen_layouts.ibexa.admin.controller.delete_rule
-    methods:  [DELETE]
+    methods: [DELETE]
     defaults:
         _nglayouts_status: published
+
+nglayouts_admin_ibexa_components_index:
+    path: /nglayouts/admin/ibexa/components
+    controller: netgen_layouts.ibexa.admin.controller.components.index
+    methods: [GET]
