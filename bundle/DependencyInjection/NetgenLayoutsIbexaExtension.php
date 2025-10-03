@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\LayoutsIbexaBundle\DependencyInjection;
 
+use Jean85\PrettyVersions;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\DelegatingLoader;
@@ -63,6 +64,11 @@ final class NetgenLayoutsIbexaExtension extends Extension implements PrependExte
 
     public function prepend(ContainerBuilder $container): void
     {
+        $container->setParameter(
+            'netgen_layouts_ibexa.asset_version',
+            PrettyVersions::getVersion('netgen/layouts-ibexa')->getShortReference(),
+        );
+
         $prependConfigs = [
             'block_definitions.yaml' => 'netgen_layouts',
             'block_types.yaml' => 'netgen_layouts',
@@ -75,6 +81,7 @@ final class NetgenLayoutsIbexaExtension extends Extension implements PrependExte
             'view/rule_view.yaml' => 'netgen_layouts',
             'view/layout_view.yaml' => 'netgen_layouts',
             'ibexa/image.yaml' => 'ibexa',
+            'framework/assets.yaml' => 'framework',
             'framework/twig.yaml' => 'twig',
         ];
 

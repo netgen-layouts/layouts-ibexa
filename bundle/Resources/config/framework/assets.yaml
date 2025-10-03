@@ -1,0 +1,22 @@
+assets:
+    packages:
+        nglayouts_ibexa_css:
+            base_path: '/bundles/netgenlayoutsibexa/css'
+            version: '%netgen_layouts_ibexa.asset_version%'
+            version_format: '%%s?%%s'
+        nglayouts_ibexa_js:
+            base_path: '/bundles/netgenlayoutsibexa/js'
+            version: '%netgen_layouts_ibexa.asset_version%'
+            version_format: '%%s?%%s'
+        nglayouts_ibexa_dev_css:
+            base_path: '/bundles/netgenlayoutsibexa/dev/css'
+            version: '%netgen_layouts_ibexa.asset_version%'
+            version_format: '%%s?%%s'
+        nglayouts_ibexa_dev_js:
+            base_path: '/bundles/netgenlayoutsibexa/dev/js'
+            version: '%netgen_layouts_ibexa.asset_version%'
+            version_format: '%%s?%%s'
+        nglayouts_ibexa:
+            base_path: '/bundles/netgenlayoutsibexa'
+            version: '%netgen_layouts_ibexa.asset_version%'
+            version_format: '%%s?%%s'

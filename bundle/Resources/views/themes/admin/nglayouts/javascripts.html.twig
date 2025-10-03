@@ -2,4 +2,4 @@
     {{ include('@NetgenLayoutsAdmin/admin/javascripts.html.twig') }}
 {% endif %}
 
-<script src="{{ asset('bundles/netgenlayoutsibexa/js/ibexa/admin/app.js') }}"></script>
+<script src="{{ asset('ibexa/admin/app.js', 'nglayouts_ibexa_' ~ (nglayouts.debug ? 'dev_' : '') ~ 'js') }}"></script>

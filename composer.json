@@ -15,7 +15,8 @@
         "netgen/content-browser-ibexa": "^1.4",
         "ibexa/core": "^4.4",
         "ibexa/admin-ui": "^4.4",
-        "ibexa/http-cache": "^4.4"
+        "ibexa/http-cache": "^4.4",
+        "jean85/pretty-package-versions": "^1.6 || ^2.0"
     },
     "require-dev": {
         "netgen/layouts-coding-standard": "^2.0",
