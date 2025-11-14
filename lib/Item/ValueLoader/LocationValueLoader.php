@@ -11,9 +11,11 @@ use Throwable;
 
 final class LocationValueLoader implements ValueLoaderInterface
 {
-    public function __construct(private LocationService $locationService) {}
+    public function __construct(
+        private LocationService $locationService,
+    ) {}
 
-    public function load($id): ?Location
+    public function load(int|string $id): ?Location
     {
         try {
             $location = $this->locationService->loadLocation((int) $id);
@@ -24,7 +26,7 @@ final class LocationValueLoader implements ValueLoaderInterface
         return $location->contentInfo->published ? $location : null;
     }
 
-    public function loadByRemoteId($remoteId): ?Location
+    public function loadByRemoteId(int|string $remoteId): ?Location
     {
         try {
             $location = $this->locationService->loadLocationByRemoteId((string) $remoteId);

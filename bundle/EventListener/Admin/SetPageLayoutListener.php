@@ -6,7 +6,6 @@ namespace Netgen\Bundle\LayoutsIbexaBundle\EventListener\Admin;
 
 use Ibexa\Bundle\AdminUi\IbexaAdminUiBundle;
 use Netgen\Bundle\LayoutsAdminBundle\Event\AdminMatchEvent;
-use Netgen\Bundle\LayoutsAdminBundle\Event\LayoutsAdminEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -26,7 +25,7 @@ final class SetPageLayoutListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return [LayoutsAdminEvents::ADMIN_MATCH => ['onAdminMatch', -255]];
+        return [AdminMatchEvent::class => ['onAdminMatch', -255]];
     }
 
     /**

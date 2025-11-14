@@ -34,10 +34,11 @@ final class ComponentPass implements CompilerPassInterface
             unset($blockTypes[$identifier]['definition_identifier']);
 
             $blockDefinitions[$identifier] = [
+                ...$blockDefinitions['ibexa_component'],
                 'name' => $blockType['name'],
                 'icon' => $blockType['icon'],
                 'enabled' => $blockType['enabled'],
-            ] + $blockDefinitions['ibexa_component'];
+            ];
 
             $componentService = clone $container
                 ->findDefinition('netgen_layouts.ibexa.block.block_definition_handler.component');

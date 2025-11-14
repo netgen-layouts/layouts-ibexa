@@ -56,7 +56,7 @@ final class Index extends Controller
             [
                 'components' => $pager,
                 'component_layouts' => $this->componentLayoutsLoader->loadLayoutsData(),
-                'filter_form' => $filterForm->createView(),
+                'filter_form' => $filterForm,
             ],
         );
     }
@@ -112,6 +112,11 @@ final class Index extends Controller
         return $locationQuery;
     }
 
+    /**
+     * @param \Pagerfanta\Adapter\AdapterInterface<\Ibexa\Contracts\Core\Repository\Values\Content\Location> $adapter
+     *
+     * @return \Pagerfanta\PagerfantaInterface<\Ibexa\Contracts\Core\Repository\Values\Content\Location>
+     */
     private function buildPager(AdapterInterface $adapter, Request $request): PagerfantaInterface
     {
         $pager = new Pagerfanta($adapter);

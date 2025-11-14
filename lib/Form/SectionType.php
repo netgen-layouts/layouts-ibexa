@@ -15,15 +15,13 @@ use function in_array;
 
 final class SectionType extends AbstractType
 {
-    public function __construct(private SectionService $sectionService) {}
+    public function __construct(
+        private SectionService $sectionService,
+    ) {}
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('translation_domain', 'nglayouts_forms');
-
-        $resolver->setDefault('sections', []);
-        $resolver->setRequired(['sections']);
-        $resolver->setAllowedTypes('sections', 'string[]');
 
         $resolver->setDefault(
             'choices',
@@ -31,6 +29,12 @@ final class SectionType extends AbstractType
         );
 
         $resolver->setDefault('choice_translation_domain', false);
+
+        $resolver
+            ->define('sections')
+            ->required()
+            ->default([])
+            ->allowedTypes('string[]');
     }
 
     public function getParent(): string

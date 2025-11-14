@@ -15,15 +15,13 @@ use function is_array;
 
 final class ContentTypeType extends AbstractType
 {
-    public function __construct(private ContentTypeService $contentTypeService) {}
+    public function __construct(
+        private ContentTypeService $contentTypeService,
+    ) {}
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('translation_domain', 'nglayouts_forms');
-
-        $resolver->setDefault('types', []);
-        $resolver->setRequired(['types']);
-        $resolver->setAllowedTypes('types', 'array');
 
         $resolver->setDefault(
             'choices',
@@ -31,6 +29,12 @@ final class ContentTypeType extends AbstractType
         );
 
         $resolver->setDefault('choice_translation_domain', false);
+
+        $resolver
+            ->define('types')
+            ->required()
+            ->default([])
+            ->allowedTypes('array');
     }
 
     public function getParent(): string

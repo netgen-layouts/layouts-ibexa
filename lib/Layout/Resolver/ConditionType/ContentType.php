@@ -17,7 +17,9 @@ use function is_array;
 
 final class ContentType extends ConditionType
 {
-    public function __construct(private ContentExtractorInterface $contentExtractor) {}
+    public function __construct(
+        private ContentExtractorInterface $contentExtractor,
+    ) {}
 
     public static function getType(): string
     {
@@ -28,13 +30,11 @@ final class ContentType extends ConditionType
     {
         return [
             new Constraints\NotBlank(),
-            new Constraints\Type(['type' => 'array']),
+            new Constraints\Type(type: 'list'),
             new Constraints\All(
-                [
-                    'constraints' => [
-                        new Constraints\Type(['type' => 'string']),
-                        new IbexaConstraints\ContentType(),
-                    ],
+                constraints: [
+                    new Constraints\Type(type: 'string'),
+                    new IbexaConstraints\ContentType(),
                 ],
             ),
         ];

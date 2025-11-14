@@ -7,23 +7,26 @@ namespace Netgen\Layouts\Ibexa\Search\Persistence\CriterionHandler;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Types\Types;
-use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion as IbexaCriterion;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
 use Ibexa\Core\Search\Legacy\Content\Common\Gateway\CriteriaConverter;
 use Ibexa\Core\Search\Legacy\Content\Common\Gateway\CriterionHandler;
-use Netgen\Layouts\API\Values\Value;
 use Netgen\Layouts\Ibexa\Search\Contracts\Criterion;
+use Netgen\Layouts\Persistence\Values\Status;
 
 class IsComponentUsed extends CriterionHandler
 {
-    public function accept(IbexaCriterion $criterion): bool
+    public function accept(CriterionInterface $criterion): bool
     {
         return $criterion instanceof Criterion\IsComponentUsed;
     }
 
+    /**
+     * @param mixed[] $languageSettings
+     */
     public function handle(
         CriteriaConverter $converter,
         QueryBuilder $queryBuilder,
-        IbexaCriterion $criterion,
+        CriterionInterface $criterion,
         array $languageSettings,
     ): CompositeExpression|string {
         $subSelect = $this->connection->createQueryBuilder();
@@ -48,7 +51,7 @@ class IsComponentUsed extends CriterionHandler
             );
 
         $queryBuilder
-            ->setParameter('nglayouts_status', Value::STATUS_PUBLISHED, Types::INTEGER)
+            ->setParameter('nglayouts_status', Status::Published->value, Types::INTEGER)
             ->setParameter('nglayouts_definition_identifier', 'ibexa_component_%', Types::STRING);
 
         if ((bool) ($criterion->value[0] ?? true)) {

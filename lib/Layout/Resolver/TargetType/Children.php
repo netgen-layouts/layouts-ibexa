@@ -29,9 +29,9 @@ final class Children extends TargetType implements ValueObjectProviderInterface
     {
         return [
             new Constraints\NotBlank(),
-            new Constraints\Type(['type' => 'numeric']),
-            new Constraints\GreaterThanOrEqual(['value' => 0]),
-            new IbexaConstraints\Location(['allowInvalid' => true]),
+            new Constraints\Type(type: 'numeric'),
+            new Constraints\PositiveOrZero(),
+            new IbexaConstraints\Location(allowInvalid: true),
         ];
     }
 

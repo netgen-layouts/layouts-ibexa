@@ -6,6 +6,7 @@ namespace Netgen\Layouts\Ibexa\Collection\QueryType\Handler\Traits;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
 use Netgen\Layouts\Parameters\ParameterBuilderInterface;
 use Netgen\Layouts\Parameters\ParameterCollectionInterface;
 use Netgen\Layouts\Parameters\ParameterType;
@@ -36,7 +37,7 @@ trait QueryTypeFilterTrait
     /**
      * Returns the criteria used to filter content with one of the supported query types.
      */
-    private function getQueryTypeFilterCriteria(ParameterCollectionInterface $parameterCollection, Location $parentLocation): ?Criterion
+    private function getQueryTypeFilterCriteria(ParameterCollectionInterface $parameterCollection, Location $parentLocation): ?CriterionInterface
     {
         if ($parameterCollection->getParameter('query_type')->getValue() !== 'list') {
             return null;

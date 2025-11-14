@@ -15,7 +15,9 @@ final class SiteAccessGroup extends Mapper
     /**
      * @param array<string, string[]> $siteAccessGroupList
      */
-    public function __construct(private array $siteAccessGroupList) {}
+    public function __construct(
+        private array $siteAccessGroupList,
+    ) {}
 
     public function getFormType(): string
     {

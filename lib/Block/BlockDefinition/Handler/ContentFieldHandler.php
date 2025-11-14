@@ -17,7 +17,9 @@ use Netgen\Layouts\Parameters\ParameterType;
  */
 final class ContentFieldHandler extends BlockDefinitionHandler
 {
-    public function __construct(private ContentProviderInterface $contentProvider) {}
+    public function __construct(
+        private ContentProviderInterface $contentProvider,
+    ) {}
 
     public function buildParameters(ParameterBuilderInterface $builder): void
     {
@@ -30,7 +32,7 @@ final class ContentFieldHandler extends BlockDefinitionHandler
         $params['location'] = $this->contentProvider->provideLocation();
     }
 
-    public function isContextual(Block $block): bool
+    public function isContextual(Block $block): true
     {
         return true;
     }

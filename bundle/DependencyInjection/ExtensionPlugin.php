@@ -23,12 +23,15 @@ use function sprintf;
 
 final class ExtensionPlugin extends BaseExtensionPlugin
 {
-    private const SITEACCCESS_AWARE_SETTINGS = [
+    private const array SITEACCCESS_AWARE_SETTINGS = [
         'view',
         'design',
     ];
 
-    public function __construct(private ContainerBuilder $container, private ExtensionInterface $extension) {}
+    public function __construct(
+        private ContainerBuilder $container,
+        private ExtensionInterface $extension,
+    ) {}
 
     /**
      * Pre-processes the configuration before it is resolved.

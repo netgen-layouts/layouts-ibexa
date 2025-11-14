@@ -9,14 +9,16 @@ use Toflar\Psr6HttpCacheStore\Psr6StoreInterface;
 
 final class LocalClient implements ClientInterface
 {
-    public function __construct(private Psr6StoreInterface $cacheStore) {}
+    public function __construct(
+        private Psr6StoreInterface $cacheStore,
+    ) {}
 
     public function purge(array $tags): void
     {
         $this->cacheStore->invalidateTags($tags);
     }
 
-    public function commit(): bool
+    public function commit(): true
     {
         return true;
     }

@@ -17,14 +17,13 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-use function array_key_first;
-use function count;
+use function array_first;
 
 final class LayoutWizardType extends AbstractType
 {
-    public const ACTION_TYPE_NEW_LAYOUT = 'new_layout';
+    public const string ACTION_TYPE_NEW_LAYOUT = 'new_layout';
 
-    public const ACTION_TYPE_COPY_LAYOUT = 'copy_layout';
+    public const string ACTION_TYPE_COPY_LAYOUT = 'copy_layout';
 
     public function __construct(
         private LayoutService $layoutService,
@@ -34,13 +33,13 @@ final class LayoutWizardType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'translation_domain' => 'nglayouts_ibexa_admin_forms',
-                'validation_groups' => static fn (FormInterface $form): array => [
-                    'Default',
-                    $form->get('action')->getData(),
-                ],
+        $resolver->setDefault('translation_domain', 'nglayouts_ibexa_admin_forms');
+
+        $resolver->setDefault(
+            'validation_groups',
+            static fn (FormInterface $form): array => [
+                'Default',
+                $form->get('action')->getData(),
             ],
         );
     }
@@ -75,9 +74,9 @@ final class LayoutWizardType extends AbstractType
                 'choice_label' => 'name',
                 'choice_translation_domain' => false,
                 'expanded' => true,
-                'data' => count($layoutTypes) > 0 ? $layoutTypes[array_key_first($layoutTypes)] : null,
+                'data' => array_first($layoutTypes),
                 'constraints' => [
-                    new Constraints\NotBlank(['groups' => [self::ACTION_TYPE_NEW_LAYOUT]]),
+                    new Constraints\NotBlank(groups: [self::ACTION_TYPE_NEW_LAYOUT]),
                 ],
             ],
         );
@@ -115,7 +114,7 @@ final class LayoutWizardType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\NotNull(),
-                    new Constraints\Type(['type' => 'string']),
+                    new Constraints\Type(type: 'string'),
                 ],
                 'empty_data' => '',
             ],
@@ -131,7 +130,7 @@ final class LayoutWizardType extends AbstractType
                     'constraints' => [
                         new Constraints\NotBlank(),
                         new Constraints\AtLeastOneOf(
-                            [
+                            constraints: [
                                 new Constraints\EqualTo(Uuid::NIL),
                                 new Constraints\Uuid(),
                             ],
@@ -149,7 +148,7 @@ final class LayoutWizardType extends AbstractType
                 'data' => true,
                 'constraints' => [
                     new Constraints\NotNull(),
-                    new Constraints\Type(['type' => 'bool']),
+                    new Constraints\Type(type: 'bool'),
                 ],
             ],
         );

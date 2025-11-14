@@ -24,12 +24,12 @@ final class RepositoryAccessVoter extends Voter
     /**
      * Identifier of the Ibexa CMS module used for creating Netgen Layouts permissions.
      */
-    private const MODULE = 'nglayouts';
+    private const string MODULE = 'nglayouts';
 
     /**
      * Map of supported attributes to corresponding functions in the Ibexa CMS module.
      */
-    private const ATTRIBUTE_TO_POLICY_MAP = [
+    private const array ATTRIBUTE_TO_POLICY_MAP = [
         'ROLE_NGLAYOUTS_ADMIN' => 'admin',
         'ROLE_NGLAYOUTS_EDITOR' => 'editor',
         'ROLE_NGLAYOUTS_API' => 'api',

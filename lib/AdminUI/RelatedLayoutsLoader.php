@@ -9,14 +9,17 @@ use Doctrine\DBAL\Types\Types;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Netgen\Layouts\API\Service\LayoutService;
 use Netgen\Layouts\API\Values\Layout\Layout;
-use Netgen\Layouts\API\Values\Value;
+use Netgen\Layouts\Persistence\Values\Status;
 use Ramsey\Uuid\Uuid;
 
 use function array_map;
 
 final class RelatedLayoutsLoader
 {
-    public function __construct(private LayoutService $layoutService, private Connection $databaseConnection) {}
+    public function __construct(
+        private LayoutService $layoutService,
+        private Connection $databaseConnection,
+    ) {}
 
     /**
      * Returns all layouts related to provided location and its content, sorted by name.
@@ -75,7 +78,7 @@ final class RelatedLayoutsLoader
                 ),
             )
             ->orderBy('l.name', 'ASC')
-            ->setParameter('status', Value::STATUS_PUBLISHED, Types::INTEGER)
+            ->setParameter('status', Status::Published->value, Types::INTEGER)
             ->setParameter('content_value_type', 'ibexa_content', Types::STRING)
             ->setParameter('location_value_type', 'ibexa_location', Types::STRING)
             ->setParameter('content_id', $location->contentInfo->id, Types::INTEGER)
@@ -83,7 +86,7 @@ final class RelatedLayoutsLoader
 
         return array_map(
             fn (array $dataRow): Layout => $this->layoutService->loadLayout(Uuid::fromString($dataRow['uuid'])),
-            $query->execute()->fetchAllAssociative(),
+            $query->fetchAllAssociative(),
         );
     }
 }

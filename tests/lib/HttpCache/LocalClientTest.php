@@ -34,9 +34,4 @@ final class LocalClientTest extends TestCase
 
         $this->client->purge($tags);
     }
-
-    public function testCommit(): void
-    {
-        self::assertTrue($this->client->commit());
-    }
 }

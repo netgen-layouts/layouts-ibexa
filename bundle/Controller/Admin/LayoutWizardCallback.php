@@ -8,8 +8,8 @@ use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator;
 use Netgen\Layouts\API\Service\LayoutResolverService;
 use Netgen\Layouts\API\Service\LayoutService;
-use Netgen\Layouts\API\Values\Layout\Layout;
 use Netgen\Layouts\API\Values\LayoutResolver\RuleGroup;
+use Netgen\Layouts\API\Values\Status;
 use Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\Location as LocationTargetType;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,7 +21,10 @@ use function sprintf;
 
 final class LayoutWizardCallback extends Controller
 {
-    public function __construct(private LayoutService $layoutService, private LayoutResolverService $layoutResolverService) {}
+    public function __construct(
+        private LayoutService $layoutService,
+        private LayoutResolverService $layoutResolverService,
+    ) {}
 
     /**
      * Creates a new 1:1 mapping based on data located in the session.
@@ -45,7 +48,7 @@ final class LayoutWizardCallback extends Controller
 
         $layoutId = Uuid::fromString($wizardData['layout']);
 
-        if (!$this->layoutService->layoutExists($layoutId, Layout::STATUS_PUBLISHED)) {
+        if (!$this->layoutService->layoutExists($layoutId, Status::Published)) {
             return $this->redirectToRoute(
                 UrlAliasGenerator::INTERNAL_CONTENT_VIEW_ROUTE,
                 [

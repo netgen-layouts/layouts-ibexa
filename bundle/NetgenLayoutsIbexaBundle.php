@@ -7,6 +7,7 @@ namespace Netgen\Bundle\LayoutsIbexaBundle;
 use Netgen\Bundle\LayoutsIbexaBundle\DependencyInjection\CompilerPass;
 use Netgen\Bundle\LayoutsIbexaBundle\DependencyInjection\ExtensionPlugin;
 use Netgen\Bundle\LayoutsIbexaBundle\Security\PolicyProvider;
+use Netgen\Layouts\Enterprise\API\Service\RoleService;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -25,9 +26,8 @@ final class NetgenLayoutsIbexaBundle extends Bundle
         $container->addCompilerPass(new CompilerPass\ComponentPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1000);
         $container->addCompilerPass(new CompilerPass\DefaultAppPreviewPass());
         $container->addCompilerPass(new CompilerPass\HttpCache\ConfigureHttpCachePass());
-        $container->addCompilerPass(new CompilerPass\HttpCache\VarnishClientPass());
 
-        if (!interface_exists('Netgen\Layouts\Enterprise\API\Service\RoleService')) {
+        if (!interface_exists(RoleService::class)) {
             /** @var \Ibexa\Bundle\Core\DependencyInjection\IbexaCoreExtension $ibexaCoreExtension */
             $ibexaCoreExtension = $container->getExtension('ibexa');
             $ibexaCoreExtension->addPolicyProvider(new PolicyProvider());

@@ -11,6 +11,7 @@ use Ibexa\Contracts\Core\Repository\SearchService;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Contracts\Core\Repository\Values\Content\LocationQuery;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
 use Ibexa\Contracts\Core\Repository\Values\Content\Search\SearchHit;
 use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
@@ -143,7 +144,7 @@ final class ContentSearchHandler implements QueryTypeHandlerInterface
 
         $criteria = array_filter(
             $criteria,
-            static fn (?Criterion $criterion): bool => $criterion instanceof Criterion,
+            static fn (?CriterionInterface $criterion): bool => $criterion instanceof CriterionInterface,
         );
 
         $locationQuery->filter = new Criterion\LogicalAnd($criteria);

@@ -9,6 +9,7 @@ use Netgen\Layouts\Ibexa\Validator\ContentValidator;
 use Netgen\Layouts\Ibexa\Validator\SiteAccessGroupValidator;
 use Netgen\Layouts\Ibexa\Validator\SiteAccessValidator;
 use Netgen\Layouts\Tests\TestCase\ValidatorFactory as BaseValidatorFactory;
+use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
@@ -21,8 +22,10 @@ final class ValidatorFactory implements ConstraintValidatorFactoryInterface
      */
     private array $validators;
 
-    public function __construct(private TestCase $testCase, private BaseValidatorFactory $baseValidatorFactory)
-    {
+    public function __construct(
+        private TestCase $testCase,
+        private BaseValidatorFactory $baseValidatorFactory,
+    ) {
         $this->validators = [
             'nglayouts_ibexa_site_access' => new SiteAccessValidator(['eng', 'cro']),
             'nglayouts_ibexa_site_access_group' => new SiteAccessGroupValidator(
@@ -32,8 +35,7 @@ final class ValidatorFactory implements ConstraintValidatorFactoryInterface
                 ],
             ),
             'nglayouts_ibexa_content' => new ContentValidator(
-                $this->testCase
-                    ->getMockBuilder(Repository::class)
+                new MockBuilder($this->testCase, Repository::class)
                     ->disableOriginalConstructor()
                     ->getMock(),
             ),

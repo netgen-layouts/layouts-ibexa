@@ -7,6 +7,7 @@ namespace Netgen\Layouts\Ibexa\Collection\QueryType\Handler\Traits;
 use Ibexa\Contracts\Core\Persistence\Content\ObjectState\Handler;
 use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
 use Netgen\Layouts\Ibexa\Parameters\ParameterType as IbexaParameterType;
 use Netgen\Layouts\Parameters\ParameterBuilderInterface;
 use Netgen\Layouts\Parameters\ParameterCollectionInterface;
@@ -55,7 +56,7 @@ trait ObjectStateFilterTrait
     /**
      * Returns the criteria used to filter content by object state.
      */
-    private function getObjectStateFilterCriteria(ParameterCollectionInterface $parameterCollection): ?Criterion
+    private function getObjectStateFilterCriteria(ParameterCollectionInterface $parameterCollection): ?CriterionInterface
     {
         if ($parameterCollection->getParameter('filter_by_object_state')->getValue() !== true) {
             return null;

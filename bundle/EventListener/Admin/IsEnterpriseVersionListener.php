@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace Netgen\Bundle\LayoutsIbexaBundle\EventListener\Admin;
 
 use Netgen\Layouts\Event\CollectViewParametersEvent;
-use Netgen\Layouts\Event\LayoutsEvents;
 use Netgen\Layouts\View\View\LayoutViewInterface;
 use Netgen\Layouts\View\View\RuleViewInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class IsEnterpriseVersionListener implements EventSubscriberInterface
 {
-    public function __construct(private bool $isEnterpriseVersion) {}
+    public function __construct(
+        private bool $isEnterpriseVersion,
+    ) {}
 
     public static function getSubscribedEvents(): array
     {
-        return [LayoutsEvents::BUILD_VIEW => 'onBuildView'];
+        return [CollectViewParametersEvent::class => 'onBuildView'];
     }
 
     /**

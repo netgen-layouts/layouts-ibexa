@@ -21,7 +21,9 @@ use function is_scalar;
  */
 final class LocationValidator extends ConstraintValidator
 {
-    public function __construct(private Repository $repository) {}
+    public function __construct(
+        private Repository $repository,
+    ) {}
 
     public function validate(mixed $value, Constraint $constraint): void
     {

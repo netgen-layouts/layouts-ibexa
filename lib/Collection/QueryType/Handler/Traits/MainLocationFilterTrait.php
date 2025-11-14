@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Layouts\Ibexa\Collection\QueryType\Handler\Traits;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
 use Netgen\Layouts\Parameters\ParameterBuilderInterface;
 use Netgen\Layouts\Parameters\ParameterCollectionInterface;
 use Netgen\Layouts\Parameters\ParameterType;
@@ -31,7 +32,7 @@ trait MainLocationFilterTrait
     /**
      * Returns the criteria used to filter content with main location only.
      */
-    private function getMainLocationFilterCriteria(ParameterCollectionInterface $parameterCollection): ?Criterion
+    private function getMainLocationFilterCriteria(ParameterCollectionInterface $parameterCollection): ?CriterionInterface
     {
         if ($parameterCollection->getParameter('only_main_locations')->getValue() !== true) {
             return null;

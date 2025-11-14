@@ -135,12 +135,12 @@ final class IbexaConfigProviderTest extends TestCase
         self::assertArrayHasKey('view_style_1', $viewTypes);
         self::assertArrayHasKey('view_style_2', $viewTypes);
 
-        self::assertInstanceOf(ViewType::class, $viewTypes['view_style_1']);
+        self::assertContainsOnlyInstancesOf(ViewType::class, $viewTypes);
+
         self::assertSame('view_style_1', $viewTypes['view_style_1']->getIdentifier());
         self::assertSame('View Style 1', $viewTypes['view_style_1']->getName());
         self::assertSame(['param1', 'param2'], $viewTypes['view_style_1']->getValidParameters());
 
-        self::assertInstanceOf(ViewType::class, $viewTypes['view_style_2']);
         self::assertSame('view_style_2', $viewTypes['view_style_2']->getIdentifier());
         self::assertSame('View Style 2', $viewTypes['view_style_2']->getName());
         self::assertNull($viewTypes['view_style_2']->getValidParameters());

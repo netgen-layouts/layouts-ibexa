@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Netgen\Bundle\LayoutsIbexaBundle\EventListener\Admin;
 
 use Netgen\Layouts\Event\CollectViewParametersEvent;
-use Netgen\Layouts\Event\LayoutsEvents;
 use Netgen\Layouts\HttpCache\ClientInterface;
 use Netgen\Layouts\HttpCache\NullClient;
 use Netgen\Layouts\View\View\LayoutViewInterface;
@@ -14,11 +13,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class CacheEnabledListener implements EventSubscriberInterface
 {
-    public function __construct(private ClientInterface $httpCacheClient) {}
+    public function __construct(
+        private ClientInterface $httpCacheClient,
+    ) {}
 
     public static function getSubscribedEvents(): array
     {
-        return [LayoutsEvents::BUILD_VIEW => 'onBuildView'];
+        return [CollectViewParametersEvent::class => 'onBuildView'];
     }
 
     /**

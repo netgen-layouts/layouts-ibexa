@@ -22,7 +22,9 @@ use function is_array;
  */
 final class TagsType extends ParameterType
 {
-    public function __construct(private TagsService $tagsService) {}
+    public function __construct(
+        private TagsService $tagsService,
+    ) {}
 
     public static function getIdentifier(): string
     {
@@ -31,37 +33,36 @@ final class TagsType extends ParameterType
 
     public function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefault('min', null);
-        $optionsResolver->setDefault('max', null);
-        $optionsResolver->setDefault('allow_invalid', false);
+        $optionsResolver
+            ->define('min')
+            ->required()
+            ->default(null)
+            ->allowedTypes('int', 'null')
+            ->allowedValues(static fn (?int $value): bool => $value === null || $value > 0)
+            ->info('It must be a positive integer or null.');
 
-        $optionsResolver->setRequired(['min', 'max', 'allow_invalid']);
+        $optionsResolver
+            ->define('max')
+            ->required()
+            ->default(null)
+            ->allowedTypes('int', 'null')
+            ->allowedValues(static fn (?int $value): bool => $value === null || $value > 0)
+            ->normalize(
+                static fn (Options $options, ?int $value): ?int => match (true) {
+                    $value === null || $options['min'] === null => $value,
+                    $value < $options['min'] => $options['min'],
+                    default => $value,
+                },
+            )->info('It must be a positive integer or null.');
 
-        $optionsResolver->setAllowedTypes('min', ['int', 'null']);
-        $optionsResolver->setAllowedTypes('max', ['int', 'null']);
-        $optionsResolver->setAllowedTypes('allow_invalid', 'bool');
-
-        $optionsResolver->setAllowedValues(
-            'min',
-            static fn (?int $value): bool => $value === null || $value > 0,
-        );
-
-        $optionsResolver->setAllowedValues(
-            'max',
-            static fn (?int $value): bool => $value === null || $value > 0,
-        );
-
-        $optionsResolver->setNormalizer(
-            'max',
-            static fn (Options $options, ?int $value): ?int => match (true) {
-                $value === null || $options['min'] === null => $value,
-                $value < $options['min'] => $options['min'],
-                default => $value,
-            },
-        );
+        $optionsResolver
+            ->define('allow_invalid')
+            ->required()
+            ->default(false)
+            ->allowedTypes('bool');
     }
 
-    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value)
+    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): mixed
     {
         return is_array($value) ? array_map('intval', $value) : $value;
     }
@@ -99,25 +100,21 @@ final class TagsType extends ParameterType
         $options = $parameterDefinition->getOptions();
 
         $constraints = [
-            new Constraints\Type(['type' => 'array']),
+            new Constraints\Type(type: 'list'),
             new Constraints\All(
-                [
-                    'constraints' => [
-                        new Constraints\NotBlank(),
-                        new Constraints\Type(['type' => 'numeric']),
-                        new Constraints\GreaterThan(['value' => 0]),
-                        new IbexaConstraints\Tag(['allowInvalid' => $options['allow_invalid']]),
-                    ],
+                constraints: [
+                    new Constraints\NotBlank(),
+                    new Constraints\Type(type: 'numeric'),
+                    new Constraints\Positive(),
+                    new IbexaConstraints\Tag(allowInvalid: $options['allow_invalid']),
                 ],
             ),
         ];
 
         if ($options['min'] !== null || $options['max'] !== null) {
             $constraints[] = new Constraints\Count(
-                [
-                    'min' => $options['min'],
-                    'max' => $options['max'],
-                ],
+                min: $options['min'],
+                max: $options['max'],
             );
         }
 

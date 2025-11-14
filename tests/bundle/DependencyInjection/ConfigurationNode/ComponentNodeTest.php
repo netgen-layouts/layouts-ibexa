@@ -72,8 +72,6 @@ final class ComponentNodeTest extends ConfigurationNodeTestBase
 
     public function testComponentSettingsWithInvalidDefaultParentLocation(): void
     {
-        self::markTestSkipped('Requires update to matthiasnoback/symfony-config-test');
-
         $config = [
             [
                 'system' => [
@@ -88,15 +86,12 @@ final class ComponentNodeTest extends ConfigurationNodeTestBase
 
         $this->assertConfigurationIsInvalid(
             $config,
-            '/^Invalid type for path "netgen_layouts.system.default.ibexa_component.default_parent_location". Expected "?int(eger)?"?, but got "?string"?\.?$/',
-            true,
+            'Invalid type for path "netgen_layouts.system.default.ibexa_component.default_parent_location". Expected "int", but got "string"',
         );
     }
 
     public function testComponentSettingsWithInvalidParentLocations(): void
     {
-        self::markTestSkipped('Requires update to matthiasnoback/symfony-config-test');
-
         $config = [
             [
                 'system' => [
@@ -111,15 +106,12 @@ final class ComponentNodeTest extends ConfigurationNodeTestBase
 
         $this->assertConfigurationIsInvalid(
             $config,
-            '/^Invalid type for path "netgen_layouts.system.default.ibexa_component.parent_locations". Expected "?array"?, but got "?int(eger)?"?\.?$/',
-            true,
+            'Invalid type for path "netgen_layouts.system.default.ibexa_component.parent_locations". Expected "array", but got "int"',
         );
     }
 
     public function testComponentSettingsWithNonScalarParentLocation(): void
     {
-        self::markTestSkipped('Requires update to matthiasnoback/symfony-config-test');
-
         $config = [
             [
                 'system' => [
@@ -136,8 +128,7 @@ final class ComponentNodeTest extends ConfigurationNodeTestBase
 
         $this->assertConfigurationIsInvalid(
             $config,
-            '/^Invalid type for path "netgen_layouts.system.default.ibexa_component.parent_locations.foo". Expected "?scalar"?, but got "?array"?\.?$/',
-            true,
+            'Invalid type for path "netgen_layouts.system.default.ibexa_component.parent_locations.foo". Expected "scalar", but got "array"',
         );
     }
 }

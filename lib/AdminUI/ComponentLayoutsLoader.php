@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use JsonException;
 use Netgen\Layouts\API\Service\LayoutService;
-use Netgen\Layouts\API\Values\Value;
+use Netgen\Layouts\Persistence\Values\Status;
 use Ramsey\Uuid\Uuid;
 
 use function array_column;
@@ -94,12 +94,12 @@ final class ComponentLayoutsLoader
                     $query->expr()->like('b.definition_identifier', ':definition_identifier'),
                 ),
             )
-            ->setParameter('status', Value::STATUS_PUBLISHED, Types::INTEGER)
+            ->setParameter('status', Status::Published->value, Types::INTEGER)
             ->setParameter('definition_identifier', 'ibexa_component_%', Types::STRING);
 
         $layoutsData = [];
 
-        foreach ($query->execute()->fetchAllAssociative() as $dataRow) {
+        foreach ($query->fetchAllAssociative() as $dataRow) {
             try {
                 $decodedParameters = json_decode($dataRow['parameters'], true, 512, JSON_THROW_ON_ERROR);
             } catch (JsonException) {

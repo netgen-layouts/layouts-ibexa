@@ -11,7 +11,9 @@ use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 
 final class RemoteIdConverter
 {
-    public function __construct(private Repository $repository) {}
+    public function __construct(
+        private Repository $repository,
+    ) {}
 
     public function toLocationId(string $remoteId): ?int
     {
@@ -21,7 +23,7 @@ final class RemoteIdConverter
                 fn (): Location => $this->repository->getLocationService()->loadLocationByRemoteId($remoteId),
             );
 
-            return (int) $location->id;
+            return $location->id;
         } catch (NotFoundException) {
             return null;
         }

@@ -24,21 +24,21 @@ abstract class ConfigurationNodeTestBase extends TestCase
      * Default configs here are used because config test library can't test against
      * two or more config tree parts.
      */
-    private const DEFAULT_CONFIG = [
+    private const array DEFAULT_CONFIG = [
         'view' => [],
         'design' => 'standard',
     ];
 
-    private const DEFAULT_SYSTEM_CONFIG = [
+    private const array DEFAULT_SYSTEM_CONFIG = [
         'view' => [],
         'design' => 'standard',
     ];
 
-    protected NetgenLayoutsExtension $extension;
+    final protected NetgenLayoutsExtension $extension;
 
-    protected ExtensionPlugin $plugin;
+    final protected ExtensionPlugin $plugin;
 
-    protected PartialProcessor $partialProcessor;
+    final protected PartialProcessor $partialProcessor;
 
     protected function setUp(): void
     {

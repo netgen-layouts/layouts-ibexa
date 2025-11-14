@@ -10,7 +10,7 @@ use Netgen\Layouts\Parameters\ParameterType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-use function array_values;
+use function array_first;
 use function is_array;
 
 /**
@@ -25,16 +25,20 @@ final class ObjectStateType extends ParameterType
 
     public function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefault('multiple', false);
-        $optionsResolver->setDefault('states', []);
+        $optionsResolver
+            ->define('multiple')
+            ->required()
+            ->default(false)
+            ->allowedTypes('bool');
 
-        $optionsResolver->setRequired(['multiple', 'states']);
-
-        $optionsResolver->setAllowedTypes('multiple', 'bool');
-        $optionsResolver->setAllowedTypes('states', 'array');
+        $optionsResolver
+            ->define('states')
+            ->required()
+            ->default([])
+            ->allowedTypes('array');
     }
 
-    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value)
+    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): mixed
     {
         if ($value === null || $value === []) {
             return null;
@@ -44,7 +48,7 @@ final class ObjectStateType extends ParameterType
             return is_array($value) ? $value : [$value];
         }
 
-        return is_array($value) ? array_values($value)[0] : $value;
+        return is_array($value) ? array_first($value) : $value;
     }
 
     public function isValueEmpty(ParameterDefinition $parameterDefinition, mixed $value): bool
@@ -57,8 +61,8 @@ final class ObjectStateType extends ParameterType
         $options = $parameterDefinition->getOptions();
 
         $objectStateConstraints = [
-            new Constraints\Type(['type' => 'string']),
-            new IbexaConstraints\ObjectState(['allowedStates' => $parameterDefinition->getOption('states')]),
+            new Constraints\Type(type: 'string'),
+            new IbexaConstraints\ObjectState(allowedStates: $parameterDefinition->getOption('states')),
         ];
 
         if ($options['multiple'] === false) {
@@ -66,11 +70,9 @@ final class ObjectStateType extends ParameterType
         }
 
         return [
-            new Constraints\Type(['type' => 'array']),
+            new Constraints\Type(type: 'list'),
             new Constraints\All(
-                [
-                    'constraints' => $objectStateConstraints,
-                ],
+                constraints: $objectStateConstraints,
             ),
         ];
     }

@@ -55,7 +55,7 @@ final class RepositoryAccessVoterTest extends TestCase
                 ->method('decide')
                 ->with(
                     self::identicalTo($token),
-                    self::isType('array'),
+                    self::isArray(),
                     self::isNull(),
                 )->willReturnCallback(
                     static fn (TokenInterface $token, array $attributes) => $repoAccess[$attributes[0]->function],

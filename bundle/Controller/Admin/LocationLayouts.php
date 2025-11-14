@@ -96,13 +96,13 @@ final class LocationLayouts extends Controller
         $target = $rule->getTargets()[0];
 
         if ($target->getTargetType()::getType() === 'ibexa_location') {
-            if ((int) $target->getValue() === (int) $location->id) {
+            if ((int) $target->getValue() === $location->id) {
                 return true;
             }
         }
 
         if ($target->getTargetType()::getType() === 'ibexa_content') {
-            if ((int) $target->getValue() === (int) $location->contentId) {
+            if ((int) $target->getValue() === $location->contentId) {
                 return true;
             }
         }

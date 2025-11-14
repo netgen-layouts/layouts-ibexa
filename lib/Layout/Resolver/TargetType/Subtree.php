@@ -12,6 +12,8 @@ use Netgen\Layouts\Layout\Resolver\ValueObjectProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
 
+use function array_map;
+
 final class Subtree extends TargetType implements ValueObjectProviderInterface
 {
     public function __construct(
@@ -29,9 +31,9 @@ final class Subtree extends TargetType implements ValueObjectProviderInterface
     {
         return [
             new Constraints\NotBlank(),
-            new Constraints\Type(['type' => 'numeric']),
-            new Constraints\GreaterThanOrEqual(['value' => 0]),
-            new IbexaConstraints\Location(['allowInvalid' => true]),
+            new Constraints\Type(type: 'numeric'),
+            new Constraints\PositiveOrZero(),
+            new IbexaConstraints\Location(allowInvalid: true),
         ];
     }
 
@@ -40,7 +42,13 @@ final class Subtree extends TargetType implements ValueObjectProviderInterface
      */
     public function provideValue(Request $request): ?array
     {
-        return $this->contentExtractor->extractLocation($request)?->path;
+        $path = $this->contentExtractor->extractLocation($request)?->path;
+
+        if ($path === null) {
+            return null;
+        }
+
+        return array_map('intval', $path);
     }
 
     public function getValueObject(mixed $value): ?object

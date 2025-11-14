@@ -32,7 +32,7 @@ final class ContentValidatorTest extends ValidatorTestCase
     {
         parent::setUp();
 
-        $this->constraint = new Content(['allowedTypes' => ['user']]);
+        $this->constraint = new Content(allowedTypes: ['user']);
     }
 
     public function testValidateValid(): void

@@ -1,4 +1,4 @@
-{% if app.request.attributes.get('_route') starts with 'nglayouts_admin' %}
+{% if app.current_route starts with 'nglayouts_admin' %}
     {{ include('@NetgenLayoutsAdmin/admin/stylesheets.html.twig') }}
 {% endif %}
 

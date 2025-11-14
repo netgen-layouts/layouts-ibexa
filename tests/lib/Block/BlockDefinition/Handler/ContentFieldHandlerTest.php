@@ -28,11 +28,6 @@ final class ContentFieldHandlerTest extends TestCase
         $this->handler = new ContentFieldHandler($this->contentProviderMock);
     }
 
-    public function testIsContextual(): void
-    {
-        self::assertTrue($this->handler->isContextual(new Block()));
-    }
-
     public function testGetDynamicParameters(): void
     {
         $content = new Content();

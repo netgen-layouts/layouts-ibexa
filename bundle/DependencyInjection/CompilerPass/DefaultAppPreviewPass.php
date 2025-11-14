@@ -7,8 +7,6 @@ namespace Netgen\Bundle\LayoutsIbexaBundle\DependencyInjection\CompilerPass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-use function is_array;
-
 final class DefaultAppPreviewPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
@@ -59,7 +57,7 @@ final class DefaultAppPreviewPass implements CompilerPassInterface
      */
     private function addDefaultPreviewRule(?array $scopeRules, array $defaultRule): array
     {
-        $scopeRules = is_array($scopeRules) ? $scopeRules : [];
+        $scopeRules = $scopeRules ?? [];
 
         $layoutsRules = $scopeRules['nglayouts_app_preview'] ?? [];
 

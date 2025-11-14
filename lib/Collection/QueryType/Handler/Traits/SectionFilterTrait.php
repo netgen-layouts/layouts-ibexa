@@ -7,6 +7,7 @@ namespace Netgen\Layouts\Ibexa\Collection\QueryType\Handler\Traits;
 use Ibexa\Contracts\Core\Persistence\Content\Section\Handler;
 use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
 use Netgen\Layouts\Ibexa\Parameters\ParameterType as IbexaParameterType;
 use Netgen\Layouts\Parameters\ParameterBuilderInterface;
 use Netgen\Layouts\Parameters\ParameterCollectionInterface;
@@ -54,7 +55,7 @@ trait SectionFilterTrait
     /**
      * Returns the criteria used to filter content by section.
      */
-    private function getSectionFilterCriteria(ParameterCollectionInterface $parameterCollection): ?Criterion
+    private function getSectionFilterCriteria(ParameterCollectionInterface $parameterCollection): ?CriterionInterface
     {
         if ($parameterCollection->getParameter('filter_by_section')->getValue() !== true) {
             return null;

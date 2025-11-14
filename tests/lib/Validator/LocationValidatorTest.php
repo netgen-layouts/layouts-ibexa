@@ -30,7 +30,7 @@ final class LocationValidatorTest extends ValidatorTestCase
     {
         parent::setUp();
 
-        $this->constraint = new Location(['allowedTypes' => ['user']]);
+        $this->constraint = new Location(allowedTypes: ['user']);
     }
 
     public function testValidateValid(): void

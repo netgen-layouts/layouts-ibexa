@@ -19,7 +19,10 @@ use Symfony\Component\Validator\Constraints;
  */
 final class ContentType extends ParameterType implements ValueObjectProviderInterface
 {
-    public function __construct(private Repository $repository, private ValueObjectProviderInterface $valueObjectProvider) {}
+    public function __construct(
+        private Repository $repository,
+        private ValueObjectProviderInterface $valueObjectProvider,
+    ) {}
 
     public static function getIdentifier(): string
     {
@@ -28,13 +31,17 @@ final class ContentType extends ParameterType implements ValueObjectProviderInte
 
     public function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setRequired(['allow_invalid', 'allowed_types']);
+        $optionsResolver
+            ->define('allow_invalid')
+            ->required()
+            ->default(false)
+            ->allowedTypes('bool');
 
-        $optionsResolver->setDefault('allow_invalid', false);
-        $optionsResolver->setDefault('allowed_types', []);
-
-        $optionsResolver->setAllowedTypes('allow_invalid', 'bool');
-        $optionsResolver->setAllowedTypes('allowed_types', 'string[]');
+        $optionsResolver
+            ->define('allowed_types')
+            ->required()
+            ->default([])
+            ->allowedTypes('string[]');
     }
 
     public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): ?int
@@ -64,7 +71,7 @@ final class ContentType extends ParameterType implements ValueObjectProviderInte
                 fn (): ContentInfo => $this->repository->getContentService()->loadContentInfoByRemoteId((string) $value),
             );
 
-            return (int) $contentInfo->id;
+            return $contentInfo->id;
         } catch (NotFoundException) {
             return null;
         }
@@ -80,13 +87,11 @@ final class ContentType extends ParameterType implements ValueObjectProviderInte
         $options = $parameterDefinition->getOptions();
 
         return [
-            new Constraints\Type(['type' => 'numeric']),
-            new Constraints\GreaterThan(['value' => 0]),
+            new Constraints\Type(type: 'numeric'),
+            new Constraints\Positive(),
             new IbexaConstraints\Content(
-                [
-                    'allowInvalid' => $options['allow_invalid'],
-                    'allowedTypes' => $options['allowed_types'],
-                ],
+                allowedTypes: $options['allowed_types'],
+                allowInvalid: $options['allow_invalid'],
             ),
         ];
     }

@@ -31,7 +31,7 @@ final class ContentValueConverter implements ValueConverterInterface
 
     public function getId(object $object): int
     {
-        return (int) $object->id;
+        return $object->id;
     }
 
     public function getRemoteId(object $object): string

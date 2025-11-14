@@ -6,6 +6,7 @@ namespace Netgen\Layouts\Ibexa\Collection\QueryType\Handler\Traits;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
 use Netgen\Layouts\Parameters\ParameterBuilderInterface;
 use Netgen\Layouts\Parameters\ParameterCollectionInterface;
 use Netgen\Layouts\Parameters\ParameterType;
@@ -32,7 +33,7 @@ trait CurrentLocationFilterTrait
     /**
      * Returns the criteria used to filter content by excluding the currently displayed location.
      */
-    private function getCurrentLocationFilterCriteria(ParameterCollectionInterface $parameterCollection, Location $location): ?Criterion
+    private function getCurrentLocationFilterCriteria(ParameterCollectionInterface $parameterCollection, Location $location): ?CriterionInterface
     {
         if ($parameterCollection->getParameter('exclude_current_location')->getValue() !== true) {
             return null;

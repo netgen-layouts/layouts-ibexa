@@ -15,15 +15,13 @@ use function is_array;
 
 final class ObjectStateType extends AbstractType
 {
-    public function __construct(private ObjectStateService $objectStateService) {}
+    public function __construct(
+        private ObjectStateService $objectStateService,
+    ) {}
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('translation_domain', 'nglayouts_forms');
-
-        $resolver->setDefault('states', []);
-        $resolver->setRequired(['states']);
-        $resolver->setAllowedTypes('states', 'array');
 
         $resolver->setDefault(
             'choices',
@@ -31,6 +29,12 @@ final class ObjectStateType extends AbstractType
         );
 
         $resolver->setDefault('choice_translation_domain', false);
+
+        $resolver
+            ->define('states')
+            ->required()
+            ->default([])
+            ->allowedTypes('array');
     }
 
     public function getParent(): string

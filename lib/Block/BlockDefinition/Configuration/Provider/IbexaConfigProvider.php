@@ -19,9 +19,9 @@ use function array_values;
 use function in_array;
 use function is_array;
 use function mb_strtolower;
+use function mb_trim;
 use function preg_replace;
 use function sort;
-use function trim;
 use function ucwords;
 
 final class IbexaConfigProvider implements ConfigProviderInterface
@@ -131,6 +131,6 @@ final class IbexaConfigProvider implements ConfigProviderInterface
      */
     private function humanize(string $text): string
     {
-        return ucwords(mb_strtolower(trim(preg_replace(['/([A-Z])/', '/[_\s]+/'], ['_$1', ' '], $text) ?? '')));
+        return ucwords(mb_strtolower(mb_trim(preg_replace(['/([A-Z])/', '/[_\s]+/'], ['_$1', ' '], $text) ?? '')));
     }
 }

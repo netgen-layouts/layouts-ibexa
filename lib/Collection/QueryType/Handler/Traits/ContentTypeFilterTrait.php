@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Layouts\Ibexa\Collection\QueryType\Handler\Traits;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
 use Netgen\Layouts\Ibexa\Parameters\ParameterType as IbexaParameterType;
 use Netgen\Layouts\Parameters\ParameterBuilderInterface;
 use Netgen\Layouts\Parameters\ParameterCollectionInterface;
@@ -55,7 +56,7 @@ trait ContentTypeFilterTrait
     /**
      * Returns the criteria used to filter content by content type.
      */
-    private function getContentTypeFilterCriteria(ParameterCollectionInterface $parameterCollection): ?Criterion
+    private function getContentTypeFilterCriteria(ParameterCollectionInterface $parameterCollection): ?CriterionInterface
     {
         if ($parameterCollection->getParameter('filter_by_content_type')->getValue() !== true) {
             return null;

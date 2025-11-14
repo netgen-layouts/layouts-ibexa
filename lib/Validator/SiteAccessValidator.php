@@ -20,7 +20,9 @@ final class SiteAccessValidator extends ConstraintValidator
     /**
      * @param string[] $siteAccessList
      */
-    public function __construct(private array $siteAccessList) {}
+    public function __construct(
+        private array $siteAccessList,
+    ) {}
 
     public function validate(mixed $value, Constraint $constraint): void
     {
