@@ -138,12 +138,18 @@ final class SectionTypeTest extends TestCase
                 [
                     'multiple' => 'true',
                 ],
+            ],
+            [
                 [
                     'undefined_value' => 'Value',
                 ],
+            ],
+            [
                 [
                     'sections' => 42,
                 ],
+            ],
+            [
                 [
                     'sections' => [42],
                 ],

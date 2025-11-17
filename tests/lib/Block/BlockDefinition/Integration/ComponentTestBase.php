@@ -65,18 +65,26 @@ abstract class ComponentTestBase extends BlockTestCase
         return [
             [
                 [],
+            ],
+            [
                 [
                     'content_type_identifier' => null,
                     'content' => null,
                 ],
+            ],
+            [
                 [
                     'content_type_identifier' => '',
                     'content' => null,
                 ],
+            ],
+            [
                 [
                     'content_type_identifier' => 42,
                     'content' => null,
                 ],
+            ],
+            [
                 [
                     'content_type_identifier' => null,
                     'content' => '42',

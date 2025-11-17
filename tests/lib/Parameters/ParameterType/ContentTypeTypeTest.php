@@ -138,6 +138,8 @@ final class ContentTypeTypeTest extends TestCase
                 [
                     'multiple' => 'true',
                 ],
+            ],
+            [
                 [
                     'undefined_value' => 'Value',
                 ],

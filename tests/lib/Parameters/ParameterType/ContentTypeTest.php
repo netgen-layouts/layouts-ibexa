@@ -163,21 +163,33 @@ final class ContentTypeTest extends TestCase
                 [
                     'allow_invalid' => 'false',
                 ],
+            ],
+            [
                 [
                     'allow_invalid' => 'true',
                 ],
+            ],
+            [
                 [
                     'allow_invalid' => 0,
                 ],
+            ],
+            [
                 [
                     'allow_invalid' => 1,
                 ],
+            ],
+            [
                 [
                     'allowed_types' => 'image',
                 ],
+            ],
+            [
                 [
                     'allowed_types' => [42],
                 ],
+            ],
+            [
                 [
                     'undefined_value' => 'Value',
                 ],

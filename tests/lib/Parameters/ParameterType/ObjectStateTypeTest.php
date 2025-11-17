@@ -138,6 +138,8 @@ final class ObjectStateTypeTest extends TestCase
                 [
                     'multiple' => 'true',
                 ],
+            ],
+            [
                 [
                     'undefined_value' => 'Value',
                 ],

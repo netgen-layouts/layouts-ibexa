@@ -169,33 +169,53 @@ final class TagsTypeTest extends TestCase
                 [
                     'min' => '0',
                 ],
+            ],
+            [
                 [
                     'min' => -5,
                 ],
+            ],
+            [
                 [
                     'min' => 0,
                 ],
+            ],
+            [
                 [
                     'max' => '0',
                 ],
+            ],
+            [
                 [
                     'max' => -5,
                 ],
+            ],
+            [
                 [
                     'max' => 0,
                 ],
+            ],
+            [
                 [
                     'allow_invalid' => 'false',
                 ],
+            ],
+            [
                 [
                     'allow_invalid' => 'true',
                 ],
+            ],
+            [
                 [
                     'allow_invalid' => 0,
                 ],
+            ],
+            [
                 [
                     'allow_invalid' => 1,
                 ],
+            ],
+            [
                 [
                     'undefined_value' => 'Value',
                 ],
