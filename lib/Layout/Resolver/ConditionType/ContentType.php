@@ -30,7 +30,7 @@ final class ContentType extends ConditionType
     {
         return [
             new Constraints\NotBlank(),
-            new Constraints\Type(type: 'list'),
+            new Constraints\Type(type: 'array'),
             new Constraints\All(
                 constraints: [
                     new Constraints\Type(type: 'string'),

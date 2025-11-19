@@ -70,7 +70,7 @@ final class SectionType extends ParameterType
         }
 
         return [
-            new Constraints\Type(type: 'list'),
+            new Constraints\Type(type: 'array'),
             new Constraints\All(
                 constraints: $sectionConstraints,
             ),
