@@ -20,14 +20,6 @@ trait SectionFilterTrait
     private Handler $sectionHandler;
 
     /**
-     * Sets the section handler used by the trait.
-     */
-    private function setSectionHandler(Handler $handler): void
-    {
-        $this->sectionHandler = $handler;
-    }
-
-    /**
      * Builds the parameters for filtering by sections.
      *
      * @param string[] $groups

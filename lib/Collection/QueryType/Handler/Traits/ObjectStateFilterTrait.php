@@ -21,14 +21,6 @@ trait ObjectStateFilterTrait
     private Handler $objectStateHandler;
 
     /**
-     * Sets the objectState handler used by the trait.
-     */
-    private function setObjectStateHandler(Handler $handler): void
-    {
-        $this->objectStateHandler = $handler;
-    }
-
-    /**
      * Builds the parameters for filtering by object states.
      *
      * @param string[] $groups

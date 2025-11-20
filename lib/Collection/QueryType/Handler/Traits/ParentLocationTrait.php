@@ -20,22 +20,6 @@ trait ParentLocationTrait
     private LocationService $locationService;
 
     /**
-     * Sets the content provider used by the trait.
-     */
-    private function setContentProvider(ContentProviderInterface $contentProvider): void
-    {
-        $this->contentProvider = $contentProvider;
-    }
-
-    /**
-     * Sets the location service used by the trait.
-     */
-    private function setLocationService(LocationService $locationService): void
-    {
-        $this->locationService = $locationService;
-    }
-
-    /**
      * Builds the parameters for filtering by parent location.
      *
      * @param string[] $groups

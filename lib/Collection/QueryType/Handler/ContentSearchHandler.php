@@ -48,10 +48,10 @@ final class ContentSearchHandler implements QueryTypeHandlerInterface
         private SearchService $searchService,
         private ConfigResolverInterface $configResolver,
     ) {
-        $this->setSectionHandler($sectionHandler);
-        $this->setObjectStateHandler($objectStateHandler);
-        $this->setContentProvider($contentProvider);
-        $this->setLocationService($locationService);
+        $this->sectionHandler = $sectionHandler;
+        $this->objectStateHandler = $objectStateHandler;
+        $this->contentProvider = $contentProvider;
+        $this->locationService = $locationService;
     }
 
     public function buildParameters(ParameterBuilderInterface $builder): void
