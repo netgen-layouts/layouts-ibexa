@@ -56,18 +56,4 @@ final class LocationValueUrlGeneratorTest extends TestCase
 
         self::assertSame('/admin/location/path', $this->urlGenerator->generateAdminUrl($location));
     }
-
-    public function testGenerate(): void
-    {
-        $this->urlGeneratorMock
-            ->expects(self::once())
-            ->method('generate')
-            ->with(
-                self::identicalTo(UrlAliasRouter::URL_ALIAS_ROUTE_NAME),
-                self::identicalTo(['locationId' => 42]),
-            )
-            ->willReturn('/location/path');
-
-        self::assertSame('/location/path', $this->urlGenerator->generate(new Location(['id' => 42])));
-    }
 }
