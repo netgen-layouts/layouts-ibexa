@@ -11,8 +11,8 @@
     ],
     "require": {
         "php": "^8.4",
-        "netgen/layouts-core": "~1.4.9",
-        "netgen/content-browser-ibexa": "^1.4",
+        "netgen/layouts-core": "~2.0.0",
+        "netgen/content-browser-ibexa": "^2.0",
         "ibexa/core": "^5.0",
         "ibexa/admin-ui": "^5.0",
         "ibexa/http-cache": "^5.0",
@@ -59,7 +59,7 @@
     "prefer-stable": true,
     "extra": {
         "branch-alias": {
-            "dev-master": "1.4.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     }
 }
