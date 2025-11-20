@@ -12,31 +12,25 @@ use Ibexa\Core\Repository\Values\Content\Location;
 use Ibexa\Core\Repository\Values\Content\VersionInfo;
 use Netgen\Layouts\Ibexa\Item\ValueConverter\ContentValueConverter;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ContentValueConverter::class)]
 final class ContentValueConverterTest extends TestCase
 {
-    private MockObject&LocationService $locationServiceMock;
-
-    private MockObject&ContentService $contentServiceMock;
-
     private ContentValueConverter $valueConverter;
 
     protected function setUp(): void
     {
-        $this->locationServiceMock = $this->createMock(LocationService::class);
-        $this->contentServiceMock = $this->createMock(ContentService::class);
-
-        $this->locationServiceMock
+        $locationServiceMock = $this->createMock(LocationService::class);
+        $locationServiceMock
             ->method('loadLocation')
             ->with(self::isInt())
             ->willReturnCallback(
                 static fn ($id): Location => new Location(['id' => $id, 'invisible' => false]),
             );
 
-        $this->contentServiceMock
+        $contentServiceMock = $this->createMock(ContentService::class);
+        $contentServiceMock
             ->method('loadContentByContentInfo')
             ->with(self::isInstanceOf(ContentInfo::class))
             ->willReturn(
@@ -53,8 +47,8 @@ final class ContentValueConverterTest extends TestCase
             );
 
         $this->valueConverter = new ContentValueConverter(
-            $this->locationServiceMock,
-            $this->contentServiceMock,
+            $locationServiceMock,
+            $contentServiceMock,
         );
     }
 

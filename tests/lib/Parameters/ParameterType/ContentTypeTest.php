@@ -36,12 +36,20 @@ final class ContentTypeTest extends TestCase
 
     private MockObject&ContentService $contentServiceMock;
 
-    private MockObject&ContentTypeService $contentTypeServiceMock;
-
     protected function setUp(): void
     {
         $this->contentServiceMock = $this->createMock(ContentService::class);
-        $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
+
+        $contentTypeServiceMock = $this->createMock(ContentTypeService::class);
+        $contentTypeServiceMock
+            ->method('loadContentType')
+            ->willReturnCallback(
+                static fn (int $type): IbexaContentType => match ($type) {
+                    24 => new IbexaContentType(['identifier' => 'user']),
+                    42 => new IbexaContentType(['identifier' => 'image']),
+                    default => new IbexaContentType(['identifier' => 'article']),
+                },
+            );
 
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentService', 'getContentTypeService']);
         $this->valueObjectProviderMock = $this->createMock(ValueObjectProviderInterface::class);
@@ -59,17 +67,7 @@ final class ContentTypeTest extends TestCase
 
         $this->repositoryMock
             ->method('getContentTypeService')
-            ->willReturn($this->contentTypeServiceMock);
-
-        $this->contentTypeServiceMock
-            ->method('loadContentType')
-            ->willReturnCallback(
-                static fn (int $type): IbexaContentType => match ($type) {
-                    24 => new IbexaContentType(['identifier' => 'user']),
-                    42 => new IbexaContentType(['identifier' => 'image']),
-                    default => new IbexaContentType(['identifier' => 'article']),
-                },
-            );
+            ->willReturn($contentTypeServiceMock);
 
         $this->type = new ContentType($this->repositoryMock, $this->valueObjectProviderMock);
     }

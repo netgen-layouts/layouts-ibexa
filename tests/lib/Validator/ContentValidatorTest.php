@@ -26,8 +26,6 @@ final class ContentValidatorTest extends ValidatorTestCase
 
     private MockObject&ContentService $contentServiceMock;
 
-    private MockObject&ContentTypeService $contentTypeServiceMock;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -97,7 +95,15 @@ final class ContentValidatorTest extends ValidatorTestCase
     protected function getValidator(): ConstraintValidatorInterface
     {
         $this->contentServiceMock = $this->createMock(ContentService::class);
-        $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
+
+        $contentTypeServiceMock = $this->createMock(ContentTypeService::class);
+        $contentTypeServiceMock
+            ->method('loadContentType')
+            ->willReturnCallback(
+                static fn (int $type): ContentType => $type === 24 ?
+                    new ContentType(['identifier' => 'user']) :
+                    new ContentType(['identifier' => 'article']),
+            );
 
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentService', 'getContentTypeService']);
 
@@ -114,15 +120,7 @@ final class ContentValidatorTest extends ValidatorTestCase
 
         $this->repositoryMock
             ->method('getContentTypeService')
-            ->willReturn($this->contentTypeServiceMock);
-
-        $this->contentTypeServiceMock
-            ->method('loadContentType')
-            ->willReturnCallback(
-                static fn (int $type): ContentType => $type === 24 ?
-                    new ContentType(['identifier' => 'user']) :
-                    new ContentType(['identifier' => 'article']),
-            );
+            ->willReturn($contentTypeServiceMock);
 
         return new ContentValidator($this->repositoryMock);
     }
