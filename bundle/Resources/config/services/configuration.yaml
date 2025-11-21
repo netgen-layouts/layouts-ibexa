@@ -4,8 +4,6 @@ services:
         arguments:
             - "@ibexa.config.resolver"
             - "@netgen_layouts.configuration.container"
-        lazy: true
 
     netgen_layouts.configuration:
         alias: netgen_layouts.ibexa.configuration.config_resolver
-        public: true

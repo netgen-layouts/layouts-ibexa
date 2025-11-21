@@ -14,10 +14,8 @@ use Netgen\Bundle\LayoutsBundle\Exception\ConfigurationException;
  *
  * This means that the returned values will be the ones defined
  * in the current Ibexa CMS scope of the request.
- *
- * @final
  */
-class ConfigResolverConfiguration implements ConfigurationInterface
+final class ConfigResolverConfiguration implements ConfigurationInterface
 {
     public function __construct(
         private ConfigResolverInterface $configResolver,
