@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints;
 
 use function is_string;
 
-class SemanticPathInfo extends TargetType
+final class SemanticPathInfo extends TargetType
 {
     public static function getType(): string
     {

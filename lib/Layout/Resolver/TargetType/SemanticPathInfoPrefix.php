@@ -4,10 +4,40 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\Layout\Resolver\TargetType;
 
-final class SemanticPathInfoPrefix extends SemanticPathInfo
+use Netgen\Layouts\Layout\Resolver\TargetType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints;
+
+use function is_string;
+
+final class SemanticPathInfoPrefix extends TargetType
 {
     public static function getType(): string
     {
         return 'ibexa_semantic_path_info_prefix';
+    }
+
+    public function getConstraints(): array
+    {
+        return [
+            new Constraints\NotBlank(),
+            new Constraints\Type(type: 'string'),
+        ];
+    }
+
+    public function provideValue(Request $request): ?string
+    {
+        if (!$request->attributes->has('semanticPathinfo')) {
+            return null;
+        }
+
+        // Semantic path info can in some cases be false (for example, on homepage
+        // of a secondary siteaccess: i.e. /cro)
+        $semanticPathInfo = $request->attributes->get('semanticPathinfo');
+        if (!is_string($semanticPathInfo) || $semanticPathInfo === '') {
+            $semanticPathInfo = '/';
+        }
+
+        return $semanticPathInfo;
     }
 }
