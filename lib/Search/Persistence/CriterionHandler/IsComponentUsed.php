@@ -13,7 +13,7 @@ use Ibexa\Core\Search\Legacy\Content\Common\Gateway\CriterionHandler;
 use Netgen\Layouts\Ibexa\Search\Contracts\Criterion;
 use Netgen\Layouts\Persistence\Values\Status;
 
-class IsComponentUsed extends CriterionHandler
+final class IsComponentUsed extends CriterionHandler
 {
     public function accept(CriterionInterface $criterion): bool
     {
