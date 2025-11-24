@@ -26,5 +26,7 @@ services:
 
     netgen_layouts.ibexa.layout_resolver.target_handler.doctrine.semantic_path_info_prefix:
         class: Netgen\Layouts\Layout\Resolver\TargetHandler\Doctrine\RoutePrefix
+        arguments:
+            - "@database_connection"
         tags:
             - { name: netgen_layouts.target_type.doctrine_handler, target_type: ibexa_semantic_path_info_prefix }
