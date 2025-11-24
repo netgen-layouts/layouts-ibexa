@@ -21,7 +21,9 @@ final class ComponentNode implements ConfigurationNodeInterface
                     ->defaultValue(2)
                 ->end()
                 ->arrayNode('parent_locations')
-                    ->prototype('scalar')->end()
+                    ->scalarPrototype()
+                        ->cannotBeEmpty()
+                    ->end()
                 ->end()
             ->end();
 
