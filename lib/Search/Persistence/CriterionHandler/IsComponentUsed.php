@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\Search\Persistence\CriterionHandler;
 
-use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Types\Types;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
@@ -28,7 +27,7 @@ final class IsComponentUsed extends CriterionHandler
         QueryBuilder $queryBuilder,
         CriterionInterface $criterion,
         array $languageSettings,
-    ): CompositeExpression|string {
+    ): string {
         $subSelect = $this->connection->createQueryBuilder();
         $subSelect
             ->select('DISTINCT JSON_UNQUOTE(JSON_EXTRACT(parameters, "$.content"))')
