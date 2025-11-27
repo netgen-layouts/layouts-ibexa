@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\LayoutsIbexaBundle\EventListener\Admin;
 
 use Netgen\Layouts\Event\CollectViewParametersEvent;
+use Netgen\Layouts\Event\LayoutsEvents;
 use Netgen\Layouts\HttpCache\ClientInterface;
 use Netgen\Layouts\HttpCache\NullClient;
 use Netgen\Layouts\View\View\LayoutViewInterface;
@@ -19,7 +20,10 @@ final class CacheEnabledListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return [CollectViewParametersEvent::class => 'onBuildView'];
+        return [
+            sprintf('%s.%s', LayoutsEvents::BUILD_VIEW, 'layout') => 'onBuildView',
+            sprintf('%s.%s', LayoutsEvents::BUILD_VIEW, 'rule') => 'onBuildView',
+        ];
     }
 
     /**
