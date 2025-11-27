@@ -47,7 +47,7 @@
 
         {% if can_edit %}
             <div class="layout-actions">
-                <a href="{{ macros.layout_path(rule.layout.id.toString) }}" class="btn btn-primary btn-sm js-open-ngl" data-value-id="{{location.id}}" data-value-type="ibexa_location">{{ 'layouts.edit_layout'|trans }}</a>
+                <a href="{{ macros.layout_path(rule.layout.id.toString) }}" class="btn btn-primary btn-sm js-open-ngl" data-value-id="{{ location.id }}" data-value-type="ibexa_location">{{ 'layouts.edit_layout'|trans }}</a>
             </div>
         {% endif %}
 
