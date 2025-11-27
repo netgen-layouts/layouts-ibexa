@@ -58,7 +58,7 @@ final class ContentTypeType extends ParameterType
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->getOptions();
+        $options = $parameterDefinition->options;
 
         $contentTypeConstraints = [
             new Constraints\Type(type: 'string'),

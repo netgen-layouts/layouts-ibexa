@@ -97,7 +97,7 @@ final class TagsType extends ParameterType
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->getOptions();
+        $options = $parameterDefinition->options;
 
         $constraints = [
             new Constraints\Type(type: 'array'),

@@ -34,7 +34,7 @@ trait MainLocationFilterTrait
      */
     private function getMainLocationFilterCriteria(ParameterCollectionInterface $parameterCollection): ?CriterionInterface
     {
-        if ($parameterCollection->getParameter('only_main_locations')->getValue() !== true) {
+        if ($parameterCollection->getParameter('only_main_locations')->value !== true) {
             return null;
         }
 

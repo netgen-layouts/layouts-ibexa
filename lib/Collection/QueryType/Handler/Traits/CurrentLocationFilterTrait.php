@@ -35,7 +35,7 @@ trait CurrentLocationFilterTrait
      */
     private function getCurrentLocationFilterCriteria(ParameterCollectionInterface $parameterCollection, Location $location): ?CriterionInterface
     {
-        if ($parameterCollection->getParameter('exclude_current_location')->getValue() !== true) {
+        if ($parameterCollection->getParameter('exclude_current_location')->value !== true) {
             return null;
         }
 

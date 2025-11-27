@@ -9,6 +9,7 @@ use Netgen\Layouts\API\Values\Block\Block;
 use Netgen\Layouts\Block\BlockDefinition\Configuration\ViewType;
 use Netgen\Layouts\Ibexa\Block\BlockDefinition\Configuration\Provider\IbexaConfigProvider;
 use Netgen\Layouts\Parameters\Parameter;
+use Netgen\Layouts\Parameters\ParameterList;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -42,13 +43,15 @@ final class IbexaConfigProviderTest extends TestCase
         $block = Block::fromArray(
             [
                 'id' => $blockUuid,
-                'parameters' => [
-                    'content_type_identifier' => Parameter::fromArray(
-                        [
-                            'value' => 'foo',
-                        ],
-                    ),
-                ],
+                'parameters' => new ParameterList(
+                    [
+                        'content_type_identifier' => Parameter::fromArray(
+                            [
+                                'value' => 'foo',
+                            ],
+                        ),
+                    ],
+                ),
             ],
         );
 
@@ -137,13 +140,13 @@ final class IbexaConfigProviderTest extends TestCase
 
         self::assertContainsOnlyInstancesOf(ViewType::class, $viewTypes);
 
-        self::assertSame('view_style_1', $viewTypes['view_style_1']->getIdentifier());
-        self::assertSame('View Style 1', $viewTypes['view_style_1']->getName());
-        self::assertSame(['param1', 'param2'], $viewTypes['view_style_1']->getValidParameters());
+        self::assertSame('view_style_1', $viewTypes['view_style_1']->identifier);
+        self::assertSame('View Style 1', $viewTypes['view_style_1']->name);
+        self::assertSame(['param1', 'param2'], $viewTypes['view_style_1']->validParameters);
 
-        self::assertSame('view_style_2', $viewTypes['view_style_2']->getIdentifier());
-        self::assertSame('View Style 2', $viewTypes['view_style_2']->getName());
-        self::assertNull($viewTypes['view_style_2']->getValidParameters());
+        self::assertSame('view_style_2', $viewTypes['view_style_2']->identifier);
+        self::assertSame('View Style 2', $viewTypes['view_style_2']->name);
+        self::assertNull($viewTypes['view_style_2']->validParameters);
     }
 
     public function testProvideViewTypesWithoutBlock(): void

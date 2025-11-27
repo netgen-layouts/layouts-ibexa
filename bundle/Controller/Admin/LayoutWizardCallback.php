@@ -65,12 +65,12 @@ final class LayoutWizardCallback extends Controller
         $groupRules = $this->layoutResolverService->loadRulesFromGroup($ruleGroup, 0, 1)->getRules();
         $subGroups = $this->layoutResolverService->loadRuleGroups($ruleGroup, 0, 1)->getRuleGroups();
 
-        $priority1 = count($groupRules) > 0 ? $groupRules[0]->getPriority() + 10 : 0;
-        $priority2 = count($subGroups) > 0 ? $subGroups[0]->getPriority() + 10 : 0;
+        $priority1 = count($groupRules) > 0 ? $groupRules[0]->priority + 10 : 0;
+        $priority2 = count($subGroups) > 0 ? $subGroups[0]->priority + 10 : 0;
 
         $ruleCreateStruct = $this->layoutResolverService->newRuleCreateStruct();
         $ruleCreateStruct->layoutId = $layoutId;
-        $ruleCreateStruct->enabled = (bool) $wizardData['activate_rule'];
+        $ruleCreateStruct->isEnabled = (bool) $wizardData['activate_rule'];
         $ruleCreateStruct->priority = max($priority1, $priority2);
 
         $rule = $this->layoutResolverService->createRule($ruleCreateStruct, $ruleGroup);

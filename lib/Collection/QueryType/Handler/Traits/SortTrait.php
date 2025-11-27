@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Layouts\Ibexa\Collection\QueryType\Handler\Traits;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
-use Ibexa\Contracts\Core\Repository\Values\Content\LocationQuery;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause;
 use Netgen\Layouts\Parameters\ParameterBuilderInterface;
 use Netgen\Layouts\Parameters\ParameterCollectionInterface;
@@ -63,8 +63,8 @@ trait SortTrait
             [
                 'required' => true,
                 'options' => [
-                    'Descending' => LocationQuery::SORT_DESC,
-                    'Ascending' => LocationQuery::SORT_ASC,
+                    'Descending' => Query::SORT_DESC,
+                    'Ascending' => Query::SORT_ASC,
                 ],
                 'groups' => $groups,
             ],
@@ -78,8 +78,8 @@ trait SortTrait
      */
     private function getSortClauses(ParameterCollectionInterface $parameterCollection, ?Location $parentLocation = null): array
     {
-        $sortType = $parameterCollection->getParameter('sort_type')->getValue() ?? 'default';
-        $sortDirection = $parameterCollection->getParameter('sort_direction')->getValue() ?? LocationQuery::SORT_DESC;
+        $sortType = $parameterCollection->getParameter('sort_type')->value ?? 'default';
+        $sortDirection = $parameterCollection->getParameter('sort_direction')->value ?? Query::SORT_DESC;
 
         if ($sortType === 'defined_by_parent' && $parentLocation !== null) {
             return $parentLocation->getSortClauses();

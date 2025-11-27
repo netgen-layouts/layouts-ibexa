@@ -87,7 +87,7 @@ final class LayoutWizardType extends AbstractType
             [
                 'label' => 'layout_wizard.layout',
                 'choices' => $this->layoutService->loadAllLayouts()->filter(
-                    static fn (Layout $layout): bool => !$layout->isShared(),
+                    static fn (Layout $layout): bool => !$layout->isShared,
                 ),
                 'choice_value' => 'id',
                 'choice_label' => 'name',
@@ -157,7 +157,7 @@ final class LayoutWizardType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         foreach ($this->layoutTypeRegistry->getLayoutTypes(true) as $layoutType) {
-            $formView = $view['layout_type'][$layoutType->getIdentifier()] ?? null;
+            $formView = $view['layout_type'][$layoutType->identifier] ?? null;
 
             if ($formView instanceof FormView) {
                 $formView->vars['layout_type'] = $layoutType;

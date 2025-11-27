@@ -50,11 +50,11 @@ trait ParentLocationTrait
      */
     private function getParentLocation(ParameterCollectionInterface $parameterCollection): ?Location
     {
-        if ($parameterCollection->getParameter('use_current_location')->getValue() === true) {
+        if ($parameterCollection->getParameter('use_current_location')->value === true) {
             return $this->contentProvider->provideLocation();
         }
 
-        $parentLocationId = $parameterCollection->getParameter('parent_location_id')->getValue();
+        $parentLocationId = $parameterCollection->getParameter('parent_location_id')->value;
         if ($parentLocationId === null) {
             return null;
         }

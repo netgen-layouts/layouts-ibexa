@@ -58,18 +58,18 @@ trait ContentTypeFilterTrait
      */
     private function getContentTypeFilterCriteria(ParameterCollectionInterface $parameterCollection): ?CriterionInterface
     {
-        if ($parameterCollection->getParameter('filter_by_content_type')->getValue() !== true) {
+        if ($parameterCollection->getParameter('filter_by_content_type')->value !== true) {
             return null;
         }
 
-        $contentTypes = $parameterCollection->getParameter('content_types')->getValue() ?? [];
+        $contentTypes = $parameterCollection->getParameter('content_types')->value ?? [];
         if (count($contentTypes) === 0) {
             return null;
         }
 
         $contentTypeFilter = new Criterion\ContentTypeIdentifier($contentTypes);
 
-        if ($parameterCollection->getParameter('content_types_filter')->getValue() === 'exclude') {
+        if ($parameterCollection->getParameter('content_types_filter')->value === 'exclude') {
             $contentTypeFilter = new Criterion\LogicalNot($contentTypeFilter);
         }
 

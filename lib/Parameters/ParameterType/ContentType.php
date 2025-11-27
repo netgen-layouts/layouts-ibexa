@@ -84,7 +84,7 @@ final class ContentType extends ParameterType implements ValueObjectProviderInte
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->getOptions();
+        $options = $parameterDefinition->options;
 
         return [
             new Constraints\Type(type: 'numeric'),

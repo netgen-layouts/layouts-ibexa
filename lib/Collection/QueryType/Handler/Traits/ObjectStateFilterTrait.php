@@ -50,11 +50,11 @@ trait ObjectStateFilterTrait
      */
     private function getObjectStateFilterCriteria(ParameterCollectionInterface $parameterCollection): ?CriterionInterface
     {
-        if ($parameterCollection->getParameter('filter_by_object_state')->getValue() !== true) {
+        if ($parameterCollection->getParameter('filter_by_object_state')->value !== true) {
             return null;
         }
 
-        $objectStates = $parameterCollection->getParameter('object_states')->getValue() ?? [];
+        $objectStates = $parameterCollection->getParameter('object_states')->value ?? [];
         if (count($objectStates) === 0) {
             return null;
         }

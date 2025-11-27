@@ -52,7 +52,7 @@ final class LayoutWizard extends Controller
                 $this->copyLayout($form, $form->get('layout')->getData());
 
             $wizardData = [
-                'layout' => $layout->getId()->toString(),
+                'layout' => $layout->id->toString(),
                 'activate_rule' => $form->get('activate_rule')->getData(),
             ];
 
@@ -75,7 +75,7 @@ final class LayoutWizard extends Controller
             $layoutUrl = $this->generateUrl(
                 'nglayouts_app',
                 [
-                    '_fragment' => 'layout/' . $layout->getId()->toString(),
+                    '_fragment' => 'layout/' . $layout->id->toString(),
                 ],
                 UrlGeneratorInterface::ABSOLUTE_URL,
             );

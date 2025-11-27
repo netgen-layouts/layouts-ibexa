@@ -116,7 +116,7 @@ final class ContentSearchHandler implements QueryTypeHandlerInterface
 
     public function isContextual(Query $query): bool
     {
-        return $query->getParameter('use_current_location')->getValue() === true;
+        return $query->getParameter('use_current_location')->value === true;
     }
 
     /**

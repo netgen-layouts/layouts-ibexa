@@ -39,7 +39,7 @@ trait QueryTypeFilterTrait
      */
     private function getQueryTypeFilterCriteria(ParameterCollectionInterface $parameterCollection, Location $parentLocation): ?CriterionInterface
     {
-        if ($parameterCollection->getParameter('query_type')->getValue() !== 'list') {
+        if ($parameterCollection->getParameter('query_type')->value !== 'list') {
             return null;
         }
 

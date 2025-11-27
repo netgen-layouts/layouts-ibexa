@@ -58,7 +58,7 @@ final class ObjectStateType extends ParameterType
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->getOptions();
+        $options = $parameterDefinition->options;
 
         $objectStateConstraints = [
             new Constraints\Type(type: 'string'),

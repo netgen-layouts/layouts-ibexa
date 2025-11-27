@@ -34,7 +34,7 @@ final class LocationLayouts extends Controller
         $rulesOneOnOne = [];
 
         foreach ($rules as $rule) {
-            $rulesOneOnOne[$rule->getId()->toString()] = $this->isRuleOneOnOne($location, $rule);
+            $rulesOneOnOne[$rule->id->toString()] = $this->isRuleOneOnOne($location, $rule);
         }
 
         return $this->render(
@@ -88,21 +88,21 @@ final class LocationLayouts extends Controller
      */
     private function isRuleOneOnOne(Location $location, Rule $rule): bool
     {
-        if ($rule->getTargets()->count() !== 1) {
+        if ($rule->targets->count() !== 1) {
             return false;
         }
 
         /** @var \Netgen\Layouts\API\Values\LayoutResolver\Target $target */
-        $target = $rule->getTargets()[0];
+        $target = $rule->targets[0];
 
-        if ($target->getTargetType()::getType() === 'ibexa_location') {
-            if ((int) $target->getValue() === $location->id) {
+        if ($target->targetType::getType() === 'ibexa_location') {
+            if ((int) $target->value === $location->id) {
                 return true;
             }
         }
 
-        if ($target->getTargetType()::getType() === 'ibexa_content') {
-            if ((int) $target->getValue() === $location->contentId) {
+        if ($target->targetType::getType() === 'ibexa_content') {
+            if ((int) $target->value === $location->contentId) {
                 return true;
             }
         }

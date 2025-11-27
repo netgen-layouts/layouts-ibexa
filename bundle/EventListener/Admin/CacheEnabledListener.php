@@ -12,6 +12,8 @@ use Netgen\Layouts\View\View\LayoutViewInterface;
 use Netgen\Layouts\View\View\RuleViewInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+use function sprintf;
+
 final class CacheEnabledListener implements EventSubscriberInterface
 {
     public function __construct(
@@ -31,12 +33,11 @@ final class CacheEnabledListener implements EventSubscriberInterface
      */
     public function onBuildView(CollectViewParametersEvent $event): void
     {
-        $view = $event->getView();
-        if (!$view instanceof LayoutViewInterface && !$view instanceof RuleViewInterface) {
+        if (!$event->view instanceof LayoutViewInterface && !$event->view instanceof RuleViewInterface) {
             return;
         }
 
-        if ($view->getContext() !== 'ibexa_admin') {
+        if ($event->view->getContext() !== 'ibexa_admin') {
             return;
         }
 

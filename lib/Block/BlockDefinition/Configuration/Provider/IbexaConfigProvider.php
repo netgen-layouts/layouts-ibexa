@@ -49,7 +49,7 @@ final class IbexaConfigProvider implements ConfigProviderInterface
 
         $validViews = [];
         $validParameters = [];
-        $contentTypeIdentifier = $block->getParameter($this->parameterName)->getValue();
+        $contentTypeIdentifier = $block->getParameter($this->parameterName)->value;
 
         foreach ($this->groupsBySiteAccess as $siteAccess => $groups) {
             if (in_array(IbexaAdminUiBundle::ADMIN_GROUP_NAME, $groups, true)) {
@@ -86,9 +86,9 @@ final class IbexaConfigProvider implements ConfigProviderInterface
 
         sort($validViews);
 
-        $this->viewTypes[$block->getId()->toString()] ??= $this->buildViewTypes($validViews, $validParameters);
+        $this->viewTypes[$block->id->toString()] ??= $this->buildViewTypes($validViews, $validParameters);
 
-        return $this->viewTypes[$block->getId()->toString()];
+        return $this->viewTypes[$block->id->toString()];
     }
 
     /**

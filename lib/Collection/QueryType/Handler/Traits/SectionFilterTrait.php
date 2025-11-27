@@ -49,11 +49,11 @@ trait SectionFilterTrait
      */
     private function getSectionFilterCriteria(ParameterCollectionInterface $parameterCollection): ?CriterionInterface
     {
-        if ($parameterCollection->getParameter('filter_by_section')->getValue() !== true) {
+        if ($parameterCollection->getParameter('filter_by_section')->value !== true) {
             return null;
         }
 
-        $sections = $parameterCollection->getParameter('sections')->getValue() ?? [];
+        $sections = $parameterCollection->getParameter('sections')->value ?? [];
         if (count($sections) === 0) {
             return null;
         }

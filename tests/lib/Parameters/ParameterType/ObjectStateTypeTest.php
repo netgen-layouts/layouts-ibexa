@@ -61,8 +61,8 @@ final class ObjectStateTypeTest extends TestCase
     #[DataProvider('validOptionsDataProvider')]
     public function testValidOptions(array $options, array $resolvedOptions): void
     {
-        $parameter = $this->getParameterDefinition($options);
-        self::assertSame($resolvedOptions, $parameter->getOptions());
+        $parameterDefinition = $this->getParameterDefinition($options);
+        self::assertSame($resolvedOptions, $parameterDefinition->options);
     }
 
     /**

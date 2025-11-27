@@ -84,7 +84,7 @@ final class LocationType extends ParameterType implements ValueObjectProviderInt
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->getOptions();
+        $options = $parameterDefinition->options;
 
         return [
             new Constraints\Type(type: 'numeric'),

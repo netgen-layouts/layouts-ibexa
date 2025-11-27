@@ -58,7 +58,7 @@ final class SectionType extends ParameterType
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->getOptions();
+        $options = $parameterDefinition->options;
 
         $sectionConstraints = [
             new Constraints\Type(type: 'string'),

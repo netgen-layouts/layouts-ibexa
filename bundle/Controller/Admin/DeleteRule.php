@@ -25,18 +25,16 @@ final class DeleteRule extends Controller
         if (!$this->isGranted('ROLE_NGLAYOUTS_ADMIN')) {
             $this->denyAccessUnlessGranted(
                 'nglayouts:mapping:delete',
-                ['ruleGroup', $rule->getRuleGroupId()->toString()],
+                ['ruleGroup', $rule->ruleGroupId->toString()],
             );
         }
 
-        $layout = $rule->getLayout();
-
         if (
-            $layout !== null
-            && $this->layoutResolverService->getRuleCountForLayout($layout) === 1
+            $rule->layout !== null
+            && $this->layoutResolverService->getRuleCountForLayout($rule->layout) === 1
             && ($this->isGranted('ROLE_NGLAYOUTS_ADMIN') || $this->isGranted('nglayouts:layout:delete'))
         ) {
-            $this->layoutService->deleteLayout($layout);
+            $this->layoutService->deleteLayout($rule->layout);
         }
 
         $this->layoutResolverService->deleteRule($rule);
