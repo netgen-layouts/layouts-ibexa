@@ -5,7 +5,7 @@
 {% trans_default_domain 'nglayouts_app' %}
 
 {% block content %}
-    {% if not block.parameter('content').empty %}
+    {% if not block.parameter('content').isEmpty %}
         <div class="list-row">
             <div class="list-item">
                 {{ render(
