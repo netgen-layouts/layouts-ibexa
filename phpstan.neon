@@ -6,11 +6,18 @@ includes:
 parameters:
     ignoreErrors:
         # Doctrine DBAL
+
         - '#expects string\|null, Doctrine\\DBAL\\Query\\Expression\\CompositeExpression given#'
 
         # Ibexa CMS
+
         - '#Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query\\CriterionInterface::\$value.#'
 
+        # PHPStan
+
+        - '#Call to method integerNode\(\) on an unknown class Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition>#'
+
         # Symfony
+
         - '#with generic interface Symfony\\Component\\(Form|OptionsResolver)\\\w+ but does not specify its types: (TData|TArray)#'
         - '#extends generic class Symfony\\Component\\Form\\\w+ but does not specify its types: TData#'

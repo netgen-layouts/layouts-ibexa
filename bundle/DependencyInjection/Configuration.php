@@ -14,6 +14,9 @@ final class Configuration extends SiteAccessConfiguration
         private ExtensionInterface $extension,
     ) {}
 
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder<'array'>
+     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         return new TreeBuilder($this->extension->getAlias());

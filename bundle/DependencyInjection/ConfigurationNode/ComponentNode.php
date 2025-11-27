@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Netgen\Bundle\LayoutsIbexaBundle\DependencyInjection\ConfigurationNode;
 
 use Netgen\Bundle\LayoutsBundle\DependencyInjection\ConfigurationNodeInterface;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 final class ComponentNode implements ConfigurationNodeInterface
 {
-    public function getConfigurationNode(): NodeDefinition
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition<\Symfony\Component\Config\Definition\Builder\NodeParentInterface>
+     */
+    public function getConfigurationNode(): ArrayNodeDefinition
     {
         $treeBuilder = new TreeBuilder('ibexa_component');
         $node = $treeBuilder->getRootNode();
