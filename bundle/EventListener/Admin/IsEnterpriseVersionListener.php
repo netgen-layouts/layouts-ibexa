@@ -35,7 +35,7 @@ final class IsEnterpriseVersionListener implements EventSubscriberInterface
             return;
         }
 
-        if ($event->view->getContext() !== 'ibexa_admin') {
+        if ($event->view->context !== 'ibexa_admin') {
             return;
         }
 
