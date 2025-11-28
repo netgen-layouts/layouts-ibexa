@@ -58,14 +58,12 @@ final class SectionType extends ParameterType
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->options;
-
         $sectionConstraints = [
             new Constraints\Type(type: 'string'),
             new IbexaConstraints\Section(allowedSections: $parameterDefinition->getOption('sections')),
         ];
 
-        if ($options['multiple'] === false) {
+        if ($parameterDefinition->getOption('multiple') === false) {
             return $sectionConstraints;
         }
 

@@ -58,14 +58,12 @@ final class ContentTypeType extends ParameterType
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->options;
-
         $contentTypeConstraints = [
             new Constraints\Type(type: 'string'),
             new IbexaConstraints\ContentType(allowedTypes: $parameterDefinition->getOption('types')),
         ];
 
-        if ($options['multiple'] === false) {
+        if ($parameterDefinition->getOption('multiple') === false) {
             return $contentTypeConstraints;
         }
 

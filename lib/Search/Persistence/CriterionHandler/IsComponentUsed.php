@@ -53,6 +53,7 @@ final class IsComponentUsed extends CriterionHandler
             ->setParameter('nglayouts_status', Status::Published->value, Types::INTEGER)
             ->setParameter('nglayouts_definition_identifier', 'ibexa_component_%', Types::STRING);
 
+        /** @var \Netgen\Layouts\Ibexa\Search\Contracts\Criterion\IsComponentUsed $criterion */
         if ((bool) ($criterion->value[0] ?? true)) {
             return $queryBuilder->expr()->in(
                 'c.id',

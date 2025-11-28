@@ -97,7 +97,8 @@ final class TagsType extends ParameterType
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->options;
+        $min = $parameterDefinition->getOption('min');
+        $max = $parameterDefinition->getOption('max');
 
         $constraints = [
             new Constraints\Type(type: 'array'),
@@ -106,15 +107,15 @@ final class TagsType extends ParameterType
                     new Constraints\NotBlank(),
                     new Constraints\Type(type: 'numeric'),
                     new Constraints\Positive(),
-                    new IbexaConstraints\Tag(allowInvalid: $options['allow_invalid']),
+                    new IbexaConstraints\Tag(allowInvalid: $parameterDefinition->getOption('allow_invalid')),
                 ],
             ),
         ];
 
-        if ($options['min'] !== null || $options['max'] !== null) {
+        if ($min !== null || $max !== null) {
             $constraints[] = new Constraints\Count(
-                min: $options['min'],
-                max: $options['max'],
+                min: $min,
+                max: $max,
             );
         }
 

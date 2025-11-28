@@ -58,14 +58,12 @@ final class ObjectStateType extends ParameterType
 
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
-        $options = $parameterDefinition->options;
-
         $objectStateConstraints = [
             new Constraints\Type(type: 'string'),
             new IbexaConstraints\ObjectState(allowedStates: $parameterDefinition->getOption('states')),
         ];
 
-        if ($options['multiple'] === false) {
+        if ($parameterDefinition->getOption('multiple') === false) {
             return $objectStateConstraints;
         }
 
