@@ -7,6 +7,7 @@ namespace Netgen\Layouts\Ibexa\Security\Authorization\Voter;
 use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
@@ -43,7 +44,7 @@ final class RepositoryAccessVoter extends Voter
     /**
      * @param mixed[] $attributes
      */
-    public function vote(TokenInterface $token, mixed $subject, array $attributes): int
+    public function vote(TokenInterface $token, mixed $subject, array $attributes, ?Vote $vote = null): int
     {
         // abstain vote by default in case none of the attributes are supported
         $vote = self::ACCESS_ABSTAIN;
@@ -72,7 +73,7 @@ final class RepositoryAccessVoter extends Voter
         return str_starts_with($attribute, 'ROLE_NGLAYOUTS_');
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         if (!isset(self::ATTRIBUTE_TO_POLICY_MAP[$attribute])) {
             return false;
