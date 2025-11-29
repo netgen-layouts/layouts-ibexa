@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\Form;
 
-use Generator;
 use Ibexa\Contracts\Core\Repository\ContentTypeService;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Symfony\Component\Form\AbstractType;
@@ -46,7 +45,7 @@ final class ComponentFilterType extends AbstractType
             [
                 'required' => false,
                 'label' => 'components.filter_form.content_type.label',
-                'choices' => (function () use ($parentLocationsConfig): Generator {
+                'choices' => (function () use ($parentLocationsConfig): iterable {
                     foreach (array_keys($parentLocationsConfig) as $contentTypeIdentifier) {
                         $contentType = $this->contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
 
