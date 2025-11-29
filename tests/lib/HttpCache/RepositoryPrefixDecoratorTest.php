@@ -34,12 +34,12 @@ final class RepositoryPrefixDecoratorTest extends TestCase
     public function testPurge(): void
     {
         $this->repositoryTagPrefixMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getRepositoryPrefix')
             ->willReturn('prefix_');
 
         $this->clientMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('purge')
             ->with(self::identicalTo(['prefix_tag-1', 'prefix_tag-2']));
 
@@ -49,7 +49,7 @@ final class RepositoryPrefixDecoratorTest extends TestCase
     public function testCommit(): void
     {
         $this->clientMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('commit')
             ->willReturn(true);
 

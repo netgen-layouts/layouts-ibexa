@@ -36,7 +36,7 @@ final class LocationValidatorTest extends ValidatorTestCase
     public function testValidateValid(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn(
@@ -54,7 +54,7 @@ final class LocationValidatorTest extends ValidatorTestCase
     public function testValidateInvalidWithWrongType(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn(
@@ -72,7 +72,7 @@ final class LocationValidatorTest extends ValidatorTestCase
     public function testValidateInvalidWithNonExistingLocation(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
@@ -83,7 +83,7 @@ final class LocationValidatorTest extends ValidatorTestCase
     public function testValidateNull(): void
     {
         $this->locationServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadLocation');
 
         $this->assertValid(true, null);

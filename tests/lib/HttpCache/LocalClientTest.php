@@ -28,7 +28,7 @@ final class LocalClientTest extends TestCase
         $tags = ['tag-1', 'tag-2'];
 
         $this->cacheStoreMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('invalidateTags')
             ->with(self::identicalTo($tags));
 

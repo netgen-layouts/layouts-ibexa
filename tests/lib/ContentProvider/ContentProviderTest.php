@@ -45,7 +45,7 @@ final class ContentProviderTest extends TestCase
         $this->context->set('ibexa_location_id', 42);
 
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn($location);
@@ -56,7 +56,7 @@ final class ContentProviderTest extends TestCase
     public function testProvideContentWithoutContent(): void
     {
         $this->locationServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadLocation');
 
         self::assertNull($this->contentProvider->provideContent());
@@ -69,7 +69,7 @@ final class ContentProviderTest extends TestCase
         $this->context->set('ibexa_location_id', 42);
 
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn($location);
@@ -80,7 +80,7 @@ final class ContentProviderTest extends TestCase
     public function testProvideLocationWithoutLocation(): void
     {
         $this->locationServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadLocation');
 
         self::assertNull($this->contentProvider->provideLocation());

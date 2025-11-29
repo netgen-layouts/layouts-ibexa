@@ -63,7 +63,7 @@ final class ContextProviderTest extends TestCase
         $request->attributes->set('_route', UrlAliasRouter::URL_ALIAS_ROUTE_NAME);
 
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(

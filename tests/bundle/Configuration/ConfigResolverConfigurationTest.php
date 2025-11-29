@@ -35,13 +35,13 @@ final class ConfigResolverConfigurationTest extends TestCase
     public function testHasParameter(): void
     {
         $this->configResolverMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(true);
 
         $this->fallbackConfigurationMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('hasParameter');
 
         self::assertTrue($this->configuration->hasParameter('some_param'));
@@ -50,13 +50,13 @@ final class ConfigResolverConfigurationTest extends TestCase
     public function testHasParameterWithNoParameter(): void
     {
         $this->configResolverMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
         $this->fallbackConfigurationMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn(true);
@@ -67,13 +67,13 @@ final class ConfigResolverConfigurationTest extends TestCase
     public function testHasParameterWithNoFallbackParameter(): void
     {
         $this->configResolverMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
         $this->fallbackConfigurationMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn(false);
@@ -89,13 +89,13 @@ final class ConfigResolverConfigurationTest extends TestCase
             ->willReturn(true);
 
         $this->configResolverMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn('some_param_value');
 
         $this->fallbackConfigurationMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('getParameter');
 
         self::assertSame('some_param_value', $this->configuration->getParameter('some_param'));
@@ -109,17 +109,17 @@ final class ConfigResolverConfigurationTest extends TestCase
             ->willReturn(false);
 
         $this->fallbackConfigurationMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn(true);
 
         $this->configResolverMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('getParameter');
 
         $this->fallbackConfigurationMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn('some_param_value');
@@ -133,13 +133,13 @@ final class ConfigResolverConfigurationTest extends TestCase
         $this->expectExceptionMessage('Parameter "some_param" does not exist in configuration.');
 
         $this->configResolverMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
         $this->fallbackConfigurationMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn(false);

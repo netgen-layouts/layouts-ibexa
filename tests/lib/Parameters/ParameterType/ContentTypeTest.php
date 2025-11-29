@@ -198,7 +198,7 @@ final class ContentTypeTest extends TestCase
     public function testExport(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['remoteId' => 'abc']));
@@ -209,7 +209,7 @@ final class ContentTypeTest extends TestCase
     public function testExportWithNonExistingContent(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('contentInfo', 42));
@@ -220,7 +220,7 @@ final class ContentTypeTest extends TestCase
     public function testImport(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(new ContentInfo(['id' => 42]));
@@ -231,7 +231,7 @@ final class ContentTypeTest extends TestCase
     public function testImportWithNonExistingContent(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('contentInfo', 'abc'));
@@ -244,7 +244,7 @@ final class ContentTypeTest extends TestCase
     {
         if ($value !== null) {
             $this->contentServiceMock
-                ->expects(self::once())
+                ->expects($this->once())
                 ->method('loadContentInfo')
                 ->with(self::identicalTo((int) $value))
                 ->willReturnCallback(
@@ -341,7 +341,7 @@ final class ContentTypeTest extends TestCase
         $content = new Content();
 
         $this->valueObjectProviderMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getValueObject')
             ->with(self::identicalTo(42))
             ->willReturn($content);

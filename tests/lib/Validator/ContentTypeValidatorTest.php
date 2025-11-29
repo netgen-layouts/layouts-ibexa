@@ -43,7 +43,7 @@ final class ContentTypeValidatorTest extends ValidatorTestCase
     public function testValidate(string $identifier, array $groups, array $allowedTypes, bool $isValid): void
     {
         $this->contentTypeServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentTypeByIdentifier')
             ->with(self::identicalTo($identifier))
             ->willReturn(
@@ -69,7 +69,7 @@ final class ContentTypeValidatorTest extends ValidatorTestCase
     public function testValidateNull(): void
     {
         $this->contentTypeServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadContentTypeByIdentifier');
 
         $this->assertValid(true, null);
@@ -78,7 +78,7 @@ final class ContentTypeValidatorTest extends ValidatorTestCase
     public function testValidateInvalid(): void
     {
         $this->contentTypeServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentTypeByIdentifier')
             ->with(self::identicalTo('unknown'))
             ->willThrowException(new NotFoundException('content type', 'unknown'));

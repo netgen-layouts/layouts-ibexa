@@ -60,7 +60,7 @@ final class ContentTypeTest extends TestCase
     public function testValidation(): void
     {
         $this->contentTypeServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentTypeByIdentifier')
             ->with(self::identicalTo('identifier'))
             ->willReturn(new IbexaContentType());
@@ -76,7 +76,7 @@ final class ContentTypeTest extends TestCase
     public function testValidationWithInvalidValue(): void
     {
         $this->contentTypeServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentTypeByIdentifier')
             ->with(self::identicalTo('unknown'))
             ->willThrowException(new NotFoundException('content type', 'unknown'));

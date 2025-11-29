@@ -30,7 +30,7 @@ final class LocationValueUrlGeneratorTest extends TestCase
     public function testGenerateDefaultUrl(): void
     {
         $this->urlGeneratorMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('generate')
             ->with(
                 self::identicalTo(UrlAliasRouter::URL_ALIAS_ROUTE_NAME),
@@ -44,7 +44,7 @@ final class LocationValueUrlGeneratorTest extends TestCase
     public function testGenerateAdminUrl(): void
     {
         $this->urlGeneratorMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('generate')
             ->with(
                 self::identicalTo('ibexa.content.view'),

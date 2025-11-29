@@ -67,7 +67,7 @@ final class ContentTest extends TestCase
     public function testValidation(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo());
@@ -83,7 +83,7 @@ final class ContentTest extends TestCase
     public function testValidationWithInvalidValue(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
@@ -139,7 +139,7 @@ final class ContentTest extends TestCase
         $content = new IbexaContent();
 
         $this->valueObjectProviderMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getValueObject')
             ->with(self::identicalTo(42))
             ->willReturn($content);
@@ -150,7 +150,7 @@ final class ContentTest extends TestCase
     public function testExport(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['remoteId' => 'abc']));
@@ -161,7 +161,7 @@ final class ContentTest extends TestCase
     public function testExportWithInvalidValue(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
@@ -172,7 +172,7 @@ final class ContentTest extends TestCase
     public function testImport(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(new ContentInfo(['id' => 42]));
@@ -183,7 +183,7 @@ final class ContentTest extends TestCase
     public function testImportWithInvalidValue(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('content', 'abc'));

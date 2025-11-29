@@ -27,7 +27,7 @@ final class PolicyProviderTest extends TestCase
     public function testAddPolicies(): void
     {
         $this->configBuilderMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('addConfig')
             ->with(
                 self::identicalTo(

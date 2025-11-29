@@ -51,7 +51,7 @@ final class IbexaRuntimeTest extends TestCase
     public function testGetContentNameWithException(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContent')
             ->with(self::identicalTo(42))
             ->willThrowException(new Exception());
@@ -76,7 +76,7 @@ final class IbexaRuntimeTest extends TestCase
     public function testGetLocationPathWithException(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(22))
             ->willThrowException(new Exception());
@@ -101,7 +101,7 @@ final class IbexaRuntimeTest extends TestCase
     public function testGetContentPathWithException(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContent')
             ->with(self::identicalTo(22))
             ->willThrowException(new Exception());
@@ -156,7 +156,7 @@ final class IbexaRuntimeTest extends TestCase
     public function testGetContentTypeNameWithException(): void
     {
         $this->contentTypeServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentTypeByIdentifier')
             ->with(self::identicalTo('some_type'))
             ->willThrowException(new Exception());

@@ -55,7 +55,7 @@ final class RemoteIdConverterTest extends TestCase
     public function testToLocationId(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocationByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(new Location(['id' => 42]));
@@ -66,7 +66,7 @@ final class RemoteIdConverterTest extends TestCase
     public function testToLocationIdWithNonExistentRemoteId(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocationByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('location', 'abc'));
@@ -77,7 +77,7 @@ final class RemoteIdConverterTest extends TestCase
     public function testToLocationRemoteId(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn(new Location(['remoteId' => 'abc']));
@@ -88,7 +88,7 @@ final class RemoteIdConverterTest extends TestCase
     public function testToLocationRemoteIdWithNonExistentId(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
@@ -99,7 +99,7 @@ final class RemoteIdConverterTest extends TestCase
     public function testToContentId(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(new ContentInfo(['id' => 42]));
@@ -110,7 +110,7 @@ final class RemoteIdConverterTest extends TestCase
     public function testToContentIdWithNonExistentRemoteId(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('content', 'abc'));
@@ -121,7 +121,7 @@ final class RemoteIdConverterTest extends TestCase
     public function testToContentRemoteId(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['remoteId' => 'abc']));
@@ -132,7 +132,7 @@ final class RemoteIdConverterTest extends TestCase
     public function testToContentRemoteIdWithNonExistentId(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));

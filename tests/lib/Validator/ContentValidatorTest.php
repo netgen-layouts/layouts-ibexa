@@ -36,7 +36,7 @@ final class ContentValidatorTest extends ValidatorTestCase
     public function testValidateValid(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['id' => 42, 'contentTypeId' => 24]));
@@ -47,7 +47,7 @@ final class ContentValidatorTest extends ValidatorTestCase
     public function testValidateInvalidWithWrongType(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['id' => 42, 'contentTypeId' => 52]));
@@ -58,7 +58,7 @@ final class ContentValidatorTest extends ValidatorTestCase
     public function testValidateInvalidWithNonExistingContent(): void
     {
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
@@ -69,7 +69,7 @@ final class ContentValidatorTest extends ValidatorTestCase
     public function testValidateNull(): void
     {
         $this->contentServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadContentInfo');
 
         $this->assertValid(true, null);

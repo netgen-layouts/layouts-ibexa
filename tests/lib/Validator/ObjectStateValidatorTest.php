@@ -91,11 +91,11 @@ final class ObjectStateValidatorTest extends ValidatorTestCase
     public function testValidateNull(): void
     {
         $this->objectStateServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadObjectStateGroups');
 
         $this->objectStateServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadObjectStates');
 
         $this->assertValid(true, null);

@@ -182,7 +182,7 @@ final class LocationTypeTest extends TestCase
     public function testExport(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn(new Location(['remoteId' => 'abc']));
@@ -193,7 +193,7 @@ final class LocationTypeTest extends TestCase
     public function testExportWithNonExistingLocation(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
@@ -204,7 +204,7 @@ final class LocationTypeTest extends TestCase
     public function testImport(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocationByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(new Location(['id' => 42]));
@@ -215,7 +215,7 @@ final class LocationTypeTest extends TestCase
     public function testImportWithNonExistingLocation(): void
     {
         $this->locationServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLocationByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('location', 'abc'));
@@ -228,7 +228,7 @@ final class LocationTypeTest extends TestCase
     {
         if ($value !== null) {
             $this->locationServiceMock
-                ->expects(self::once())
+                ->expects($this->once())
                 ->method('loadLocation')
                 ->with(self::identicalTo((int) $value))
                 ->willReturnCallback(
@@ -334,7 +334,7 @@ final class LocationTypeTest extends TestCase
         $location = new Location();
 
         $this->valueObjectProviderMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getValueObject')
             ->with(self::identicalTo(42))
             ->willReturn($location);

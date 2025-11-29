@@ -39,7 +39,7 @@ final class SectionValidatorTest extends ValidatorTestCase
     public function testValidate(string $identifier, array $allowedSections, bool $isValid): void
     {
         $this->sectionServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadSectionByIdentifier')
             ->with(self::identicalTo($identifier))
             ->willReturn(
@@ -57,7 +57,7 @@ final class SectionValidatorTest extends ValidatorTestCase
     public function testValidateNull(): void
     {
         $this->sectionServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadSectionByIdentifier');
 
         $this->assertValid(true, null);
@@ -66,7 +66,7 @@ final class SectionValidatorTest extends ValidatorTestCase
     public function testValidateInvalid(): void
     {
         $this->sectionServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadSectionByIdentifier')
             ->with(self::identicalTo('unknown'))
             ->willThrowException(new NotFoundException('section', 'unknown'));

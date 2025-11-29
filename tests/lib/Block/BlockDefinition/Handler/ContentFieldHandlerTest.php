@@ -34,12 +34,12 @@ final class ContentFieldHandlerTest extends TestCase
         $location = new Location();
 
         $this->contentProviderMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('provideContent')
             ->willReturn($content);
 
         $this->contentProviderMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('provideLocation')
             ->willReturn($location);
 

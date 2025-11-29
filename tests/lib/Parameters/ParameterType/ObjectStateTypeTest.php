@@ -199,11 +199,11 @@ final class ObjectStateTypeTest extends TestCase
     public function testValidationWithEmptyValues(mixed $value, bool $required, bool $isValid): void
     {
         $this->objectStateServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadObjectStateGroups');
 
         $this->objectStateServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadObjectStates');
 
         $options = $value !== null ? ['multiple' => is_array($value)] : [];

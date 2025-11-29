@@ -252,7 +252,7 @@ final class TagsTypeTest extends TestCase
     public function testExport(): void
     {
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTag')
             ->with(self::identicalTo(42))
             ->willReturn(new Tag(['remoteId' => 'abc']));
@@ -263,7 +263,7 @@ final class TagsTypeTest extends TestCase
     public function testExportWithNonExistingTag(): void
     {
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTag')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('tag', 42));
@@ -274,7 +274,7 @@ final class TagsTypeTest extends TestCase
     public function testImport(): void
     {
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTagByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(new Tag(['id' => 42]));
@@ -285,7 +285,7 @@ final class TagsTypeTest extends TestCase
     public function testImportWithNonExistingTag(): void
     {
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTagByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('tag', 'abc'));

@@ -96,7 +96,7 @@ final class LocaleProviderTest extends TestCase
             ->willReturn(['eng-GB', 'ger-DE', 'unknown', 'cro-HR']);
 
         $this->languageServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLanguageListByCode')
             ->with(self::identicalTo(['eng-GB', 'ger-DE', 'unknown', 'cro-HR']))
             ->willReturn(
@@ -129,7 +129,7 @@ final class LocaleProviderTest extends TestCase
             ->willReturn(['eng-GB']);
 
         $this->languageServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLanguageListByCode')
             ->with(self::identicalTo(['eng-GB']))
             ->willReturn(
@@ -156,7 +156,7 @@ final class LocaleProviderTest extends TestCase
             ->willReturn(['eng-GB']);
 
         $this->languageServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadLanguageListByCode')
             ->with(self::identicalTo(['eng-GB']))
             ->willReturn(

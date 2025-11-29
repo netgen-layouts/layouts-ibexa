@@ -43,7 +43,7 @@ final class PageLayoutResolverTest extends TestCase
         $request = Request::create('/');
 
         $this->requestStackMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
 
@@ -63,21 +63,21 @@ final class PageLayoutResolverTest extends TestCase
     public function testResolvePageLayoutWitNoRequest(): void
     {
         $this->requestStackMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn(null);
 
         $this->innerResolverMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('resolvePageLayout')
             ->willReturn('default_layout.html.twig');
 
         $this->configResolverMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('hasParameter');
 
         $this->configResolverMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('getParameter');
 
         self::assertSame('default_layout.html.twig', $this->resolver->resolvePageLayout());
@@ -89,20 +89,20 @@ final class PageLayoutResolverTest extends TestCase
         $request->attributes->set('layout', false);
 
         $this->requestStackMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
 
         $this->innerResolverMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('resolvePageLayout');
 
         $this->configResolverMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('hasParameter');
 
         $this->configResolverMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('getParameter');
 
         self::assertSame('fallback_layout.html.twig', $this->resolver->resolvePageLayout());
