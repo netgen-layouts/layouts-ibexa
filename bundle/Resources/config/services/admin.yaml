@@ -134,25 +134,25 @@ services:
             - { name: ibexa.admin_ui.tab, group: location-view }
 
     netgen_layouts.ibexa.admin.component.stylesheets:
-         parent: Ibexa\AdminUi\Component\TwigComponent
+         parent: Ibexa\TwigComponents\Component\TemplateComponent
          arguments:
              - "@twig"
              - "@@ibexadesign/nglayouts/stylesheets.html.twig"
          tags:
-             - { name: ibexa.admin_ui.component, group: stylesheet-head }
+             - { name: ibexa.twig.component, group: admin-ui-stylesheet-head }
 
     netgen_layouts.ibexa.admin.component.javascripts:
-         parent: Ibexa\AdminUi\Component\TwigComponent
+         parent: Ibexa\TwigComponents\Component\TemplateComponent
          arguments:
              - "@twig"
              - "@@ibexadesign/nglayouts/javascripts.html.twig"
          tags:
-             - { name: ibexa.admin_ui.component, group: script-body }
+             - { name: ibexa.twig.component, group: admin-ui-script-body }
 
     netgen_layouts.ibexa.admin.component.meta:
-         parent: Ibexa\AdminUi\Component\TwigComponent
+         parent: Ibexa\TwigComponents\Component\TemplateComponent
          arguments:
              - "@twig"
              - "@@ibexadesign/nglayouts/meta.html.twig"
          tags:
-             - { name: ibexa.admin_ui.component, group: script-head }
+             - { name: ibexa.twig.component, group: admin-ui-script-head }
