@@ -25,7 +25,7 @@
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpstan/phpstan-symfony": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^6.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.2",
         "matthiasnoback/symfony-config-test": "^6.1",
         "netgen/tagsbundle": "^6.0"
     },
