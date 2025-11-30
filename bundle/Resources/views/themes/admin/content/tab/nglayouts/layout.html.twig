@@ -11,6 +11,12 @@
         <div class="layout-description">{{ layout.description }}</div>
         <div class="layout-modified">{{ layout.modified|nglayouts_format_datetime }}</div>
 
+        {% if additional_data|default('') is not empty %}
+            <div class="additional-data">
+                {{ additional_data }}
+            </div>
+        {% endif %}
+
         {% if can_edit %}
             <div class="layout-actions">
                 <a href="{{ macros.layout_path(layout.id.toString) }}" class="btn btn-primary btn-sm js-open-ngl">{{ 'layouts.edit_layout'|trans }}</a>
@@ -28,12 +34,6 @@
                 </ul>
             </div>
         {% endif %}
-
-        {% if additional_data|default('') is not empty %}
-            <div class="additional-data">
-                {{ additional_data }}
-            </div>
-        {% endif %}
     </div>
 
     {% if can_clear_cache %}
@@ -44,7 +44,7 @@
                         <h5 class="modal-title">{{ 'layouts.cache.layout.title'|trans({}, 'nglayouts_admin') }}: <strong>{{ layout.name }}</strong></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <svg class="ibexa-icon ibexa-icon--medium" aria-hidden="true">
-                                <use xlink:href="{{ asset('bundles/ibexaadminui/img/ibexa-icons.svg') }}#discard"></use>
+                                <use xlink:href="{{ ibexa_icon_path('discard') }}"></use>
                             </svg>
                         </button>
                     </div>
