@@ -3,7 +3,7 @@
 
     {% if image_alias %}
         <div class="image">
-            <img src="{{ asset(image_alias.uri) }}" />
+            <img src="{{ asset(image_alias.uri) }}" alt="{{ content.field('image').value.alternativeText }}" />
         </div>
     {% endif %}
 {% endif %}
