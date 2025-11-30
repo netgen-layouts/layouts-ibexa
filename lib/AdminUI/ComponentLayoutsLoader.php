@@ -74,7 +74,7 @@ final class ComponentLayoutsLoader
                 'b',
                 'nglayouts_block_translation',
                 'bt',
-                $query->expr()->and(
+                (string) $query->expr()->and(
                     $query->expr()->eq('b.id', 'bt.block_id'),
                     $query->expr()->eq('b.status', 'bt.status'),
                 ),
@@ -83,7 +83,7 @@ final class ComponentLayoutsLoader
                 'b',
                 'nglayouts_layout',
                 'l',
-                $query->expr()->and(
+                (string) $query->expr()->and(
                     $query->expr()->eq('b.layout_id', 'l.id'),
                     $query->expr()->eq('b.status', 'l.status'),
                 ),

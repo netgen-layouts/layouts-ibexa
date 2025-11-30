@@ -39,7 +39,7 @@ final class RelatedLayoutsLoader
                 'ci',
                 'nglayouts_block_collection',
                 'bc',
-                $query->expr()->and(
+                (string) $query->expr()->and(
                     $query->expr()->eq('bc.collection_id', 'ci.collection_id'),
                     $query->expr()->eq('bc.collection_status', 'ci.status'),
                 ),
@@ -48,7 +48,7 @@ final class RelatedLayoutsLoader
                 'bc',
                 'nglayouts_block',
                 'b',
-                $query->expr()->and(
+                (string) $query->expr()->and(
                     $query->expr()->eq('b.id', 'bc.block_id'),
                     $query->expr()->eq('b.status', 'bc.block_status'),
                 ),
@@ -57,7 +57,7 @@ final class RelatedLayoutsLoader
                 'b',
                 'nglayouts_layout',
                 'l',
-                $query->expr()->and(
+                (string) $query->expr()->and(
                     $query->expr()->eq('l.id', 'b.layout_id'),
                     $query->expr()->eq('l.status', 'b.status'),
                 ),

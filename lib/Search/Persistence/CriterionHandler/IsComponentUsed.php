@@ -36,7 +36,7 @@ final class IsComponentUsed extends CriterionHandler
                 'b',
                 'nglayouts_block_translation',
                 'bt',
-                $subSelect->expr()->and(
+                (string) $subSelect->expr()->and(
                     $subSelect->expr()->eq('b.id', 'bt.block_id'),
                     $subSelect->expr()->eq('b.status', 'bt.status'),
                 ),
