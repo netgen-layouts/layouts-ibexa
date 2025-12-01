@@ -2,27 +2,31 @@
 
 ## Installation instructions
 
-[INSTALL.md](INSTALL.md)
+### Use Composer to install the integration
+
+Run the following command to install Netgen Layouts & Ibexa CMS integration:
+
+```bash
+composer require netgen/layouts-ibexa
+```
+
+Symfony Flex will automatically enable the bundle and import the routes.
+
+### Install frontend assets
+
+Run the following command to install frontend assets:
+
+```bash
+php bin/console assets:install --symlink --relative
+```
 
 ## Running tests
 
 Running tests requires that you have complete vendors installed, so run
 `composer install` before running the tests.
 
-You can run unit tests by simply calling `vendor/bin/phpunit` from the repo
-root. This will use an in memory SQLite database.
+You can run unit tests by calling `composer test` from the repo root:
 
-You can also run unit tests on a real database. After you create the database,
-run the tests with:
-
-```
-$ DATABASE=mysql://root@localhost/nglayouts vendor/bin/phpunit
-```
-
-where `mysql://root@localhost/nglayouts` is a DSN to your MySQL database.
-
-If you use PostgreSQL, you can use the following command:
-
-```
-$ DATABASE=pgsql://user:pass@localhost/nglayouts vendor/bin/phpunit
+```bash
+$ composer test
 ```
