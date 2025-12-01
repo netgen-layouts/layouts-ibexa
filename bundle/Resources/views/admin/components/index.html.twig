@@ -69,7 +69,7 @@
                         <li class="nl-component">
                             <div class="nl-component__name" data-cell-title="{{ 'components.component.name'|trans }}"><a href="{{ ibexa_path(component) }}" target="_blank">{{ component.content.name }}</a></div>
                             <div class="nl-component__content-type" data-cell-title="{{ 'components.component.content_type'|trans }}">{{ component.content.contentType.name }}</div>
-                            <div class="nl-component__last-modified" data-cell-title="{{ 'components.component.last_modified'|trans }}">{{ component.content.contentInfo.modificationDate|nglayouts_format_datetime }}</div>
+                            <div class="nl-component__last-modified" data-cell-title="{{ 'components.component.last_modified'|trans }}">{{ component.content.contentInfo.modificationDate|format_datetime }}</div>
                             <div class="nl-component__usage-count" data-cell-title="{{ 'components.component.usage_count'|trans }}">{{ component_layouts[component.content.id].count|default(0) }}</div>
                             <div class="nl-component__used-in">
                                 {% if has_layouts %}

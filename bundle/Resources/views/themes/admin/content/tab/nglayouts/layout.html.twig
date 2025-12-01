@@ -9,7 +9,7 @@
     <div class="layout-item">
         <div class="layout-name">{{ layout.name }}</div>
         <div class="layout-description">{{ layout.description }}</div>
-        <div class="layout-modified">{{ layout.modified|nglayouts_format_datetime }}</div>
+        <div class="layout-modified">{{ layout.modified|format_datetime }}</div>
 
         {% if additional_data|default('') is not empty %}
             <div class="additional-data">
