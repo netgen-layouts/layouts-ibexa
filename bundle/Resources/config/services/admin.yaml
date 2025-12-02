@@ -90,6 +90,7 @@ services:
         class: Netgen\Bundle\LayoutsIbexaBundle\EventListener\Admin\MainMenuBuilderListener
         arguments:
             - "@security.authorization_checker"
+            - "@ibexa.config.resolver"
         tags:
             - { name: kernel.event_subscriber }
 

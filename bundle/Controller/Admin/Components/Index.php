@@ -40,6 +40,10 @@ final class Index extends Controller
      */
     public function __invoke(Request $request): Response
     {
+        if (!$this->configResolver->hasParameter('ibexa_component.parent_locations', 'netgen_layouts')) {
+            throw $this->createNotFoundException();
+        }
+
         $filterForm = $this->createForm(ComponentFilterType::class);
         $filterForm->handleRequest($request);
 
