@@ -40,7 +40,7 @@ abstract class ConfigurationNodeTestBase extends TestCase
 
     final protected PartialProcessor $partialProcessor;
 
-    protected function setUp(): void
+    final protected function setUp(): void
     {
         $this->extension = new NetgenLayoutsExtension();
         $this->plugin = new ExtensionPlugin(new ContainerBuilder(), $this->extension);
@@ -57,7 +57,7 @@ abstract class ConfigurationNodeTestBase extends TestCase
      * @param mixed[] $expectedConfig
      * @param mixed[] $config
      */
-    public function assertInjectedConfigurationEqual(array $expectedConfig, array $config): void
+    final public function assertInjectedConfigurationEqual(array $expectedConfig, array $config): void
     {
         $actualConfig = $this->processConfig($config);
 
@@ -80,7 +80,7 @@ abstract class ConfigurationNodeTestBase extends TestCase
      * Return the instance of ConfigurationInterface that should be used by the
      * Configuration-specific assertions in this test-case.
      */
-    protected function getConfiguration(): ConfigurationInterface
+    final protected function getConfiguration(): ConfigurationInterface
     {
         return new Configuration($this->extension);
     }
@@ -92,7 +92,7 @@ abstract class ConfigurationNodeTestBase extends TestCase
      *
      * @return mixed[]
      */
-    protected function getExtendedExpectedConfig(array $expectedConfig): array
+    final protected function getExtendedExpectedConfig(array $expectedConfig): array
     {
         return $expectedConfig + [
             'system' => [
@@ -108,7 +108,7 @@ abstract class ConfigurationNodeTestBase extends TestCase
      *
      * @return mixed[]
      */
-    protected function processConfig(array $config): array
+    final protected function processConfig(array $config): array
     {
         return $this->plugin->postProcessConfiguration(
             $this->partialProcessor->processConfiguration(

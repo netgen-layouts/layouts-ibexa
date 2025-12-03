@@ -24,7 +24,7 @@ final class DesignNodeTest extends ConfigurationNodeTestBase
         ];
 
         $expectedConfig = $this->getExtendedExpectedConfig($expectedConfig);
-        self::assertInjectedConfigurationEqual($expectedConfig, $config);
+        $this->assertInjectedConfigurationEqual($expectedConfig, $config);
     }
 
     public function testValidDesign(): void

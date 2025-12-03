@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class ComponentTestBase extends BlockTestCase
 {
-    public static function parametersDataProvider(): iterable
+    final public static function parametersDataProvider(): iterable
     {
         return [
             [
@@ -60,7 +60,7 @@ abstract class ComponentTestBase extends BlockTestCase
         ];
     }
 
-    public static function invalidParametersDataProvider(): iterable
+    final public static function invalidParametersDataProvider(): iterable
     {
         return [
             [
@@ -93,7 +93,7 @@ abstract class ComponentTestBase extends BlockTestCase
         ];
     }
 
-    protected function createParameterTypeRegistry(): ParameterTypeRegistry
+    final protected function createParameterTypeRegistry(): ParameterTypeRegistry
     {
         return new ParameterTypeRegistry(
             [
@@ -106,14 +106,14 @@ abstract class ComponentTestBase extends BlockTestCase
         );
     }
 
-    protected function createValidator(): ValidatorInterface
+    final protected function createValidator(): ValidatorInterface
     {
         return Validation::createValidatorBuilder()
             ->setConstraintValidatorFactory(new ValidatorFactory($this, new BaseValidatorFactory($this)))
             ->getValidator();
     }
 
-    protected function createBlockDefinitionHandler(): BlockDefinitionHandlerInterface
+    final protected function createBlockDefinitionHandler(): BlockDefinitionHandlerInterface
     {
         return new ComponentHandler();
     }

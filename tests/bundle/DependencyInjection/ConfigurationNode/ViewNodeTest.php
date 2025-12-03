@@ -53,7 +53,7 @@ final class ViewNodeTest extends ConfigurationNodeTestBase
         ];
 
         $expectedConfig = $this->getExtendedExpectedConfig($expectedConfig);
-        self::assertInjectedConfigurationEqual($expectedConfig, $config);
+        $this->assertInjectedConfigurationEqual($expectedConfig, $config);
     }
 
     public function testViewSettingsWithSystemNodeAndDefaultScope(): void
@@ -130,7 +130,7 @@ final class ViewNodeTest extends ConfigurationNodeTestBase
         // other_context context should not appear in original config, but only in siteaccess aware one
         unset($expectedConfig['view']['block_view']['other_context']);
 
-        self::assertInjectedConfigurationEqual($expectedConfig, $config);
+        $this->assertInjectedConfigurationEqual($expectedConfig, $config);
     }
 
     public function testViewSettingsWithSystemNodeAndNonDefaultScope(): void
@@ -223,7 +223,7 @@ final class ViewNodeTest extends ConfigurationNodeTestBase
 
         $expectedConfig['system']['cro']['design'] = 'standard';
 
-        self::assertInjectedConfigurationEqual($expectedConfig, $config);
+        $this->assertInjectedConfigurationEqual($expectedConfig, $config);
     }
 
     public function testViewSettingsRulePositionsWithSystemNodeAndTwoScopes(): void
@@ -412,7 +412,7 @@ final class ViewNodeTest extends ConfigurationNodeTestBase
         ];
 
         $expectedConfig = $this->getExtendedExpectedConfig($expectedConfig);
-        self::assertInjectedConfigurationEqual($expectedConfig, $config);
+        $this->assertInjectedConfigurationEqual($expectedConfig, $config);
     }
 
     public function testViewSettingsWithEmptyMatch(): void
@@ -452,7 +452,7 @@ final class ViewNodeTest extends ConfigurationNodeTestBase
         ];
 
         $expectedConfig = $this->getExtendedExpectedConfig($expectedConfig);
-        self::assertInjectedConfigurationEqual($expectedConfig, $config);
+        $this->assertInjectedConfigurationEqual($expectedConfig, $config);
     }
 
     public function testViewSettingsWithNoParameters(): void
@@ -487,7 +487,7 @@ final class ViewNodeTest extends ConfigurationNodeTestBase
         ];
 
         $expectedConfig = $this->getExtendedExpectedConfig($expectedConfig);
-        self::assertInjectedConfigurationEqual($expectedConfig, $config);
+        $this->assertInjectedConfigurationEqual($expectedConfig, $config);
     }
 
     public function testUnknownSettingsAreRemoved(): void
