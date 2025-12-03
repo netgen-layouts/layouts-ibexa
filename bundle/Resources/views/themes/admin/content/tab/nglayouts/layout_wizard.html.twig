@@ -45,7 +45,18 @@
         <p class="chosen-group">
             {% if value is not empty %}{{ nglayouts_rule_group_name(value) }}{% endif %}
         </p>
-        <button type="button" class="nl-btn nl-btn-primary choose-group">{{ 'layout_wizard.rule_group.button'|trans }}</button>
+
+        <button
+            type="button"
+            class="btn ibexa-btn ibexa-btn--tertiary ibexa-btn--small ibexa-btn--prevented choose-group"
+        >
+            <svg class="ibexa-icon ibexa-icon--small ibexa-icon--create">
+                <use xlink:href="{{ ibexa_icon_path('create') }}"></use>
+            </svg>
+            <span class="ibexa-btn__label">
+                {{ 'layout_wizard.rule_group.button'|trans }}
+            </span>
+        </button>
     </div>
 {% endblock %}
 
@@ -64,6 +75,6 @@
 {% endblock %}
 
 {% block buttons %}
-    <button class="nl-btn action-cancel">{{ 'layout_wizard.button.cancel'|trans }}</button>
-    <button type="submit" class="nl-btn nl-btn-primary action-apply">{{ 'layout_wizard.button.save'|trans }}</button>
+    <button class="btn ibexa-btn ibexa-btn--secondary action-cancel">{{ 'layout_wizard.button.cancel'|trans }}</button>
+    <button type="submit" class="btn ibexa-btn ibexa-btn--primary action-apply">{{ 'layout_wizard.button.save'|trans }}</button>
 {% endblock %}

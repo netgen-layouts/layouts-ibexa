@@ -2,11 +2,11 @@
 
 <section class="ibexa-view-rawcontentview">
     <div class="ibexa-raw-content-title">
-        <h3>{{ 'component_layouts.title'|trans }}</h3>
+        <div class="ibexa-raw-content-title__text">{{ 'component_layouts.title'|trans }}</div>
     </div>
 
-    <div class="bg-white p-3 mb-5">
-        {% if component_layouts is not empty %}
+    {% if component_layouts is not empty %}
+        <div class="ibexa-content-preview">
             <ul class="layout-list">
                 <li class="layout-list-head">
                     <div class="layout-name">{{ 'component_layouts.layout_name'|trans }}</div>
@@ -25,8 +25,10 @@
                     ) }}
                 {% endfor %}
             </ul>
-        {% else %}
+        </div>
+    {% else %}
+        <div class="bg-white p-3 mb-5">
             <p>{{ 'component_layouts.no_layouts'|trans }}</p>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 </section>

@@ -47,7 +47,7 @@
 
         {% if can_edit %}
             <div class="layout-actions">
-                <a href="{{ macros.layout_path(rule.layout.id.toString) }}" class="btn btn-primary btn-sm js-open-ngl" data-value-id="{{ location.id }}" data-value-type="ibexa_location">{{ 'layouts.edit_layout'|trans }}</a>
+                <a href="{{ macros.layout_path(rule.layout.id.toString) }}" class="btn ibexa-btn ibexa-btn--primary ibexa-btn--small js-open-ngl" data-value-id="{{ location.id }}" data-value-type="ibexa_location">{{ 'layouts.edit_layout'|trans }}</a>
             </div>
         {% endif %}
 
@@ -85,8 +85,8 @@
                         <p>{{ 'layouts.cache_clear.question'|trans }}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'layouts.cache_clear.cancel'|trans }}</button>
-                        <button type="button" class="btn btn-primary js-modal-confirm">{{ 'layouts.cache_clear.submit'|trans }}</button>
+                        <button type="button" class="btn ibexa-btn ibexa-btn--secondary" data-dismiss="modal">{{ 'layouts.cache_clear.cancel'|trans }}</button>
+                        <button type="button" class="btn ibexa-btn ibexa-btn--primary js-modal-confirm">{{ 'layouts.cache_clear.submit'|trans }}</button>
                     </div>
                 </div>
             </div>
@@ -109,8 +109,8 @@
                         <p>{{ 'layouts.rule.delete_rule.question'|trans }}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'layouts.rule.delete_rule.cancel'|trans }}</button>
-                        <button type="button" class="btn btn-primary js-modal-confirm">{{ 'layouts.rule.delete_rule.submit'|trans }}</button>
+                        <button type="button" class="btn ibexa-btn ibexa-btn--secondary" data-dismiss="modal">{{ 'layouts.rule.delete_rule.cancel'|trans }}</button>
+                        <button type="button" class="btn ibexa-btn ibexa-btn--primary js-modal-confirm">{{ 'layouts.rule.delete_rule.submit'|trans }}</button>
                     </div>
                 </div>
             </div>

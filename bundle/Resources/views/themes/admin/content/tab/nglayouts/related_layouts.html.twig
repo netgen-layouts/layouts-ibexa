@@ -2,11 +2,11 @@
 
 <section class="ibexa-view-rawcontentview">
     <div class="ibexa-raw-content-title">
-        <h3>{{ 'related_layouts.title'|trans }}</h3>
+        <div class="ibexa-raw-content-title__text">{{ 'related_layouts.title'|trans }}</div>
     </div>
 
-    <div class="bg-white p-3 mb-5">
-        {% if related_layouts is not empty %}
+    {% if related_layouts is not empty %}
+        <div class="ibexa-content-preview">
             <ul class="layout-list">
                 <li class="layout-list-head">
                     <div class="layout-name">{{ 'related_layouts.layout_name'|trans }}</div>
@@ -20,8 +20,10 @@
                     {{ nglayouts_render_layout(related_layout, {}, 'ibexa_admin') }}
                 {% endfor %}
             </ul>
-        {% else %}
+        </div>
+    {% else %}
+        <div class="bg-white p-3 mb-5">
             <p>{{ 'related_layouts.no_related_layouts'|trans }}</p>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 </section>
