@@ -32,7 +32,6 @@ final class RelatedLayoutsLoader
     public function loadRelatedLayouts(Location $location): array
     {
         $query = $this->databaseConnection->createQueryBuilder();
-
         $query->select('DISTINCT l.uuid, l.name')
             ->from('nglayouts_collection_item', 'ci')
             ->innerJoin(

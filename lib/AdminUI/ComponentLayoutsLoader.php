@@ -67,7 +67,6 @@ final class ComponentLayoutsLoader
     public function loadLayoutsData(): array
     {
         $query = $this->databaseConnection->createQueryBuilder();
-
         $query->select('b.view_type, bt.parameters, l.uuid as layout_uuid, l.name as layout_name')
             ->from('nglayouts_block', 'b')
             ->innerJoin(

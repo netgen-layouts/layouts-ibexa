@@ -48,13 +48,13 @@ final class RepositoryAccessVoterTest extends TestCase
     #[DataProvider('voteDataProvider')]
     public function testVote(mixed $attribute, array $repoAccess, int $voteResult): void
     {
-        $token = $this->createMock(TokenInterface::class);
+        $tokenMock = $this->createMock(TokenInterface::class);
 
         if (count($repoAccess) > 0) {
             $this->accessDecisionManagerMock
                 ->method('decide')
                 ->with(
-                    self::identicalTo($token),
+                    self::identicalTo($tokenMock),
                     self::isArray(),
                     self::isNull(),
                 )->willReturnCallback(
@@ -62,7 +62,7 @@ final class RepositoryAccessVoterTest extends TestCase
                 );
         }
 
-        $result = $this->voter->vote($token, null, [$attribute]);
+        $result = $this->voter->vote($tokenMock, null, [$attribute]);
 
         self::assertSame($voteResult, $result);
     }
