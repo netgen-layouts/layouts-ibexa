@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\LayoutsIbexaBundle\EventListener\Admin;
 
-use Netgen\Layouts\Event\CollectViewParametersEvent;
-use Netgen\Layouts\Event\LayoutsEvents;
+use Netgen\Layouts\Event\BuildViewEvent;
 use Netgen\Layouts\View\View\LayoutViewInterface;
 use Netgen\Layouts\View\View\RuleViewInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
-use function sprintf;
 
 final class IsEnterpriseVersionListener implements EventSubscriberInterface
 {
@@ -21,15 +18,15 @@ final class IsEnterpriseVersionListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            sprintf('%s.%s', LayoutsEvents::BUILD_VIEW, 'layout') => 'onBuildView',
-            sprintf('%s.%s', LayoutsEvents::BUILD_VIEW, 'rule') => 'onBuildView',
+            BuildViewEvent::getEventName('layout') => 'onBuildView',
+            BuildViewEvent::getEventName('rule') => 'onBuildView',
         ];
     }
 
     /**
      * Injects if Netgen Layouts is the enterprise version or not.
      */
-    public function onBuildView(CollectViewParametersEvent $event): void
+    public function onBuildView(BuildViewEvent $event): void
     {
         if (!$event->view instanceof LayoutViewInterface && !$event->view instanceof RuleViewInterface) {
             return;
@@ -39,6 +36,6 @@ final class IsEnterpriseVersionListener implements EventSubscriberInterface
             return;
         }
 
-        $event->addParameter('is_enterprise', $this->isEnterpriseVersion);
+        $event->view->addParameter('is_enterprise', $this->isEnterpriseVersion);
     }
 }
