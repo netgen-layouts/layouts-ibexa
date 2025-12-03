@@ -1,9 +1,7 @@
 services:
     netgen_layouts.ibexa.configuration.config_resolver:
         class: Netgen\Bundle\LayoutsIbexaBundle\Configuration\ConfigResolverConfiguration
+        decorates: netgen_layouts.configuration
         arguments:
             - "@ibexa.config.resolver"
-            - "@netgen_layouts.configuration.container"
-
-    netgen_layouts.configuration:
-        alias: netgen_layouts.ibexa.configuration.config_resolver
+            - "@.inner"

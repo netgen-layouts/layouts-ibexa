@@ -19,7 +19,7 @@ final class ConfigResolverConfiguration implements ConfigurationInterface
 {
     public function __construct(
         private ConfigResolverInterface $configResolver,
-        private ConfigurationInterface $fallbackConfiguration,
+        private ConfigurationInterface $innerConfiguration,
     ) {}
 
     public function hasParameter(string $parameterName): bool
@@ -30,7 +30,7 @@ final class ConfigResolverConfiguration implements ConfigurationInterface
         );
 
         if (!$hasParam) {
-            $hasParam = $this->fallbackConfiguration->hasParameter($parameterName);
+            $hasParam = $this->innerConfiguration->hasParameter($parameterName);
         }
 
         return $hasParam;
@@ -54,6 +54,6 @@ final class ConfigResolverConfiguration implements ConfigurationInterface
             );
         }
 
-        return $this->fallbackConfiguration->getParameter($parameterName);
+        return $this->innerConfiguration->getParameter($parameterName);
     }
 }
