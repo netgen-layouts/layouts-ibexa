@@ -14,7 +14,7 @@ use Netgen\Layouts\Ibexa\Tests\Validator\RepositoryValidatorFactory;
 use Netgen\Layouts\Ibexa\Utils\RemoteIdConverter;
 use Netgen\Layouts\Layout\Resolver\ValueObjectProviderInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validation;
@@ -22,38 +22,38 @@ use Symfony\Component\Validator\Validation;
 #[CoversClass(Subtree::class)]
 final class SubtreeTest extends TestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&ContentExtractorInterface $contentExtractorMock;
+    private Stub&ContentExtractorInterface $contentExtractorStub;
 
-    private MockObject&ValueObjectProviderInterface $valueObjectProviderMock;
+    private Stub&ValueObjectProviderInterface $valueObjectProviderStub;
 
-    private MockObject&LocationService $locationServiceMock;
+    private Stub&LocationService $locationServiceStub;
 
     private Subtree $targetType;
 
     protected function setUp(): void
     {
-        $this->contentExtractorMock = $this->createMock(ContentExtractorInterface::class);
-        $this->valueObjectProviderMock = $this->createMock(ValueObjectProviderInterface::class);
-        $this->locationServiceMock = $this->createMock(LocationService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getLocationService']);
+        $this->contentExtractorStub = self::createStub(ContentExtractorInterface::class);
+        $this->valueObjectProviderStub = self::createStub(ValueObjectProviderInterface::class);
+        $this->locationServiceStub = self::createStub(LocationService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getLocationService')
-            ->willReturn($this->locationServiceMock);
+            ->willReturn($this->locationServiceStub);
 
         $this->targetType = new Subtree(
-            $this->contentExtractorMock,
-            $this->valueObjectProviderMock,
-            new RemoteIdConverter($this->repositoryMock),
+            $this->contentExtractorStub,
+            $this->valueObjectProviderStub,
+            new RemoteIdConverter($this->repositoryStub),
         );
     }
 
@@ -64,14 +64,13 @@ final class SubtreeTest extends TestCase
 
     public function testValidation(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn(new Location());
 
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryMock))
+            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
             ->getValidator();
 
         $errors = $validator->validate(42, $this->targetType->getConstraints());
@@ -80,14 +79,13 @@ final class SubtreeTest extends TestCase
 
     public function testValidationWithInvalidValue(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
 
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryMock))
+            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
             ->getValidator();
 
         $errors = $validator->validate(42, $this->targetType->getConstraints());
@@ -104,7 +102,7 @@ final class SubtreeTest extends TestCase
 
         $request = Request::create('/');
 
-        $this->contentExtractorMock
+        $this->contentExtractorStub
             ->method('extractLocation')
             ->with(self::identicalTo($request))
             ->willReturn($location);
@@ -116,7 +114,7 @@ final class SubtreeTest extends TestCase
     {
         $request = Request::create('/');
 
-        $this->contentExtractorMock
+        $this->contentExtractorStub
             ->method('extractLocation')
             ->with(self::identicalTo($request))
             ->willReturn(null);
@@ -128,8 +126,7 @@ final class SubtreeTest extends TestCase
     {
         $location = new Location();
 
-        $this->valueObjectProviderMock
-            ->expects($this->once())
+        $this->valueObjectProviderStub
             ->method('getValueObject')
             ->with(self::identicalTo(42))
             ->willReturn($location);
@@ -139,8 +136,7 @@ final class SubtreeTest extends TestCase
 
     public function testExport(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn(new Location(['remoteId' => 'abc']));
@@ -150,8 +146,7 @@ final class SubtreeTest extends TestCase
 
     public function testExportWithInvalidValue(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
@@ -161,8 +156,7 @@ final class SubtreeTest extends TestCase
 
     public function testImport(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocationByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(new Location(['id' => 42]));
@@ -172,8 +166,7 @@ final class SubtreeTest extends TestCase
 
     public function testImportWithInvalidValue(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocationByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('location', 'abc'));

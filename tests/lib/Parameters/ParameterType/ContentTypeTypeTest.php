@@ -14,7 +14,7 @@ use Netgen\Layouts\Parameters\ParameterDefinition;
 use Netgen\Layouts\Tests\Parameters\ParameterType\ParameterTypeTestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidArgumentException;
 use Symfony\Component\Validator\Validation;
@@ -26,25 +26,25 @@ final class ContentTypeTypeTest extends TestCase
 {
     use ParameterTypeTestTrait;
 
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&ContentTypeService $contentTypeServiceMock;
+    private Stub&ContentTypeService $contentTypeServiceStub;
 
     protected function setUp(): void
     {
-        $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentTypeService']);
+        $this->contentTypeServiceStub = self::createStub(ContentTypeService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getContentTypeService')
-            ->willReturn($this->contentTypeServiceMock);
+            ->willReturn($this->contentTypeServiceStub);
 
         $this->type = new ContentTypeType();
     }
@@ -155,7 +155,7 @@ final class ContentTypeTypeTest extends TestCase
         if ($value !== null) {
             $options = ['multiple' => is_array($value)];
 
-            $this->contentTypeServiceMock
+            $this->contentTypeServiceStub
                 ->method('loadContentTypeByIdentifier')
                 ->willReturnCallback(
                     static fn (string $identifier): IbexaContentType => match (true) {
@@ -167,7 +167,7 @@ final class ContentTypeTypeTest extends TestCase
 
         $parameter = $this->getParameterDefinition($options, $required);
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryMock))
+            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
             ->getValidator();
 
         $errors = $validator->validate($value, $this->type->getConstraints($parameter, $value));

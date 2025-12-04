@@ -10,7 +10,7 @@ use Ibexa\Core\MVC\Symfony\Routing\UrlAliasRouter;
 use Netgen\Layouts\Context\Context;
 use Netgen\Layouts\Ibexa\Context\ContextProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -24,18 +24,18 @@ final class ContextProviderTest extends TestCase
 
     private ContextProvider $contextProvider;
 
-    private MockObject&ContentService $contentServiceMock;
+    private Stub&ContentService $contentServiceStub;
 
     protected function setUp(): void
     {
         $this->requestStack = new RequestStack();
         $this->context = new Context();
 
-        $this->contentServiceMock = $this->createMock(ContentService::class);
+        $this->contentServiceStub = self::createStub(ContentService::class);
 
         $this->contextProvider = new ContextProvider(
             $this->requestStack,
-            $this->contentServiceMock,
+            $this->contentServiceStub,
             [UrlAliasRouter::URL_ALIAS_ROUTE_NAME],
         );
     }
@@ -62,8 +62,7 @@ final class ContextProviderTest extends TestCase
         $request->attributes->set('contentId', 42);
         $request->attributes->set('_route', UrlAliasRouter::URL_ALIAS_ROUTE_NAME);
 
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(

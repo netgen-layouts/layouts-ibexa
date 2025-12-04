@@ -11,21 +11,21 @@ use Netgen\Layouts\Block\DynamicParameters;
 use Netgen\Layouts\Ibexa\Block\BlockDefinition\Handler\ContentFieldHandler;
 use Netgen\Layouts\Ibexa\ContentProvider\ContentProviderInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ContentFieldHandler::class)]
 final class ContentFieldHandlerTest extends TestCase
 {
-    private MockObject&ContentProviderInterface $contentProviderMock;
+    private Stub&ContentProviderInterface $contentProviderStub;
 
     private ContentFieldHandler $handler;
 
     protected function setUp(): void
     {
-        $this->contentProviderMock = $this->createMock(ContentProviderInterface::class);
+        $this->contentProviderStub = self::createStub(ContentProviderInterface::class);
 
-        $this->handler = new ContentFieldHandler($this->contentProviderMock);
+        $this->handler = new ContentFieldHandler($this->contentProviderStub);
     }
 
     public function testGetDynamicParameters(): void
@@ -33,13 +33,11 @@ final class ContentFieldHandlerTest extends TestCase
         $content = new Content();
         $location = new Location();
 
-        $this->contentProviderMock
-            ->expects($this->once())
+        $this->contentProviderStub
             ->method('provideContent')
             ->willReturn($content);
 
-        $this->contentProviderMock
-            ->expects($this->once())
+        $this->contentProviderStub
             ->method('provideLocation')
             ->willReturn($location);
 

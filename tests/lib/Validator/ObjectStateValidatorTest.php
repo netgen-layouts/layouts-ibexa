@@ -13,7 +13,7 @@ use Netgen\Layouts\Ibexa\Validator\ObjectStateValidator;
 use Netgen\Layouts\Tests\TestCase\ValidatorTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -21,9 +21,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 #[CoversClass(ObjectStateValidator::class)]
 final class ObjectStateValidatorTest extends ValidatorTestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&ObjectStateService $objectStateServiceMock;
+    private Stub&ObjectStateService $objectStateServiceStub;
 
     protected function setUp(): void
     {
@@ -41,11 +41,11 @@ final class ObjectStateValidatorTest extends ValidatorTestCase
         $group1 = new ObjectStateGroup(['identifier' => 'group1']);
         $group2 = new ObjectStateGroup(['identifier' => 'group2']);
 
-        $this->objectStateServiceMock
+        $this->objectStateServiceStub
             ->method('loadObjectStateGroups')
             ->willReturn([$group1, $group2]);
 
-        $this->objectStateServiceMock
+        $this->objectStateServiceStub
             ->method('loadObjectStates')
             ->willReturnMap(
                 [
@@ -90,14 +90,6 @@ final class ObjectStateValidatorTest extends ValidatorTestCase
 
     public function testValidateNull(): void
     {
-        $this->objectStateServiceMock
-            ->expects($this->never())
-            ->method('loadObjectStateGroups');
-
-        $this->objectStateServiceMock
-            ->expects($this->never())
-            ->method('loadObjectStates');
-
         $this->assertValid(true, null);
     }
 
@@ -152,20 +144,20 @@ final class ObjectStateValidatorTest extends ValidatorTestCase
 
     protected function getValidator(): ConstraintValidatorInterface
     {
-        $this->objectStateServiceMock = $this->createMock(ObjectStateService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getObjectStateService']);
+        $this->objectStateServiceStub = self::createStub(ObjectStateService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getObjectStateService')
-            ->willReturn($this->objectStateServiceMock);
+            ->willReturn($this->objectStateServiceStub);
 
-        return new ObjectStateValidator($this->repositoryMock);
+        return new ObjectStateValidator($this->repositoryStub);
     }
 }

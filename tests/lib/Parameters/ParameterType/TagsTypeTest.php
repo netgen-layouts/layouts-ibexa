@@ -12,7 +12,7 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\Core\Repository\TagsService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidArgumentException;
 use Symfony\Component\Validator\Validation;
@@ -22,13 +22,20 @@ final class TagsTypeTest extends TestCase
 {
     use ParameterTypeTestTrait;
 
-    private MockObject&TagsService $tagsServiceMock;
+    private Stub&TagsService $tagsServiceStub;
 
     protected function setUp(): void
     {
-        $this->tagsServiceMock = $this->createPartialMock(TagsService::class, ['loadTag', 'loadTagByRemoteId']);
+        $this->tagsServiceStub = self::createStub(TagsService::class);
 
-        $this->type = new TagsType($this->tagsServiceMock);
+        $this->tagsServiceStub
+            ->method('sudo')
+            ->with(self::anything())
+            ->willReturnCallback(
+                fn (callable $callback) => $callback($this->tagsServiceStub),
+            );
+
+        $this->type = new TagsType($this->tagsServiceStub);
     }
 
     public function testGetIdentifier(): void
@@ -251,8 +258,7 @@ final class TagsTypeTest extends TestCase
 
     public function testExport(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTag')
             ->with(self::identicalTo(42))
             ->willReturn(new Tag(['remoteId' => 'abc']));
@@ -262,8 +268,7 @@ final class TagsTypeTest extends TestCase
 
     public function testExportWithNonExistingTag(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTag')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('tag', 42));
@@ -273,8 +278,7 @@ final class TagsTypeTest extends TestCase
 
     public function testImport(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTagByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(new Tag(['id' => 42]));
@@ -284,8 +288,7 @@ final class TagsTypeTest extends TestCase
 
     public function testImportWithNonExistingTag(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTagByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('tag', 'abc'));
@@ -297,7 +300,7 @@ final class TagsTypeTest extends TestCase
     public function testValidation(mixed $values, bool $required, bool $isValid): void
     {
         if ($values !== null) {
-            $this->tagsServiceMock
+            $this->tagsServiceStub
                 ->method('loadTag')
                 ->willReturnCallback(
                     static fn (int $id): Tag => match (true) {
@@ -309,7 +312,7 @@ final class TagsTypeTest extends TestCase
 
         $parameter = $this->getParameterDefinition(['min' => 1, 'max' => 3], $required);
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new TagsServiceValidatorFactory($this->tagsServiceMock))
+            ->setConstraintValidatorFactory(new TagsServiceValidatorFactory($this->tagsServiceStub))
             ->getValidator();
 
         $errors = $validator->validate($values, $this->type->getConstraints($parameter, $values));

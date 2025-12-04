@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\Tests\Layout\Resolver\ConditionType;
 
+use Ibexa\Contracts\Core\Repository\Repository;
 use Ibexa\Core\MVC\Symfony\SiteAccess as IbexaSiteAccess;
 use Netgen\Layouts\Ibexa\Layout\Resolver\ConditionType\SiteAccess;
 use Netgen\Layouts\Ibexa\Tests\Validator\ValidatorFactory;
+use Netgen\Layouts\Item\CmsItemLoaderInterface;
 use Netgen\Layouts\Tests\TestCase\ValidatorFactory as BaseValidatorFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -33,7 +35,14 @@ final class SiteAccessTest extends TestCase
     public function testValidation(mixed $value, bool $isValid): void
     {
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new ValidatorFactory($this, new BaseValidatorFactory($this)))
+            ->setConstraintValidatorFactory(
+                new ValidatorFactory(
+                    new BaseValidatorFactory(
+                        self::createStub(CmsItemLoaderInterface::class),
+                    ),
+                    self::createStub(Repository::class),
+                ),
+            )
             ->getValidator();
 
         $errors = $validator->validate($value, $this->conditionType->getConstraints());

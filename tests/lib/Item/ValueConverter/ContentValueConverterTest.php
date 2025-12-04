@@ -21,16 +21,16 @@ final class ContentValueConverterTest extends TestCase
 
     protected function setUp(): void
     {
-        $locationServiceMock = $this->createMock(LocationService::class);
-        $locationServiceMock
+        $locationServiceStub = self::createStub(LocationService::class);
+        $locationServiceStub
             ->method('loadLocation')
             ->with(self::isInt())
             ->willReturnCallback(
                 static fn ($id): Location => new Location(['id' => $id, 'invisible' => false]),
             );
 
-        $contentServiceMock = $this->createMock(ContentService::class);
-        $contentServiceMock
+        $contentServiceStub = self::createStub(ContentService::class);
+        $contentServiceStub
             ->method('loadContentByContentInfo')
             ->with(self::isInstanceOf(ContentInfo::class))
             ->willReturn(
@@ -47,8 +47,8 @@ final class ContentValueConverterTest extends TestCase
             );
 
         $this->valueConverter = new ContentValueConverter(
-            $locationServiceMock,
-            $contentServiceMock,
+            $locationServiceStub,
+            $contentServiceStub,
         );
     }
 

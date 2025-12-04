@@ -50,7 +50,7 @@ final class ComponentContentExtensionTest extends TestCase
 
         $formView->parent->parent->vars['block'] = $block;
 
-        $this->extension->buildView($formView, $this->createMock(FormInterface::class), []);
+        $this->extension->buildView($formView, self::createStub(FormInterface::class), []);
 
         self::assertContains('ibexa_component_content', $formView->vars['block_prefixes']);
     }
@@ -75,7 +75,7 @@ final class ComponentContentExtensionTest extends TestCase
 
         $formView->parent->parent->vars['block'] = $block;
 
-        $this->extension->buildView($formView, $this->createMock(FormInterface::class), []);
+        $this->extension->buildView($formView, self::createStub(FormInterface::class), []);
 
         self::assertNotContains('ibexa_component_content', $formView->vars['block_prefixes']);
     }
@@ -85,7 +85,7 @@ final class ComponentContentExtensionTest extends TestCase
         $formView = new FormView();
         $formView->vars['block_prefixes'] = [];
 
-        $this->extension->buildView($formView, $this->createMock(FormInterface::class), []);
+        $this->extension->buildView($formView, self::createStub(FormInterface::class), []);
 
         self::assertNotContains('ibexa_component_content', $formView->vars['block_prefixes']);
     }

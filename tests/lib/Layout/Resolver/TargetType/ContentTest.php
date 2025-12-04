@@ -16,7 +16,7 @@ use Netgen\Layouts\Ibexa\Tests\Validator\RepositoryValidatorFactory;
 use Netgen\Layouts\Ibexa\Utils\RemoteIdConverter;
 use Netgen\Layouts\Layout\Resolver\ValueObjectProviderInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validation;
@@ -24,38 +24,38 @@ use Symfony\Component\Validator\Validation;
 #[CoversClass(Content::class)]
 final class ContentTest extends TestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&ContentService $contentServiceMock;
+    private Stub&ContentService $contentServiceStub;
 
-    private MockObject&ContentExtractorInterface $contentExtractorMock;
+    private Stub&ContentExtractorInterface $contentExtractorStub;
 
-    private MockObject&ValueObjectProviderInterface $valueObjectProviderMock;
+    private Stub&ValueObjectProviderInterface $valueObjectProviderStub;
 
     private Content $targetType;
 
     protected function setUp(): void
     {
-        $this->contentExtractorMock = $this->createMock(ContentExtractorInterface::class);
-        $this->valueObjectProviderMock = $this->createMock(ValueObjectProviderInterface::class);
-        $this->contentServiceMock = $this->createMock(ContentService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentService']);
+        $this->contentExtractorStub = self::createStub(ContentExtractorInterface::class);
+        $this->valueObjectProviderStub = self::createStub(ValueObjectProviderInterface::class);
+        $this->contentServiceStub = self::createStub(ContentService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getContentService')
-            ->willReturn($this->contentServiceMock);
+            ->willReturn($this->contentServiceStub);
 
         $this->targetType = new Content(
-            $this->contentExtractorMock,
-            $this->valueObjectProviderMock,
-            new RemoteIdConverter($this->repositoryMock),
+            $this->contentExtractorStub,
+            $this->valueObjectProviderStub,
+            new RemoteIdConverter($this->repositoryStub),
         );
     }
 
@@ -66,14 +66,13 @@ final class ContentTest extends TestCase
 
     public function testValidation(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo());
 
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryMock))
+            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
             ->getValidator();
 
         $errors = $validator->validate(42, $this->targetType->getConstraints());
@@ -82,14 +81,13 @@ final class ContentTest extends TestCase
 
     public function testValidationWithInvalidValue(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
 
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryMock))
+            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
             ->getValidator();
 
         $errors = $validator->validate(42, $this->targetType->getConstraints());
@@ -114,7 +112,7 @@ final class ContentTest extends TestCase
 
         $request = Request::create('/');
 
-        $this->contentExtractorMock
+        $this->contentExtractorStub
             ->method('extractContent')
             ->with(self::identicalTo($request))
             ->willReturn($content);
@@ -126,7 +124,7 @@ final class ContentTest extends TestCase
     {
         $request = Request::create('/');
 
-        $this->contentExtractorMock
+        $this->contentExtractorStub
             ->method('extractContent')
             ->with(self::identicalTo($request))
             ->willReturn(null);
@@ -138,8 +136,7 @@ final class ContentTest extends TestCase
     {
         $content = new IbexaContent();
 
-        $this->valueObjectProviderMock
-            ->expects($this->once())
+        $this->valueObjectProviderStub
             ->method('getValueObject')
             ->with(self::identicalTo(42))
             ->willReturn($content);
@@ -149,8 +146,7 @@ final class ContentTest extends TestCase
 
     public function testExport(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['remoteId' => 'abc']));
@@ -160,8 +156,7 @@ final class ContentTest extends TestCase
 
     public function testExportWithInvalidValue(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
@@ -171,8 +166,7 @@ final class ContentTest extends TestCase
 
     public function testImport(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(new ContentInfo(['id' => 42]));
@@ -182,8 +176,7 @@ final class ContentTest extends TestCase
 
     public function testImportWithInvalidValue(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('content', 'abc'));

@@ -10,13 +10,13 @@ use Ibexa\Core\Repository\Values\Content\Location;
 use Netgen\Layouts\Context\Context;
 use Netgen\Layouts\Ibexa\ContentProvider\ContentProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ContentProvider::class)]
 final class ContentProviderTest extends TestCase
 {
-    private MockObject&LocationService $locationServiceMock;
+    private Stub&LocationService $locationServiceStub;
 
     private Context $context;
 
@@ -24,11 +24,11 @@ final class ContentProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->locationServiceMock = $this->createMock(LocationService::class);
+        $this->locationServiceStub = self::createStub(LocationService::class);
         $this->context = new Context();
 
         $this->contentProvider = new ContentProvider(
-            $this->locationServiceMock,
+            $this->locationServiceStub,
             $this->context,
         );
     }
@@ -44,8 +44,7 @@ final class ContentProviderTest extends TestCase
 
         $this->context->set('ibexa_location_id', 42);
 
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn($location);
@@ -55,10 +54,6 @@ final class ContentProviderTest extends TestCase
 
     public function testProvideContentWithoutContent(): void
     {
-        $this->locationServiceMock
-            ->expects($this->never())
-            ->method('loadLocation');
-
         self::assertNull($this->contentProvider->provideContent());
     }
 
@@ -68,8 +63,7 @@ final class ContentProviderTest extends TestCase
 
         $this->context->set('ibexa_location_id', 42);
 
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn($location);
@@ -79,10 +73,6 @@ final class ContentProviderTest extends TestCase
 
     public function testProvideLocationWithoutLocation(): void
     {
-        $this->locationServiceMock
-            ->expects($this->never())
-            ->method('loadLocation');
-
         self::assertNull($this->contentProvider->provideLocation());
     }
 }

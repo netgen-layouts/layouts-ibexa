@@ -14,7 +14,7 @@ use Netgen\Layouts\Ibexa\Validator\Constraint\Location;
 use Netgen\Layouts\Ibexa\Validator\LocationValidator;
 use Netgen\Layouts\Tests\TestCase\ValidatorTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -22,9 +22,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 #[CoversClass(LocationValidator::class)]
 final class LocationValidatorTest extends ValidatorTestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&LocationService $locationServiceMock;
+    private Stub&LocationService $locationServiceStub;
 
     protected function setUp(): void
     {
@@ -35,8 +35,7 @@ final class LocationValidatorTest extends ValidatorTestCase
 
     public function testValidateValid(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn(
@@ -53,8 +52,7 @@ final class LocationValidatorTest extends ValidatorTestCase
 
     public function testValidateInvalidWithWrongType(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willReturn(
@@ -71,8 +69,7 @@ final class LocationValidatorTest extends ValidatorTestCase
 
     public function testValidateInvalidWithNonExistingLocation(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
@@ -82,10 +79,6 @@ final class LocationValidatorTest extends ValidatorTestCase
 
     public function testValidateNull(): void
     {
-        $this->locationServiceMock
-            ->expects($this->never())
-            ->method('loadLocation');
-
         $this->assertValid(true, null);
     }
 
@@ -108,19 +101,19 @@ final class LocationValidatorTest extends ValidatorTestCase
 
     protected function getValidator(): ConstraintValidatorInterface
     {
-        $this->locationServiceMock = $this->createMock(LocationService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getLocationService']);
+        $this->locationServiceStub = self::createStub(LocationService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getLocationService')
-            ->willReturn($this->locationServiceMock);
+            ->willReturn($this->locationServiceStub);
 
-        return new LocationValidator($this->repositoryMock);
+        return new LocationValidator($this->repositoryStub);
     }
 }

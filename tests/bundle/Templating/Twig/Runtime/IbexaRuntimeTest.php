@@ -16,42 +16,41 @@ use Ibexa\Core\Repository\Values\Content\VersionInfo;
 use Ibexa\Core\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\LayoutsIbexaBundle\Templating\Twig\Runtime\IbexaRuntime;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(IbexaRuntime::class)]
 final class IbexaRuntimeTest extends TestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&ContentService $contentServiceMock;
+    private Stub&ContentService $contentServiceStub;
 
-    private MockObject&LocationService $locationServiceMock;
+    private Stub&LocationService $locationServiceStub;
 
-    private MockObject&ContentTypeService $contentTypeServiceMock;
+    private Stub&ContentTypeService $contentTypeServiceStub;
 
     private IbexaRuntime $runtime;
 
     protected function setUp(): void
     {
-        $this->prepareRepositoryMock();
+        $this->prepareRepositoryStub();
 
         $this->runtime = new IbexaRuntime(
-            $this->repositoryMock,
+            $this->repositoryStub,
         );
     }
 
     public function testGetContentName(): void
     {
-        $this->mockServices();
+        $this->configureStubs();
 
         self::assertSame('Content name 42', $this->runtime->getContentName(42));
     }
 
     public function testGetContentNameWithException(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContent')
             ->with(self::identicalTo(42))
             ->willThrowException(new Exception());
@@ -61,7 +60,7 @@ final class IbexaRuntimeTest extends TestCase
 
     public function testGetLocationPath(): void
     {
-        $this->mockServices();
+        $this->configureStubs();
 
         self::assertSame(
             [
@@ -75,8 +74,7 @@ final class IbexaRuntimeTest extends TestCase
 
     public function testGetLocationPathWithException(): void
     {
-        $this->locationServiceMock
-            ->expects($this->once())
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(22))
             ->willThrowException(new Exception());
@@ -86,7 +84,7 @@ final class IbexaRuntimeTest extends TestCase
 
     public function testGetContentPath(): void
     {
-        $this->mockServices();
+        $this->configureStubs();
 
         self::assertSame(
             [
@@ -100,8 +98,7 @@ final class IbexaRuntimeTest extends TestCase
 
     public function testGetContentPathWithException(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContent')
             ->with(self::identicalTo(22))
             ->willThrowException(new Exception());
@@ -111,9 +108,9 @@ final class IbexaRuntimeTest extends TestCase
 
     public function testGetContentTypeName(): void
     {
-        $this->mockServices();
+        $this->configureStubs();
 
-        $this->contentTypeServiceMock
+        $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
             ->willReturnCallback(
                 static fn (string $identifier): ContentType => new ContentType(
@@ -133,9 +130,9 @@ final class IbexaRuntimeTest extends TestCase
 
     public function testGetContentTypeNameWithNoTranslatedName(): void
     {
-        $this->mockServices();
+        $this->configureStubs();
 
-        $this->contentTypeServiceMock
+        $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
             ->willReturnCallback(
                 static fn (string $identifier): ContentType => new ContentType(
@@ -155,8 +152,7 @@ final class IbexaRuntimeTest extends TestCase
 
     public function testGetContentTypeNameWithException(): void
     {
-        $this->contentTypeServiceMock
-            ->expects($this->once())
+        $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
             ->with(self::identicalTo('some_type'))
             ->willThrowException(new Exception());
@@ -164,45 +160,36 @@ final class IbexaRuntimeTest extends TestCase
         self::assertSame('', $this->runtime->getContentTypeName('some_type'));
     }
 
-    private function prepareRepositoryMock(): void
+    private function prepareRepositoryStub(): void
     {
-        $this->locationServiceMock = $this->createMock(LocationService::class);
-        $this->contentServiceMock = $this->createMock(ContentService::class);
-        $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
+        $this->locationServiceStub = self::createStub(LocationService::class);
+        $this->contentServiceStub = self::createStub(ContentService::class);
+        $this->contentTypeServiceStub = self::createStub(ContentTypeService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock = $this->createPartialMock(
-            Repository::class,
-            [
-                'sudo',
-                'getContentService',
-                'getLocationService',
-                'getContentTypeService',
-            ],
-        );
-
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getLocationService')
-            ->willReturn($this->locationServiceMock);
+            ->willReturn($this->locationServiceStub);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getContentService')
-            ->willReturn($this->contentServiceMock);
+            ->willReturn($this->contentServiceStub);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getContentTypeService')
-            ->willReturn($this->contentTypeServiceMock);
+            ->willReturn($this->contentTypeServiceStub);
     }
 
-    private function mockServices(): void
+    private function configureStubs(): void
     {
-        $this->locationServiceMock
+        $this->locationServiceStub
             ->method('loadLocation')
             ->willReturnCallback(
                 static fn ($locationId): Location => new Location(
@@ -217,7 +204,7 @@ final class IbexaRuntimeTest extends TestCase
                 ),
             );
 
-        $this->contentServiceMock
+        $this->contentServiceStub
             ->method('loadContent')
             ->willReturnCallback(
                 static fn ($contentId): Content => new Content(

@@ -11,7 +11,7 @@ use Netgen\Layouts\Tests\TestCase\ValidatorTestCase;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag as APITag;
 use Netgen\TagsBundle\Core\Repository\TagsService;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 #[CoversClass(TagValidator::class)]
 final class TagValidatorTest extends ValidatorTestCase
 {
-    private MockObject&TagsService $tagsServiceMock;
+    private Stub&TagsService $tagsServiceStub;
 
     protected function setUp(): void
     {
@@ -30,8 +30,7 @@ final class TagValidatorTest extends ValidatorTestCase
 
     public function testValidateValid(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTag')
             ->with(self::identicalTo(42))
             ->willReturn(new APITag(['id' => 42]));
@@ -41,17 +40,12 @@ final class TagValidatorTest extends ValidatorTestCase
 
     public function testValidateNull(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->never())
-            ->method('loadTag');
-
         $this->assertValid(true, null);
     }
 
     public function testValidateInvalid(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTag')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('tag', 42));
@@ -78,8 +72,15 @@ final class TagValidatorTest extends ValidatorTestCase
 
     protected function getValidator(): ConstraintValidatorInterface
     {
-        $this->tagsServiceMock = $this->createPartialMock(TagsService::class, ['loadTag']);
+        $this->tagsServiceStub = self::createStub(TagsService::class);
 
-        return new TagValidator($this->tagsServiceMock);
+        $this->tagsServiceStub
+            ->method('sudo')
+            ->with(self::anything())
+            ->willReturnCallback(
+                fn (callable $callback) => $callback($this->tagsServiceStub),
+            );
+
+        return new TagValidator($this->tagsServiceStub);
     }
 }

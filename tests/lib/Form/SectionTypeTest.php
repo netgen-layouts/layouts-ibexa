@@ -9,7 +9,7 @@ use Ibexa\Contracts\Core\Repository\Values\Content\Section;
 use Netgen\Layouts\Ibexa\Form\SectionType;
 use Netgen\Layouts\Tests\TestCase\FormTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 #[CoversClass(SectionType::class)]
 final class SectionTypeTest extends FormTestCase
 {
-    private MockObject&SectionService $sectionServiceMock;
+    private Stub&SectionService $sectionServiceStub;
 
     public function testSubmitValidData(): void
     {
@@ -123,16 +123,16 @@ final class SectionTypeTest extends FormTestCase
 
     protected function getMainType(): FormTypeInterface
     {
-        $this->sectionServiceMock = $this->createMock(SectionService::class);
+        $this->sectionServiceStub = self::createStub(SectionService::class);
 
         return new SectionType(
-            $this->sectionServiceMock,
+            $this->sectionServiceStub,
         );
     }
 
     private function configureSectionService(): void
     {
-        $this->sectionServiceMock
+        $this->sectionServiceStub
             ->method('loadSections')
             ->willReturn(
                 [

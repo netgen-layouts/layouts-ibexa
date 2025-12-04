@@ -66,6 +66,6 @@ abstract class ContentFieldTestBase extends BlockTestCase
 
     final protected function createBlockDefinitionHandler(): BlockDefinitionHandlerInterface
     {
-        return new ContentFieldHandler($this->createMock(ContentProviderInterface::class));
+        return new ContentFieldHandler(self::createStub(ContentProviderInterface::class));
     }
 }

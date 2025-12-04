@@ -14,7 +14,7 @@ use Netgen\Layouts\Ibexa\Validator\Constraint\Content;
 use Netgen\Layouts\Ibexa\Validator\ContentValidator;
 use Netgen\Layouts\Tests\TestCase\ValidatorTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -22,9 +22,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 #[CoversClass(ContentValidator::class)]
 final class ContentValidatorTest extends ValidatorTestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&ContentService $contentServiceMock;
+    private Stub&ContentService $contentServiceStub;
 
     protected function setUp(): void
     {
@@ -35,8 +35,7 @@ final class ContentValidatorTest extends ValidatorTestCase
 
     public function testValidateValid(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['id' => 42, 'contentTypeId' => 24]));
@@ -46,8 +45,7 @@ final class ContentValidatorTest extends ValidatorTestCase
 
     public function testValidateInvalidWithWrongType(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['id' => 42, 'contentTypeId' => 52]));
@@ -57,8 +55,7 @@ final class ContentValidatorTest extends ValidatorTestCase
 
     public function testValidateInvalidWithNonExistingContent(): void
     {
-        $this->contentServiceMock
-            ->expects($this->once())
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
@@ -68,10 +65,6 @@ final class ContentValidatorTest extends ValidatorTestCase
 
     public function testValidateNull(): void
     {
-        $this->contentServiceMock
-            ->expects($this->never())
-            ->method('loadContentInfo');
-
         $this->assertValid(true, null);
     }
 
@@ -94,10 +87,10 @@ final class ContentValidatorTest extends ValidatorTestCase
 
     protected function getValidator(): ConstraintValidatorInterface
     {
-        $this->contentServiceMock = $this->createMock(ContentService::class);
+        $this->contentServiceStub = self::createStub(ContentService::class);
 
-        $contentTypeServiceMock = $this->createMock(ContentTypeService::class);
-        $contentTypeServiceMock
+        $contentTypeServiceStub = self::createStub(ContentTypeService::class);
+        $contentTypeServiceStub
             ->method('loadContentType')
             ->willReturnCallback(
                 static fn (int $type): ContentType => $type === 24 ?
@@ -105,23 +98,23 @@ final class ContentValidatorTest extends ValidatorTestCase
                     new ContentType(['identifier' => 'article']),
             );
 
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentService', 'getContentTypeService']);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getContentService')
-            ->willReturn($this->contentServiceMock);
+            ->willReturn($this->contentServiceStub);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getContentTypeService')
-            ->willReturn($contentTypeServiceMock);
+            ->willReturn($contentTypeServiceStub);
 
-        return new ContentValidator($this->repositoryMock);
+        return new ContentValidator($this->repositoryStub);
     }
 }

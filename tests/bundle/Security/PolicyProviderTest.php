@@ -7,27 +7,26 @@ namespace Netgen\Bundle\LayoutsIbexaBundle\Tests\Security;
 use Ibexa\Bundle\Core\DependencyInjection\Configuration\ConfigBuilderInterface;
 use Netgen\Bundle\LayoutsIbexaBundle\Security\PolicyProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(PolicyProvider::class)]
 final class PolicyProviderTest extends TestCase
 {
-    private MockObject&ConfigBuilderInterface $configBuilderMock;
+    private Stub&ConfigBuilderInterface $configBuilderStub;
 
     private PolicyProvider $policyProvider;
 
     protected function setUp(): void
     {
-        $this->configBuilderMock = $this->createMock(ConfigBuilderInterface::class);
+        $this->configBuilderStub = self::createStub(ConfigBuilderInterface::class);
 
         $this->policyProvider = new PolicyProvider();
     }
 
     public function testAddPolicies(): void
     {
-        $this->configBuilderMock
-            ->expects($this->once())
+        $this->configBuilderStub
             ->method('addConfig')
             ->with(
                 self::identicalTo(
@@ -41,6 +40,6 @@ final class PolicyProviderTest extends TestCase
                 ),
             );
 
-        $this->policyProvider->addPolicies($this->configBuilderMock);
+        $this->policyProvider->addPolicies($this->configBuilderStub);
     }
 }

@@ -14,7 +14,7 @@ use Netgen\Layouts\Parameters\ParameterDefinition;
 use Netgen\Layouts\Tests\Parameters\ParameterType\ParameterTypeTestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidArgumentException;
 use Symfony\Component\Validator\Validation;
@@ -26,25 +26,25 @@ final class SectionTypeTest extends TestCase
 {
     use ParameterTypeTestTrait;
 
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&SectionService $sectionServiceMock;
+    private Stub&SectionService $sectionServiceStub;
 
     protected function setUp(): void
     {
-        $this->sectionServiceMock = $this->createMock(SectionService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getSectionService']);
+        $this->sectionServiceStub = self::createStub(SectionService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getSectionService')
-            ->willReturn($this->sectionServiceMock);
+            ->willReturn($this->sectionServiceStub);
 
         $this->type = new SectionType();
     }
@@ -165,7 +165,7 @@ final class SectionTypeTest extends TestCase
         if ($value !== null) {
             $options = ['multiple' => is_array($value)];
 
-            $this->sectionServiceMock
+            $this->sectionServiceStub
                 ->method('loadSectionByIdentifier')
                 ->willReturnCallback(
                     static fn (string $identifier): IbexaSection => match (true) {
@@ -177,7 +177,7 @@ final class SectionTypeTest extends TestCase
 
         $parameter = $this->getParameterDefinition($options, $required);
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryMock))
+            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
             ->getValidator();
 
         $errors = $validator->validate($value, $this->type->getConstraints($parameter, $value));

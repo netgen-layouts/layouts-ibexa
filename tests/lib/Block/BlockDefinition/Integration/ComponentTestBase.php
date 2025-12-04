@@ -9,6 +9,7 @@ use Netgen\Layouts\Block\BlockDefinition\BlockDefinitionHandlerInterface;
 use Netgen\Layouts\Ibexa\Block\BlockDefinition\Handler\ComponentHandler;
 use Netgen\Layouts\Ibexa\Parameters\ParameterType as IbexaParameterType;
 use Netgen\Layouts\Ibexa\Tests\Validator\ValidatorFactory;
+use Netgen\Layouts\Item\CmsItemLoaderInterface;
 use Netgen\Layouts\Parameters\ParameterType;
 use Netgen\Layouts\Parameters\Registry\ParameterTypeRegistry;
 use Netgen\Layouts\Parameters\ValueObjectProviderInterface;
@@ -99,8 +100,8 @@ abstract class ComponentTestBase extends BlockTestCase
             [
                 new ParameterType\HiddenType(),
                 new IbexaParameterType\ContentType(
-                    $this->createMock(Repository::class),
-                    $this->createMock(ValueObjectProviderInterface::class),
+                    self::createStub(Repository::class),
+                    self::createStub(ValueObjectProviderInterface::class),
                 ),
             ],
         );
@@ -109,7 +110,14 @@ abstract class ComponentTestBase extends BlockTestCase
     final protected function createValidator(): ValidatorInterface
     {
         return Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new ValidatorFactory($this, new BaseValidatorFactory($this)))
+            ->setConstraintValidatorFactory(
+                new ValidatorFactory(
+                    new BaseValidatorFactory(
+                        self::createStub(CmsItemLoaderInterface::class),
+                    ),
+                    self::createStub(Repository::class),
+                ),
+            )
             ->getValidator();
     }
 

@@ -11,23 +11,23 @@ use Netgen\Layouts\Ibexa\Block\BlockDefinition\Configuration\Provider\IbexaConfi
 use Netgen\Layouts\Parameters\Parameter;
 use Netgen\Layouts\Parameters\ParameterList;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
 #[CoversClass(IbexaConfigProvider::class)]
 final class IbexaConfigProviderTest extends TestCase
 {
-    private MockObject&ConfigResolverInterface $configResolverMock;
+    private Stub&ConfigResolverInterface $configResolverStub;
 
     private IbexaConfigProvider $configProvider;
 
     protected function setUp(): void
     {
-        $this->configResolverMock = $this->createMock(ConfigResolverInterface::class);
+        $this->configResolverStub = self::createStub(ConfigResolverInterface::class);
 
         $this->configProvider = new IbexaConfigProvider(
-            $this->configResolverMock,
+            $this->configResolverStub,
             [
                 'cro' => ['group1', 'group2'],
                 'admin' => ['admin_group'],
@@ -55,7 +55,7 @@ final class IbexaConfigProviderTest extends TestCase
             ],
         );
 
-        $this->configResolverMock
+        $this->configResolverStub
             ->method('getParameter')
             ->with(self::identicalTo('content_view'), self::isNull(), self::identicalTo('cro'))
             ->willReturn(

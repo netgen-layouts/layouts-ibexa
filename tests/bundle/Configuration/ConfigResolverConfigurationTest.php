@@ -9,54 +9,47 @@ use Netgen\Bundle\LayoutsBundle\Configuration\ConfigurationInterface;
 use Netgen\Bundle\LayoutsBundle\Exception\ConfigurationException;
 use Netgen\Bundle\LayoutsIbexaBundle\Configuration\ConfigResolverConfiguration;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ConfigResolverConfiguration::class)]
 final class ConfigResolverConfigurationTest extends TestCase
 {
-    private MockObject&ConfigResolverInterface $configResolverMock;
+    private Stub&ConfigResolverInterface $configResolverStub;
 
-    private MockObject&ConfigurationInterface $fallbackConfigurationMock;
+    private Stub&ConfigurationInterface $fallbackConfigurationStub;
 
     private ConfigResolverConfiguration $configuration;
 
     protected function setUp(): void
     {
-        $this->configResolverMock = $this->createMock(ConfigResolverInterface::class);
-        $this->fallbackConfigurationMock = $this->createMock(ConfigurationInterface::class);
+        $this->configResolverStub = self::createStub(ConfigResolverInterface::class);
+        $this->fallbackConfigurationStub = self::createStub(ConfigurationInterface::class);
 
         $this->configuration = new ConfigResolverConfiguration(
-            $this->configResolverMock,
-            $this->fallbackConfigurationMock,
+            $this->configResolverStub,
+            $this->fallbackConfigurationStub,
         );
     }
 
     public function testHasParameter(): void
     {
-        $this->configResolverMock
-            ->expects($this->once())
+        $this->configResolverStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(true);
-
-        $this->fallbackConfigurationMock
-            ->expects($this->never())
-            ->method('hasParameter');
 
         self::assertTrue($this->configuration->hasParameter('some_param'));
     }
 
     public function testHasParameterWithNoParameter(): void
     {
-        $this->configResolverMock
-            ->expects($this->once())
+        $this->configResolverStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
-        $this->fallbackConfigurationMock
-            ->expects($this->once())
+        $this->fallbackConfigurationStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn(true);
@@ -66,14 +59,12 @@ final class ConfigResolverConfigurationTest extends TestCase
 
     public function testHasParameterWithNoFallbackParameter(): void
     {
-        $this->configResolverMock
-            ->expects($this->once())
+        $this->configResolverStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
-        $this->fallbackConfigurationMock
-            ->expects($this->once())
+        $this->fallbackConfigurationStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn(false);
@@ -83,43 +74,32 @@ final class ConfigResolverConfigurationTest extends TestCase
 
     public function testGetParameter(): void
     {
-        $this->configResolverMock
+        $this->configResolverStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(true);
 
-        $this->configResolverMock
-            ->expects($this->once())
+        $this->configResolverStub
             ->method('getParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn('some_param_value');
-
-        $this->fallbackConfigurationMock
-            ->expects($this->never())
-            ->method('getParameter');
 
         self::assertSame('some_param_value', $this->configuration->getParameter('some_param'));
     }
 
     public function testGetFallbackParameter(): void
     {
-        $this->configResolverMock
+        $this->configResolverStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
-        $this->fallbackConfigurationMock
-            ->expects($this->once())
+        $this->fallbackConfigurationStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn(true);
 
-        $this->configResolverMock
-            ->expects($this->never())
-            ->method('getParameter');
-
-        $this->fallbackConfigurationMock
-            ->expects($this->once())
+        $this->fallbackConfigurationStub
             ->method('getParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn('some_param_value');
@@ -132,14 +112,12 @@ final class ConfigResolverConfigurationTest extends TestCase
         $this->expectException(ConfigurationException::class);
         $this->expectExceptionMessage('Parameter "some_param" does not exist in configuration.');
 
-        $this->configResolverMock
-            ->expects($this->once())
+        $this->configResolverStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
-        $this->fallbackConfigurationMock
-            ->expects($this->once())
+        $this->fallbackConfigurationStub
             ->method('hasParameter')
             ->with(self::identicalTo('some_param'))
             ->willReturn(false);

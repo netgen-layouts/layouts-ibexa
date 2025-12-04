@@ -34,8 +34,8 @@ final class ContentMapperTest extends TestCase
             ParameterDefinition::fromArray(
                 [
                     'type' => new ParameterType(
-                        $this->createMock(Repository::class),
-                        $this->createMock(ValueObjectProviderInterface::class),
+                        self::createStub(Repository::class),
+                        self::createStub(ValueObjectProviderInterface::class),
                     ),
                     'options' => [
                         'allowed_types' => ['user', 'image'],
@@ -62,8 +62,8 @@ final class ContentMapperTest extends TestCase
             ParameterDefinition::fromArray(
                 [
                     'type' => new ParameterType(
-                        $this->createMock(Repository::class),
-                        $this->createMock(ValueObjectProviderInterface::class),
+                        self::createStub(Repository::class),
+                        self::createStub(ValueObjectProviderInterface::class),
                     ),
                     'options' => [
                         'allowed_types' => [],

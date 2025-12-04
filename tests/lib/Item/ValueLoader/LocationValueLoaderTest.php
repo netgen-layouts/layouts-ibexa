@@ -10,21 +10,21 @@ use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use Ibexa\Core\Repository\Values\Content\Location;
 use Netgen\Layouts\Ibexa\Item\ValueLoader\LocationValueLoader;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(LocationValueLoader::class)]
 final class LocationValueLoaderTest extends TestCase
 {
-    private MockObject&LocationService $locationServiceMock;
+    private Stub&LocationService $locationServiceStub;
 
     private LocationValueLoader $valueLoader;
 
     protected function setUp(): void
     {
-        $this->locationServiceMock = $this->createMock(LocationService::class);
+        $this->locationServiceStub = self::createStub(LocationService::class);
 
-        $this->valueLoader = new LocationValueLoader($this->locationServiceMock);
+        $this->valueLoader = new LocationValueLoader($this->locationServiceStub);
     }
 
     public function testLoad(): void
@@ -40,7 +40,7 @@ final class LocationValueLoaderTest extends TestCase
             ],
         );
 
-        $this->locationServiceMock
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(52))
             ->willReturn($location);
@@ -50,7 +50,7 @@ final class LocationValueLoaderTest extends TestCase
 
     public function testLoadWithNoLocation(): void
     {
-        $this->locationServiceMock
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(52))
             ->willThrowException(new Exception());
@@ -60,7 +60,7 @@ final class LocationValueLoaderTest extends TestCase
 
     public function testLoadWithNonPublishedContent(): void
     {
-        $this->locationServiceMock
+        $this->locationServiceStub
             ->method('loadLocation')
             ->with(self::identicalTo(52))
             ->willReturn(
@@ -91,7 +91,7 @@ final class LocationValueLoaderTest extends TestCase
             ],
         );
 
-        $this->locationServiceMock
+        $this->locationServiceStub
             ->method('loadLocationByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn($location);
@@ -101,7 +101,7 @@ final class LocationValueLoaderTest extends TestCase
 
     public function testLoadByRemoteIdWithNoLocation(): void
     {
-        $this->locationServiceMock
+        $this->locationServiceStub
             ->method('loadLocationByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new Exception());
@@ -111,7 +111,7 @@ final class LocationValueLoaderTest extends TestCase
 
     public function testLoadByRemoteIdWithNonPublishedContent(): void
     {
-        $this->locationServiceMock
+        $this->locationServiceStub
             ->method('loadLocationByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(

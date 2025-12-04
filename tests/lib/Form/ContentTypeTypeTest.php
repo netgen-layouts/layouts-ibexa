@@ -10,7 +10,7 @@ use Ibexa\Core\Repository\Values\ContentType\ContentTypeGroup;
 use Netgen\Layouts\Ibexa\Form\ContentTypeType;
 use Netgen\Layouts\Tests\TestCase\FormTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 #[CoversClass(ContentTypeType::class)]
 final class ContentTypeTypeTest extends FormTestCase
 {
-    private MockObject&ContentTypeService $contentTypeServiceMock;
+    private Stub&ContentTypeService $contentTypeServiceStub;
 
     public function testSubmitValidData(): void
     {
@@ -82,10 +82,10 @@ final class ContentTypeTypeTest extends FormTestCase
 
     protected function getMainType(): FormTypeInterface
     {
-        $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
+        $this->contentTypeServiceStub = self::createStub(ContentTypeService::class);
 
         return new ContentTypeType(
-            $this->contentTypeServiceMock,
+            $this->contentTypeServiceStub,
         );
     }
 
@@ -95,11 +95,11 @@ final class ContentTypeTypeTest extends FormTestCase
         $contentTypeGroup2 = new ContentTypeGroup(['identifier' => 'Group2']);
         $contentTypeGroup3 = new ContentTypeGroup(['identifier' => 'Group3']);
 
-        $this->contentTypeServiceMock
+        $this->contentTypeServiceStub
             ->method('loadContentTypeGroups')
             ->willReturn([$contentTypeGroup1, $contentTypeGroup2, $contentTypeGroup3]);
 
-        $this->contentTypeServiceMock
+        $this->contentTypeServiceStub
             ->method('loadContentTypes')
             ->willReturnMap(
                 [

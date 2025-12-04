@@ -9,21 +9,21 @@ use Ibexa\Contracts\Core\Repository\ContentService;
 use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use Netgen\Layouts\Ibexa\Item\ValueLoader\ContentValueLoader;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ContentValueLoader::class)]
 final class ContentValueLoaderTest extends TestCase
 {
-    private MockObject&ContentService $contentServiceMock;
+    private Stub&ContentService $contentServiceStub;
 
     private ContentValueLoader $valueLoader;
 
     protected function setUp(): void
     {
-        $this->contentServiceMock = $this->createMock(ContentService::class);
+        $this->contentServiceStub = self::createStub(ContentService::class);
 
-        $this->valueLoader = new ContentValueLoader($this->contentServiceMock);
+        $this->valueLoader = new ContentValueLoader($this->contentServiceStub);
     }
 
     public function testLoad(): void
@@ -36,7 +36,7 @@ final class ContentValueLoaderTest extends TestCase
             ],
         );
 
-        $this->contentServiceMock
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(52))
             ->willReturn($contentInfo);
@@ -46,7 +46,7 @@ final class ContentValueLoaderTest extends TestCase
 
     public function testLoadWithNoContent(): void
     {
-        $this->contentServiceMock
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(52))
             ->willThrowException(new Exception());
@@ -56,7 +56,7 @@ final class ContentValueLoaderTest extends TestCase
 
     public function testLoadWithNonPublishedContent(): void
     {
-        $this->contentServiceMock
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(52))
             ->willReturn(
@@ -73,7 +73,7 @@ final class ContentValueLoaderTest extends TestCase
 
     public function testLoadWithNoMainLocation(): void
     {
-        $this->contentServiceMock
+        $this->contentServiceStub
             ->method('loadContentInfo')
             ->with(self::identicalTo(52))
             ->willReturn(
@@ -97,7 +97,7 @@ final class ContentValueLoaderTest extends TestCase
             ],
         );
 
-        $this->contentServiceMock
+        $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn($contentInfo);
@@ -107,7 +107,7 @@ final class ContentValueLoaderTest extends TestCase
 
     public function testLoadByRemoteIdWithNoContent(): void
     {
-        $this->contentServiceMock
+        $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willThrowException(new Exception());
@@ -117,7 +117,7 @@ final class ContentValueLoaderTest extends TestCase
 
     public function testLoadByRemoteIdWithNonPublishedContent(): void
     {
-        $this->contentServiceMock
+        $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(
@@ -134,7 +134,7 @@ final class ContentValueLoaderTest extends TestCase
 
     public function testLoadByRemoteIdWithNoMainLocation(): void
     {
-        $this->contentServiceMock
+        $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
             ->with(self::identicalTo('abc'))
             ->willReturn(

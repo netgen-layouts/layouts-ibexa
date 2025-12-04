@@ -10,7 +10,7 @@ use Ibexa\Core\Repository\Values\ObjectState\ObjectStateGroup;
 use Netgen\Layouts\Ibexa\Form\ObjectStateType;
 use Netgen\Layouts\Tests\TestCase\FormTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 #[CoversClass(ObjectStateType::class)]
 final class ObjectStateTypeTest extends FormTestCase
 {
-    private MockObject&ObjectStateService $objectStateServiceMock;
+    private Stub&ObjectStateService $objectStateServiceStub;
 
     public function testSubmitValidData(): void
     {
@@ -82,10 +82,10 @@ final class ObjectStateTypeTest extends FormTestCase
 
     protected function getMainType(): FormTypeInterface
     {
-        $this->objectStateServiceMock = $this->createMock(ObjectStateService::class);
+        $this->objectStateServiceStub = self::createStub(ObjectStateService::class);
 
         return new ObjectStateType(
-            $this->objectStateServiceMock,
+            $this->objectStateServiceStub,
         );
     }
 
@@ -95,11 +95,11 @@ final class ObjectStateTypeTest extends FormTestCase
         $objectStateGroup2 = new ObjectStateGroup(['identifier' => 'other', 'names' => ['eng-GB' => 'Other'], 'mainLanguageCode' => 'eng-GB']);
         $objectStateGroup3 = new ObjectStateGroup(['identifier' => 'third', 'names' => ['eng-GB' => 'Third'], 'mainLanguageCode' => 'eng-GB']);
 
-        $this->objectStateServiceMock
+        $this->objectStateServiceStub
             ->method('loadObjectStateGroups')
             ->willReturn([$objectStateGroup1, $objectStateGroup2, $objectStateGroup3]);
 
-        $this->objectStateServiceMock
+        $this->objectStateServiceStub
             ->method('loadObjectStates')
             ->willReturnMap(
                 [

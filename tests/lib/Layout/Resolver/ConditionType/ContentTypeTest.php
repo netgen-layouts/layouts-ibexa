@@ -14,7 +14,7 @@ use Netgen\Layouts\Ibexa\Layout\Resolver\ConditionType\ContentType;
 use Netgen\Layouts\Ibexa\Tests\Validator\RepositoryValidatorFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validation;
@@ -22,33 +22,33 @@ use Symfony\Component\Validator\Validation;
 #[CoversClass(ContentType::class)]
 final class ContentTypeTest extends TestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
     private ContentType $conditionType;
 
-    private MockObject&ContentExtractorInterface $contentExtractorMock;
+    private Stub&ContentExtractorInterface $contentExtractorStub;
 
-    private MockObject&ContentTypeService $contentTypeServiceMock;
+    private Stub&ContentTypeService $contentTypeServiceStub;
 
     protected function setUp(): void
     {
-        $this->contentExtractorMock = $this->createMock(ContentExtractorInterface::class);
-        $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentTypeService']);
+        $this->contentExtractorStub = self::createStub(ContentExtractorInterface::class);
+        $this->contentTypeServiceStub = self::createStub(ContentTypeService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getContentTypeService')
-            ->willReturn($this->contentTypeServiceMock);
+            ->willReturn($this->contentTypeServiceStub);
 
         $this->conditionType = new ContentType(
-            $this->contentExtractorMock,
+            $this->contentExtractorStub,
         );
     }
 
@@ -59,14 +59,13 @@ final class ContentTypeTest extends TestCase
 
     public function testValidation(): void
     {
-        $this->contentTypeServiceMock
-            ->expects($this->once())
+        $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
             ->with(self::identicalTo('identifier'))
             ->willReturn(new IbexaContentType());
 
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryMock))
+            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
             ->getValidator();
 
         $errors = $validator->validate(['identifier'], $this->conditionType->getConstraints());
@@ -75,14 +74,13 @@ final class ContentTypeTest extends TestCase
 
     public function testValidationWithInvalidValue(): void
     {
-        $this->contentTypeServiceMock
-            ->expects($this->once())
+        $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
             ->with(self::identicalTo('unknown'))
             ->willThrowException(new NotFoundException('content type', 'unknown'));
 
         $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryMock))
+            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
             ->getValidator();
 
         $errors = $validator->validate(['unknown'], $this->conditionType->getConstraints());
@@ -104,7 +102,7 @@ final class ContentTypeTest extends TestCase
             ],
         );
 
-        $this->contentExtractorMock
+        $this->contentExtractorStub
             ->method('extractContent')
             ->with(self::identicalTo($request))
             ->willReturn($content);
@@ -116,7 +114,7 @@ final class ContentTypeTest extends TestCase
     {
         $request = Request::create('/');
 
-        $this->contentExtractorMock
+        $this->contentExtractorStub
             ->method('extractContent')
             ->with(self::identicalTo($request))
             ->willReturn(null);

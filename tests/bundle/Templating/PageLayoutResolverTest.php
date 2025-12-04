@@ -8,7 +8,7 @@ use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\Bundle\LayoutsBundle\Templating\PageLayoutResolverInterface;
 use Netgen\Bundle\LayoutsIbexaBundle\Templating\PageLayoutResolver;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -16,24 +16,24 @@ use Symfony\Component\HttpFoundation\RequestStack;
 #[CoversClass(PageLayoutResolver::class)]
 final class PageLayoutResolverTest extends TestCase
 {
-    private MockObject&PageLayoutResolverInterface $innerResolverMock;
+    private Stub&PageLayoutResolverInterface $innerResolverStub;
 
-    private MockObject&ConfigResolverInterface $configResolverMock;
+    private Stub&ConfigResolverInterface $configResolverStub;
 
-    private MockObject&RequestStack $requestStackMock;
+    private Stub&RequestStack $requestStackStub;
 
     private PageLayoutResolver $resolver;
 
     protected function setUp(): void
     {
-        $this->innerResolverMock = $this->createMock(PageLayoutResolverInterface::class);
-        $this->configResolverMock = $this->createMock(ConfigResolverInterface::class);
-        $this->requestStackMock = $this->createMock(RequestStack::class);
+        $this->innerResolverStub = self::createStub(PageLayoutResolverInterface::class);
+        $this->configResolverStub = self::createStub(ConfigResolverInterface::class);
+        $this->requestStackStub = self::createStub(RequestStack::class);
 
         $this->resolver = new PageLayoutResolver(
-            $this->innerResolverMock,
-            $this->configResolverMock,
-            $this->requestStackMock,
+            $this->innerResolverStub,
+            $this->configResolverStub,
+            $this->requestStackStub,
             'fallback_layout.html.twig',
         );
     }
@@ -42,17 +42,16 @@ final class PageLayoutResolverTest extends TestCase
     {
         $request = Request::create('/');
 
-        $this->requestStackMock
-            ->expects($this->once())
+        $this->requestStackStub
             ->method('getCurrentRequest')
             ->willReturn($request);
 
-        $this->configResolverMock
+        $this->configResolverStub
             ->method('hasParameter')
             ->with(self::identicalTo('page_layout'))
             ->willReturn(true);
 
-        $this->configResolverMock
+        $this->configResolverStub
             ->method('getParameter')
             ->with(self::identicalTo('page_layout'))
             ->willReturn('resolved_layout.html.twig');
@@ -62,23 +61,13 @@ final class PageLayoutResolverTest extends TestCase
 
     public function testResolvePageLayoutWitNoRequest(): void
     {
-        $this->requestStackMock
-            ->expects($this->once())
+        $this->requestStackStub
             ->method('getCurrentRequest')
             ->willReturn(null);
 
-        $this->innerResolverMock
-            ->expects($this->once())
+        $this->innerResolverStub
             ->method('resolvePageLayout')
             ->willReturn('default_layout.html.twig');
-
-        $this->configResolverMock
-            ->expects($this->never())
-            ->method('hasParameter');
-
-        $this->configResolverMock
-            ->expects($this->never())
-            ->method('getParameter');
 
         self::assertSame('default_layout.html.twig', $this->resolver->resolvePageLayout());
     }
@@ -88,22 +77,9 @@ final class PageLayoutResolverTest extends TestCase
         $request = Request::create('/');
         $request->attributes->set('layout', false);
 
-        $this->requestStackMock
-            ->expects($this->once())
+        $this->requestStackStub
             ->method('getCurrentRequest')
             ->willReturn($request);
-
-        $this->innerResolverMock
-            ->expects($this->never())
-            ->method('resolvePageLayout');
-
-        $this->configResolverMock
-            ->expects($this->never())
-            ->method('hasParameter');
-
-        $this->configResolverMock
-            ->expects($this->never())
-            ->method('getParameter');
 
         self::assertSame('fallback_layout.html.twig', $this->resolver->resolvePageLayout());
     }

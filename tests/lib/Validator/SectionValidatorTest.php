@@ -13,7 +13,7 @@ use Netgen\Layouts\Ibexa\Validator\SectionValidator;
 use Netgen\Layouts\Tests\TestCase\ValidatorTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -21,9 +21,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 #[CoversClass(SectionValidator::class)]
 final class SectionValidatorTest extends ValidatorTestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&SectionService $sectionServiceMock;
+    private Stub&SectionService $sectionServiceStub;
 
     protected function setUp(): void
     {
@@ -38,8 +38,7 @@ final class SectionValidatorTest extends ValidatorTestCase
     #[DataProvider('validateDataProvider')]
     public function testValidate(string $identifier, array $allowedSections, bool $isValid): void
     {
-        $this->sectionServiceMock
-            ->expects($this->once())
+        $this->sectionServiceStub
             ->method('loadSectionByIdentifier')
             ->with(self::identicalTo($identifier))
             ->willReturn(
@@ -56,17 +55,12 @@ final class SectionValidatorTest extends ValidatorTestCase
 
     public function testValidateNull(): void
     {
-        $this->sectionServiceMock
-            ->expects($this->never())
-            ->method('loadSectionByIdentifier');
-
         $this->assertValid(true, null);
     }
 
     public function testValidateInvalid(): void
     {
-        $this->sectionServiceMock
-            ->expects($this->once())
+        $this->sectionServiceStub
             ->method('loadSectionByIdentifier')
             ->with(self::identicalTo('unknown'))
             ->willThrowException(new NotFoundException('section', 'unknown'));
@@ -103,20 +97,20 @@ final class SectionValidatorTest extends ValidatorTestCase
 
     protected function getValidator(): ConstraintValidatorInterface
     {
-        $this->sectionServiceMock = $this->createMock(SectionService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getSectionService']);
+        $this->sectionServiceStub = self::createStub(SectionService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getSectionService')
-            ->willReturn($this->sectionServiceMock);
+            ->willReturn($this->sectionServiceStub);
 
-        return new SectionValidator($this->repositoryMock);
+        return new SectionValidator($this->repositoryStub);
     }
 }
