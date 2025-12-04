@@ -8,7 +8,9 @@ includes:
 parameters:
     ignoreErrors:
         # Disable errors about missing value types in PHPUnit data providers
+
         - '#Method .+Test(Base)?::\w+DataProvider\(\) return type has no value type specified in iterable type iterable.#'
 
         # Symfony
+
         - '#with generic interface Symfony\\Component\\Form\\\w+ does not specify its types: TData#'
