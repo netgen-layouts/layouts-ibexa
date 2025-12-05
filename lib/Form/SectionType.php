@@ -25,7 +25,7 @@ final class SectionType extends AbstractType
 
         $resolver->setDefault(
             'choices',
-            fn (Options $options): array => $this->getSections($options),
+            fn (Options $options): array => $this->getSections($options['sections']),
         );
 
         $resolver->setDefault('choice_translation_domain', false);
@@ -45,15 +45,16 @@ final class SectionType extends AbstractType
     /**
      * Returns the allowed sections from Ibexa CMS.
      *
+     * @param array<string, string[]> $configuredSections
+     *
      * @return array<string, string>
      */
-    private function getSections(Options $options): array
+    private function getSections(array $configuredSections): array
     {
         $allSections = [];
 
         /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Section[] $sections */
         $sections = $this->sectionService->loadSections();
-        $configuredSections = $options['sections'];
 
         foreach ($sections as $section) {
             if (count($configuredSections) > 0 && !in_array($section->identifier, $configuredSections, true)) {

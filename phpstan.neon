@@ -7,5 +7,5 @@ parameters:
     ignoreErrors:
         # Symfony
 
-        - '#with generic interface Symfony\\Component\\(Form|OptionsResolver)\\\w+ but does not specify its types: (TData|TArray)#'
+        - '#with generic interface Symfony\\Component\\Form\\\w+ but does not specify its types: TData#'
         - '#extends generic class Symfony\\Component\\Form\\\w+ but does not specify its types: TData#'

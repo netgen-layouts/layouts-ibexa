@@ -25,7 +25,7 @@ final class ObjectStateType extends AbstractType
 
         $resolver->setDefault(
             'choices',
-            fn (Options $options): array => $this->getObjectStates($options),
+            fn (Options $options): array => $this->getObjectStates($options['states']),
         );
 
         $resolver->setDefault('choice_translation_domain', false);
@@ -45,14 +45,15 @@ final class ObjectStateType extends AbstractType
     /**
      * Returns the allowed content states from Ibexa CMS.
      *
+     * @param array<string, string[]|bool> $configuredGroups
+     *
      * @return array<string, string[]>
      */
-    private function getObjectStates(Options $options): array
+    private function getObjectStates(array $configuredGroups): array
     {
         $allObjectStates = [];
 
         $groups = $this->objectStateService->loadObjectStateGroups();
-        $configuredGroups = $options['states'];
 
         foreach ($groups as $group) {
             $configuredGroups += [$group->identifier => true];

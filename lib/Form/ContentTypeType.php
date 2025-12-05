@@ -25,7 +25,7 @@ final class ContentTypeType extends AbstractType
 
         $resolver->setDefault(
             'choices',
-            fn (Options $options): array => $this->getContentTypes($options),
+            fn (Options $options): array => $this->getContentTypes($options['types']),
         );
 
         $resolver->setDefault('choice_translation_domain', false);
@@ -45,14 +45,15 @@ final class ContentTypeType extends AbstractType
     /**
      * Returns the allowed content types from Ibexa CMS.
      *
+     * @param array<string, string[]|bool> $configuredGroups
+     *
      * @return array<string, string[]>
      */
-    private function getContentTypes(Options $options): array
+    private function getContentTypes(array $configuredGroups): array
     {
         $allContentTypes = [];
 
         $groups = $this->contentTypeService->loadContentTypeGroups();
-        $configuredGroups = $options['types'];
 
         foreach ($groups as $group) {
             $configuredGroups += [$group->identifier => true];
