@@ -6,6 +6,8 @@ namespace Netgen\Layouts\Ibexa\Tests\Layout\Resolver\ConditionType;
 
 use Ibexa\Contracts\Core\Repository\Repository;
 use Ibexa\Core\MVC\Symfony\SiteAccess as IbexaSiteAccess;
+use Netgen\Layouts\API\Service\LayoutResolverService;
+use Netgen\Layouts\API\Service\LayoutService;
 use Netgen\Layouts\Ibexa\Layout\Resolver\ConditionType\SiteAccessGroup;
 use Netgen\Layouts\Ibexa\Tests\Validator\ValidatorFactory;
 use Netgen\Layouts\Item\CmsItemLoaderInterface;
@@ -47,6 +49,8 @@ final class SiteAccessGroupTest extends TestCase
             ->setConstraintValidatorFactory(
                 new ValidatorFactory(
                     new BaseValidatorFactory(
+                        self::createStub(LayoutService::class),
+                        self::createStub(LayoutResolverService::class),
                         self::createStub(CmsItemLoaderInterface::class),
                     ),
                     self::createStub(Repository::class),
