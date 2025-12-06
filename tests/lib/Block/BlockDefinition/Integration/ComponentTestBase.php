@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class ComponentTestBase extends BlockTestCase
 {
-    protected function setUp(): void
+    final protected function setUp(): void
     {
         parent::setUp();
 
