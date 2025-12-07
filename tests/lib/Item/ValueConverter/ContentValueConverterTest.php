@@ -26,7 +26,7 @@ final class ContentValueConverterTest extends TestCase
             ->method('loadLocation')
             ->with(self::isInt())
             ->willReturnCallback(
-                static fn ($id): Location => new Location(['id' => $id, 'invisible' => false]),
+                static fn (int $id): Location => new Location(['id' => $id, 'invisible' => false]),
             );
 
         $contentServiceStub = self::createStub(ContentService::class);

@@ -104,7 +104,7 @@ final class IbexaConfigProvider implements ConfigProviderInterface
         return array_combine(
             $validViews,
             array_map(
-                fn (string $view) => ViewType::fromArray(
+                fn (string $view): ViewType => ViewType::fromArray(
                     [
                         'identifier' => $view,
                         'name' => $this->humanize($view),

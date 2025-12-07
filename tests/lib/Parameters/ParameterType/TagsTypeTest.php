@@ -32,7 +32,7 @@ final class TagsTypeTest extends TestCase
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->tagsServiceStub),
+                fn (callable $callback): mixed => $callback($this->tagsServiceStub),
             );
 
         $this->type = new TagsType($this->tagsServiceStub);

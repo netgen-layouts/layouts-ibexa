@@ -43,7 +43,7 @@ final class SubtreeTest extends TestCase
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryStub),
+                fn (callable $callback): mixed => $callback($this->repositoryStub),
             );
 
         $this->repositoryStub

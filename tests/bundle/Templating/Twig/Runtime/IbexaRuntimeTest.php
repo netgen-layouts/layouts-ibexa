@@ -171,7 +171,7 @@ final class IbexaRuntimeTest extends TestCase
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryStub),
+                fn (callable $callback): mixed => $callback($this->repositoryStub),
             );
 
         $this->repositoryStub
@@ -192,7 +192,7 @@ final class IbexaRuntimeTest extends TestCase
         $this->locationServiceStub
             ->method('loadLocation')
             ->willReturnCallback(
-                static fn ($locationId): Location => new Location(
+                static fn (int $locationId): Location => new Location(
                     [
                         'path' => [1, 2, 42, 84],
                         'contentInfo' => new ContentInfo(
@@ -207,7 +207,7 @@ final class IbexaRuntimeTest extends TestCase
         $this->contentServiceStub
             ->method('loadContent')
             ->willReturnCallback(
-                static fn ($contentId): Content => new Content(
+                static fn (int $contentId): Content => new Content(
                     [
                         'versionInfo' => new VersionInfo(
                             [
