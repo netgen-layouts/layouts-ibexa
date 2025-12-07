@@ -18,12 +18,9 @@ final class RemoteIdConverter
     public function toLocationId(string $remoteId): ?int
     {
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Location $location */
-            $location = $this->repository->sudo(
-                fn (): Location => $this->repository->getLocationService()->loadLocationByRemoteId($remoteId),
-            );
-
-            return $location->id;
+            return $this->repository->sudo(
+                static fn (Repository $repository): Location => $repository->getLocationService()->loadLocationByRemoteId($remoteId),
+            )->id;
         } catch (NotFoundException) {
             return null;
         }
@@ -32,12 +29,9 @@ final class RemoteIdConverter
     public function toLocationRemoteId(int $id): ?string
     {
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Location $location */
-            $location = $this->repository->sudo(
-                fn (): Location => $this->repository->getLocationService()->loadLocation($id),
-            );
-
-            return $location->remoteId;
+            return $this->repository->sudo(
+                static fn (Repository $repository): Location => $repository->getLocationService()->loadLocation($id),
+            )->remoteId;
         } catch (NotFoundException) {
             return null;
         }
@@ -46,12 +40,9 @@ final class RemoteIdConverter
     public function toContentId(string $remoteId): ?int
     {
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo $contentInfo */
-            $contentInfo = $this->repository->sudo(
-                fn (): ContentInfo => $this->repository->getContentService()->loadContentInfoByRemoteId($remoteId),
-            );
-
-            return $contentInfo->id;
+            return $this->repository->sudo(
+                static fn (Repository $repository): ContentInfo => $repository->getContentService()->loadContentInfoByRemoteId($remoteId),
+            )->id;
         } catch (NotFoundException) {
             return null;
         }
@@ -60,12 +51,9 @@ final class RemoteIdConverter
     public function toContentRemoteId(int $id): ?string
     {
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo $contentInfo */
-            $contentInfo = $this->repository->sudo(
-                fn (): ContentInfo => $this->repository->getContentService()->loadContentInfo($id),
-            );
-
-            return $contentInfo->remoteId;
+            return $this->repository->sudo(
+                static fn (Repository $repository): ContentInfo => $repository->getContentService()->loadContentInfo($id),
+            )->remoteId;
         } catch (NotFoundException) {
             return null;
         }

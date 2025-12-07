@@ -70,12 +70,9 @@ final class TagsType extends ParameterType
     public function export(ParameterDefinition $parameterDefinition, mixed $value): ?string
     {
         try {
-            /** @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag */
-            $tag = $this->tagsService->sudo(
-                fn (): Tag => $this->tagsService->loadTag((int) $value),
-            );
-
-            return $tag->remoteId;
+            return $this->tagsService->sudo(
+                static fn (TagsService $tagsService): Tag => $tagsService->loadTag((int) $value),
+            )->remoteId;
         } catch (NotFoundException) {
             return null;
         }
@@ -84,12 +81,9 @@ final class TagsType extends ParameterType
     public function import(ParameterDefinition $parameterDefinition, mixed $value): ?int
     {
         try {
-            /** @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag */
-            $tag = $this->tagsService->sudo(
-                fn (): Tag => $this->tagsService->loadTagByRemoteId((string) $value),
-            );
-
-            return $tag->id;
+            return $this->tagsService->sudo(
+                static fn (TagsService $tagsService): Tag => $tagsService->loadTagByRemoteId((string) $value),
+            )->id;
         } catch (NotFoundException) {
             return null;
         }

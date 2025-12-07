@@ -44,9 +44,8 @@ final class ContentTypeValidator extends ConstraintValidator
         }
 
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType $contentType */
             $contentType = $this->repository->sudo(
-                fn (): APIContentType => $this->repository->getContentTypeService()->loadContentTypeByIdentifier($value),
+                static fn (Repository $repository): APIContentType => $repository->getContentTypeService()->loadContentTypeByIdentifier($value),
             );
         } catch (NotFoundException) {
             $this->context->buildViolation($constraint->message)

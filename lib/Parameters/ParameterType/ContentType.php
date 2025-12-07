@@ -52,12 +52,9 @@ final class ContentType extends ParameterType implements ValueObjectProviderInte
     public function export(ParameterDefinition $parameterDefinition, mixed $value): ?string
     {
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo $contentInfo */
-            $contentInfo = $this->repository->sudo(
-                fn (): ContentInfo => $this->repository->getContentService()->loadContentInfo((int) $value),
-            );
-
-            return $contentInfo->remoteId;
+            return $this->repository->sudo(
+                static fn (Repository $repository): ContentInfo => $repository->getContentService()->loadContentInfo((int) $value),
+            )->remoteId;
         } catch (NotFoundException) {
             return null;
         }
@@ -66,12 +63,9 @@ final class ContentType extends ParameterType implements ValueObjectProviderInte
     public function import(ParameterDefinition $parameterDefinition, mixed $value): ?int
     {
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo $contentInfo */
-            $contentInfo = $this->repository->sudo(
-                fn (): ContentInfo => $this->repository->getContentService()->loadContentInfoByRemoteId((string) $value),
-            );
-
-            return $contentInfo->id;
+            return $this->repository->sudo(
+                static fn (Repository $repository): ContentInfo => $repository->getContentService()->loadContentInfoByRemoteId((string) $value),
+            )->id;
         } catch (NotFoundException) {
             return null;
         }

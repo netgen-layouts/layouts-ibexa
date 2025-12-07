@@ -102,14 +102,14 @@ final class ObjectStateValidator extends ConstraintValidator
     {
         if ($this->stateIdentifiers === []) {
             $this->stateIdentifiers = $this->repository->sudo(
-                function (): array {
+                static function (Repository $repository): array {
                     $stateIdentifiers = [];
 
-                    $stateGroups = $this->repository->getObjectStateService()->loadObjectStateGroups();
+                    $stateGroups = $repository->getObjectStateService()->loadObjectStateGroups();
                     foreach ($stateGroups as $stateGroup) {
                         $stateIdentifiers[$stateGroup->identifier] = [];
 
-                        $states = $this->repository->getObjectStateService()->loadObjectStates($stateGroup);
+                        $states = $repository->getObjectStateService()->loadObjectStates($stateGroup);
                         foreach ($states as $state) {
                             $stateIdentifiers[$stateGroup->identifier][] = $state->identifier;
                         }

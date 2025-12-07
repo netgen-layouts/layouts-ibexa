@@ -40,9 +40,8 @@ final class ContentValidator extends ConstraintValidator
         }
 
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo $contentInfo */
             $contentInfo = $this->repository->sudo(
-                fn (): ContentInfo => $this->repository->getContentService()->loadContentInfo((int) $value),
+                static fn (Repository $repository): ContentInfo => $repository->getContentService()->loadContentInfo((int) $value),
             );
 
             if (count($constraint->allowedTypes) > 0) {

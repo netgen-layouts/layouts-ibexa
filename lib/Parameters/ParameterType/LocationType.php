@@ -52,12 +52,9 @@ final class LocationType extends ParameterType implements ValueObjectProviderInt
     public function export(ParameterDefinition $parameterDefinition, mixed $value): ?string
     {
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Location $location */
-            $location = $this->repository->sudo(
-                fn (): Location => $this->repository->getLocationService()->loadLocation((int) $value),
-            );
-
-            return $location->remoteId;
+            return $this->repository->sudo(
+                static fn (Repository $repository): Location => $repository->getLocationService()->loadLocation((int) $value),
+            )->remoteId;
         } catch (NotFoundException) {
             return null;
         }
@@ -66,12 +63,9 @@ final class LocationType extends ParameterType implements ValueObjectProviderInt
     public function import(ParameterDefinition $parameterDefinition, mixed $value): ?int
     {
         try {
-            /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Location $location */
-            $location = $this->repository->sudo(
-                fn (): Location => $this->repository->getLocationService()->loadLocationByRemoteId((string) $value),
-            );
-
-            return $location->id;
+            return $this->repository->sudo(
+                static fn (Repository $repository): Location => $repository->getLocationService()->loadLocationByRemoteId((string) $value),
+            )->id;
         } catch (NotFoundException) {
             return null;
         }
