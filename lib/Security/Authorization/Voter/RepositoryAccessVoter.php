@@ -74,7 +74,7 @@ final class RepositoryAccessVoter extends Voter
         return str_starts_with($attribute, 'ROLE_NGLAYOUTS_');
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $result = null): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         if (!array_key_exists($attribute, self::ATTRIBUTE_TO_POLICY_MAP)) {
             return false;
