@@ -17,7 +17,7 @@ use function count;
 trait SortTrait
 {
     /**
-     * @var array<string, class-string>
+     * @var array<string, class-string<\Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause>>
      */
     private static array $sortClauses = [
         'default' => SortClause\DatePublished::class,
@@ -85,7 +85,6 @@ trait SortTrait
             return $parentLocation->getSortClauses();
         }
 
-        /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause $sortClause */
         $sortClause = new self::$sortClauses[$sortType]($sortDirection);
 
         return [$sortClause];
