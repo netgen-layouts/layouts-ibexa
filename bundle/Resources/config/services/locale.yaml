@@ -1,9 +1,7 @@
 services:
-    netgen_layouts.locale.provider:
-        alias: netgen_layouts.ibexa.locale.provider
-
     netgen_layouts.ibexa.locale.provider:
         class: Netgen\Layouts\Ibexa\Locale\LocaleProvider
+        decorates: netgen_layouts.locale.provider
         arguments:
             - "@ibexa.api.service.language"
             - "@Ibexa\\Core\\MVC\\Symfony\\Locale\\LocaleConverter"
