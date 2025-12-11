@@ -8,6 +8,9 @@ use Netgen\Bundle\LayoutsBundle\DependencyInjection\ConfigurationNodeInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
+use function is_int;
+use function is_string;
+
 final class ComponentNode implements ConfigurationNodeInterface
 {
     /**
@@ -26,6 +29,12 @@ final class ComponentNode implements ConfigurationNodeInterface
                 ->arrayNode('parent_locations')
                     ->scalarPrototype()
                         ->cannotBeEmpty()
+                        ->validate()
+                            ->ifTrue(
+                                static fn (mixed $v): bool => !(is_int($v) || is_string($v)),
+                            )
+                            ->thenInvalid('Parent location needs to be a string or an integer.')
+                        ->end()
                     ->end()
                 ->end()
             ->end();

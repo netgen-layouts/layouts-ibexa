@@ -131,4 +131,26 @@ final class ComponentNodeTest extends ConfigurationNodeTestBase
             'Invalid type for path "netgen_layouts.system.default.ibexa_component.parent_locations.foo". Expected "scalar", but got "array"',
         );
     }
+
+    public function testComponentSettingsWithNonStringOrIntegerParentLocation(): void
+    {
+        $config = [
+            [
+                'system' => [
+                    'default' => [
+                        'ibexa_component' => [
+                            'parent_locations' => [
+                                'foo' => 42.24,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->assertConfigurationIsInvalid(
+            $config,
+            'Invalid configuration for path "netgen_layouts.system.default.ibexa_component.parent_locations.foo": Parent location needs to be a string or an integer.',
+        );
+    }
 }
