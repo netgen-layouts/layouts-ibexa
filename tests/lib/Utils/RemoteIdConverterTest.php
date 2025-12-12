@@ -22,34 +22,30 @@ final class RemoteIdConverterTest extends TestCase
 
     private Stub&ContentService $contentServiceStub;
 
-    private Stub&Repository $repositoryStub;
-
     private RemoteIdConverter $converter;
 
     protected function setUp(): void
     {
         $this->locationServiceStub = self::createStub(LocationService::class);
         $this->contentServiceStub = self::createStub(ContentService::class);
-        $this->repositoryStub = self::createStub(Repository::class);
 
-        $this->repositoryStub
+        $repositoryStub = self::createStub(Repository::class);
+        $repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback): mixed => $callback($this->repositoryStub),
+                static fn (callable $callback): mixed => $callback($repositoryStub),
             );
 
-        $this->repositoryStub
+        $repositoryStub
             ->method('getLocationService')
             ->willReturn($this->locationServiceStub);
 
-        $this->repositoryStub
+        $repositoryStub
             ->method('getContentService')
             ->willReturn($this->contentServiceStub);
 
-        $this->converter = new RemoteIdConverter(
-            $this->repositoryStub,
-        );
+        $this->converter = new RemoteIdConverter($repositoryStub);
     }
 
     public function testToLocationId(): void

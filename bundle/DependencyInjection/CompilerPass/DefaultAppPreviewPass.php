@@ -57,7 +57,7 @@ final class DefaultAppPreviewPass implements CompilerPassInterface
      */
     private function addDefaultPreviewRule(?array $scopeRules, array $defaultRule): array
     {
-        $scopeRules = $scopeRules ?? [];
+        $scopeRules ??= [];
 
         $layoutsRules = $scopeRules['nglayouts_app_preview'] ?? [];
 

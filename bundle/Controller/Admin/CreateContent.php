@@ -7,7 +7,6 @@ namespace Netgen\Bundle\LayoutsIbexaBundle\Controller\Admin;
 use Ibexa\Contracts\Core\Repository\ContentTypeService;
 use Ibexa\Contracts\Core\Repository\LocationService;
 use Netgen\Layouts\API\Values\Block\Block;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class CreateContent extends Controller
@@ -20,7 +19,7 @@ final class CreateContent extends Controller
     /**
      * Creates a content and redirects to route that edits the content.
      */
-    public function __invoke(Request $request, Block $block, string $contentTypeIdentifier, string $languageCode, int $parentLocationId): Response
+    public function __invoke(Block $block, string $contentTypeIdentifier, string $languageCode, int $parentLocationId): Response
     {
         $location = $this->locationService->loadLocation($parentLocationId);
         $contentType = $this->contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);

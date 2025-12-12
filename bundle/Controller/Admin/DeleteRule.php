@@ -7,7 +7,6 @@ namespace Netgen\Bundle\LayoutsIbexaBundle\Controller\Admin;
 use Netgen\Layouts\API\Service\LayoutResolverService;
 use Netgen\Layouts\API\Service\LayoutService;
 use Netgen\Layouts\API\Values\LayoutResolver\Rule;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class DeleteRule extends Controller
@@ -20,7 +19,7 @@ final class DeleteRule extends Controller
     /**
      * Deletes the provided rule.
      */
-    public function __invoke(Rule $rule, Request $request): Response
+    public function __invoke(Rule $rule): Response
     {
         if (!$this->isGranted('ROLE_NGLAYOUTS_ADMIN')) {
             $this->denyAccessUnlessGranted(

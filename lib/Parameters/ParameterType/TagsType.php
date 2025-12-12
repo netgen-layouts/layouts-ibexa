@@ -64,7 +64,7 @@ final class TagsType extends ParameterType
 
     public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): mixed
     {
-        return is_array($value) ? array_map('intval', $value) : $value;
+        return is_array($value) ? array_map(intval(...), $value) : $value;
     }
 
     public function export(ParameterDefinition $parameterDefinition, mixed $value): ?string

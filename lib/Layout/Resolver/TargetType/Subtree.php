@@ -48,7 +48,7 @@ final class Subtree extends TargetType implements ValueObjectProviderInterface
             return null;
         }
 
-        return array_map('intval', $path);
+        return array_map(intval(...), $path);
     }
 
     public function getValueObject(mixed $value): ?object
