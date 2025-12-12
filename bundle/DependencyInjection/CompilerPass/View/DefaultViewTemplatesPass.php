@@ -17,7 +17,7 @@ final class DefaultViewTemplatesPass implements CompilerPassInterface
             return;
         }
 
-        /** @var array<int, string> $siteAccessList */
+        /** @var string[] $siteAccessList */
         $siteAccessList = $container->getParameter('ibexa.site_access.list');
         $scopes = [...['default'], ...$siteAccessList];
 

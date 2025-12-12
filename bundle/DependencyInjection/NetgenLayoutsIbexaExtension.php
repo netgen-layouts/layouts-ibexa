@@ -22,9 +22,6 @@ use function file_get_contents;
 
 final class NetgenLayoutsIbexaExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @param mixed[] $configs
-     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $locator = new FileLocator(__DIR__ . '/../Resources/config');

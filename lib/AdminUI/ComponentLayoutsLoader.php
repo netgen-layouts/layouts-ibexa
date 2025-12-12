@@ -37,7 +37,7 @@ final class ComponentLayoutsLoader
      *     view_types: string[]
      * }>
      */
-    public function loadComponentLayouts(ContentInfo $contentInfo): iterable
+    public function loadComponentLayouts(ContentInfo $contentInfo): array
     {
         $layoutsData = $this->loadLayoutsData();
 

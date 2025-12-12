@@ -66,10 +66,6 @@ final class ExtensionPlugin extends BaseExtensionPlugin
      *
      * If the original array already has a system key, it will be removed and prepended
      * to configs generated from the original parameters.
-     *
-     * @param mixed[] $configs
-     *
-     * @return mixed[]
      */
     public function preProcessConfiguration(array $configs): array
     {
@@ -111,10 +107,6 @@ final class ExtensionPlugin extends BaseExtensionPlugin
      * The postprocessor calls Ibexa CMS mapConfigArray and mapSettings methods from siteaccess aware
      * configuration processor as per documentation, to make the configuration correctly apply to all
      * siteaccesses.
-     *
-     * @param mixed[] $config
-     *
-     * @return mixed[]
      */
     public function postProcessConfiguration(array $config): array
     {
@@ -154,9 +146,6 @@ final class ExtensionPlugin extends BaseExtensionPlugin
         return $config;
     }
 
-    /**
-     * @return string[]
-     */
     public function appendConfigurationFiles(): array
     {
         return [
@@ -164,9 +153,6 @@ final class ExtensionPlugin extends BaseExtensionPlugin
         ];
     }
 
-    /**
-     * @return \Netgen\Bundle\LayoutsBundle\DependencyInjection\ConfigurationNodeInterface[]
-     */
     protected function getConfigurationNodes(): array
     {
         return [

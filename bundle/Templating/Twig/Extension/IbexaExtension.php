@@ -10,9 +10,6 @@ use Twig\TwigFunction;
 
 final class IbexaExtension extends AbstractExtension
 {
-    /**
-     * @return \Twig\TwigFunction[]
-     */
     public function getFunctions(): array
     {
         return [

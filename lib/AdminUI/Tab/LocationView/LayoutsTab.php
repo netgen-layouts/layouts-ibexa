@@ -35,9 +35,6 @@ final class LayoutsTab extends AbstractEventDispatchingTab implements Conditiona
         return 'Netgen Layouts';
     }
 
-    /**
-     * @param array<mixed> $parameters
-     */
     public function evaluate(array $parameters): bool
     {
         try {

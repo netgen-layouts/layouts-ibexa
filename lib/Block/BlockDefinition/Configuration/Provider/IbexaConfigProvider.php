@@ -71,7 +71,7 @@ final class IbexaConfigProvider implements ConfigProviderInterface
                         $validViews[$view] = $view;
                         $validParameters[$view] ??= null;
 
-                        /** @var array<string>|null $viewConfigValidParameters */
+                        /** @var string[]|null $viewConfigValidParameters */
                         $viewConfigValidParameters = $viewConfig['params']['valid_parameters'] ?? null;
 
                         if (is_array($viewConfigValidParameters)) {

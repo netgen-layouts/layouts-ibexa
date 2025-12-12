@@ -76,10 +76,6 @@ abstract class ConfigurationNodeTestBase extends TestCase
         self::assertSame($expectedConfig, $actualConfig);
     }
 
-    /**
-     * Return the instance of ConfigurationInterface that should be used by the
-     * Configuration-specific assertions in this test-case.
-     */
     final protected function getConfiguration(): ConfigurationInterface
     {
         return new Configuration($this->extension);
