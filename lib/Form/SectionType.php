@@ -53,7 +53,6 @@ final class SectionType extends AbstractType
     {
         $allSections = [];
 
-        /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Section[] $sections */
         $sections = $this->sectionService->loadSections();
 
         foreach ($sections as $section) {
