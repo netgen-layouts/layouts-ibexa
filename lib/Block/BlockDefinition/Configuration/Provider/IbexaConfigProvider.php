@@ -18,11 +18,8 @@ use function array_unique;
 use function array_values;
 use function in_array;
 use function is_array;
-use function mb_strtolower;
-use function mb_trim;
-use function preg_replace;
 use function sort;
-use function ucwords;
+use function Symfony\Component\String\u;
 
 final class IbexaConfigProvider implements ConfigProviderInterface
 {
@@ -104,10 +101,10 @@ final class IbexaConfigProvider implements ConfigProviderInterface
         return array_combine(
             $validViews,
             array_map(
-                fn (string $view): ViewType => ViewType::fromArray(
+                static fn (string $view): ViewType => ViewType::fromArray(
                     [
                         'identifier' => $view,
-                        'name' => $this->humanize($view),
+                        'name' => u($view)->replace('_', ' ')->title(true)->toString(),
                         'itemViewTypes' => [
                             'standard' => ItemViewType::fromArray(
                                 [
@@ -124,13 +121,5 @@ final class IbexaConfigProvider implements ConfigProviderInterface
                 $validViews,
             ),
         );
-    }
-
-    /**
-     * Returns the human readable version of the provided string.
-     */
-    private function humanize(string $text): string
-    {
-        return ucwords(mb_strtolower(mb_trim(preg_replace(['/([A-Z])/', '/[_\s]+/'], ['_$1', ' '], $text) ?? '')));
     }
 }
