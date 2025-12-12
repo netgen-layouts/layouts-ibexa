@@ -7,6 +7,8 @@ namespace Netgen\Bundle\LayoutsIbexaBundle\DependencyInjection\CompilerPass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+use function sprintf;
+
 final class DefaultAppPreviewPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
@@ -29,8 +31,8 @@ final class DefaultAppPreviewPass implements CompilerPassInterface
 
         foreach ($scopes as $scope) {
             $scopeParams = [
-                "ibexa.site_access.config.{$scope}.content_view",
-                "ibexa.site_access.config.{$scope}.location_view",
+                sprintf('ibexa.site_access.config.%s.content_view', $scope),
+                sprintf('ibexa.site_access.config.%s.location_view', $scope),
             ];
 
             foreach ($scopeParams as $scopeParam) {

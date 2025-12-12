@@ -31,7 +31,7 @@ final class ComponentNode implements ConfigurationNodeInterface
                         ->cannotBeEmpty()
                         ->validate()
                             ->ifTrue(
-                                static fn (mixed $v): bool => !(is_int($v) || is_string($v)),
+                                static fn (mixed $v): bool => !is_int($v) && !is_string($v),
                             )
                             ->thenInvalid('Parent location needs to be a string or an integer.')
                         ->end()
