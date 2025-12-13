@@ -13,7 +13,7 @@ use Netgen\Layouts\Parameters\ParameterList;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Uuid;
+use Symfony\Component\Uid\Uuid;
 
 #[CoversClass(IbexaConfigProvider::class)]
 final class IbexaConfigProviderTest extends TestCase
@@ -39,7 +39,7 @@ final class IbexaConfigProviderTest extends TestCase
 
     public function testProvideViewTypes(): void
     {
-        $blockUuid = Uuid::uuid4();
+        $blockUuid = Uuid::v4();
         $block = Block::fromArray(
             [
                 'id' => $blockUuid,

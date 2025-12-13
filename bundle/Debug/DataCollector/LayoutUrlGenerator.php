@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\LayoutsIbexaBundle\Debug\DataCollector;
 
 use Netgen\Bundle\LayoutsDebugBundle\DataCollector\LayoutUrlGeneratorInterface;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 final class LayoutUrlGenerator implements LayoutUrlGeneratorInterface
 {
@@ -19,7 +19,7 @@ final class LayoutUrlGenerator implements LayoutUrlGeneratorInterface
         private string $defaultSiteAccessName,
     ) {}
 
-    public function generateLayoutUrl(UuidInterface $layoutId, array $parameters = []): string
+    public function generateLayoutUrl(Uuid $layoutId, array $parameters = []): string
     {
         $adminSiteAccess = $this->siteAccessGroups[$this->siteAccessGroupName][0] ?? $this->defaultSiteAccessName;
 

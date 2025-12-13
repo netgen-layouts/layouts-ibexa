@@ -8,13 +8,13 @@ use Netgen\Layouts\API\Service\LayoutService;
 use Netgen\Layouts\API\Values\Layout\Layout;
 use Netgen\Layouts\Layout\Registry\LayoutTypeRegistry;
 use Netgen\Layouts\Validator\Constraint\LayoutName;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Uid\NilUuid;
 use Symfony\Component\Validator\Constraints;
 
 use function array_first;
@@ -131,7 +131,7 @@ final class LayoutWizardType extends AbstractType
                         new Constraints\NotBlank(),
                         new Constraints\AtLeastOneOf(
                             constraints: [
-                                new Constraints\EqualTo(Uuid::NIL),
+                                new Constraints\EqualTo(new NilUuid()->toString()),
                                 new Constraints\Uuid(),
                             ],
                         ),

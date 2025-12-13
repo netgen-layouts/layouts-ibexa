@@ -10,7 +10,7 @@ use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use JsonException;
 use Netgen\Layouts\API\Service\LayoutService;
 use Netgen\Layouts\Persistence\Values\Status;
-use Ramsey\Uuid\Uuid;
+use Symfony\Component\Uid\Uuid;
 
 use function array_column;
 use function array_key_exists;

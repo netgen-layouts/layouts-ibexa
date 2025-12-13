@@ -10,7 +10,7 @@ use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Netgen\Layouts\API\Service\LayoutService;
 use Netgen\Layouts\API\Values\Layout\Layout;
 use Netgen\Layouts\Persistence\Values\Status;
-use Ramsey\Uuid\Uuid;
+use Symfony\Component\Uid\Uuid;
 
 use function array_map;
 

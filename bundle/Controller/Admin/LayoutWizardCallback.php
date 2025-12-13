@@ -11,9 +11,9 @@ use Netgen\Layouts\API\Service\LayoutService;
 use Netgen\Layouts\API\Values\LayoutResolver\RuleGroup;
 use Netgen\Layouts\API\Values\Status;
 use Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\Location as LocationTargetType;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Uid\Uuid;
 
 use function count;
 use function max;
