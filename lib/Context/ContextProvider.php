@@ -30,7 +30,7 @@ final class ContextProvider implements ContextProviderInterface
             return;
         }
 
-        $currentRoute = $currentRequest->attributes->get('_route');
+        $currentRoute = $currentRequest->attributes->getString('_route');
         if (!in_array($currentRoute, $this->allowedRoutes, true)) {
             return;
         }
@@ -38,20 +38,17 @@ final class ContextProvider implements ContextProviderInterface
         $currentLocationId = null;
 
         if ($currentRequest->attributes->has('locationId')) {
-            $currentLocationId = $currentRequest->attributes->get('locationId');
+            $currentLocationId = $currentRequest->attributes->getInt('locationId');
         } elseif ($currentRequest->attributes->has('contentId')) {
-            $currentContentId = $currentRequest->attributes->get('contentId');
-            if ($currentContentId !== null) {
-                $currentLocationId = $this->contentService->loadContentInfo(
-                    (int) $currentContentId,
-                )->mainLocationId;
-            }
+            $currentLocationId = $this->contentService->loadContentInfo(
+                $currentRequest->attributes->getInt('contentId'),
+            )->mainLocationId;
         }
 
         if ($currentLocationId === null) {
             return;
         }
 
-        $context->set('ibexa_location_id', (int) $currentLocationId);
+        $context->set('ibexa_location_id', $currentLocationId);
     }
 }

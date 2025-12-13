@@ -31,7 +31,7 @@ final class PageLayoutResolver implements PageLayoutResolverInterface
             return $this->innerResolver->resolvePageLayout();
         }
 
-        if ($currentRequest->attributes->get('layout') === false) {
+        if (!$currentRequest->attributes->getBoolean('layout', true)) {
             return $this->baseViewLayout;
         }
 
