@@ -27,7 +27,7 @@ final class ComponentContentExtensionTest extends TestCase
 
     public function testGetExtendedTypes(): void
     {
-        self::assertSame([ContentBrowserType::class], $this->extension::getExtendedTypes());
+        self::assertSame([ContentBrowserType::class], [...$this->extension::getExtendedTypes()]);
     }
 
     public function testBuildView(): void
