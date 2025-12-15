@@ -79,7 +79,7 @@ final class LocationType extends ParameterType implements ValueObjectProviderInt
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
         return [
-            new Constraints\Type(type: 'numeric'),
+            new Constraints\Type(type: 'int'),
             new Constraints\Positive(),
             new IbexaConstraints\Location(
                 allowedTypes: $parameterDefinition->getOption('allowed_types'),

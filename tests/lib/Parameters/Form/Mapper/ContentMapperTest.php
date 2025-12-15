@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Layouts\Ibexa\Tests\Parameters\Form\Mapper;
 
 use Ibexa\Contracts\Core\Repository\Repository;
-use Netgen\ContentBrowser\Form\Type\ContentBrowserType;
+use Netgen\ContentBrowser\Form\Type\ContentBrowserIntegerType;
 use Netgen\Layouts\Ibexa\Parameters\Form\Mapper\ContentMapper;
 use Netgen\Layouts\Ibexa\Parameters\ParameterType\ContentType as ParameterType;
 use Netgen\Layouts\Parameters\ParameterDefinition;
@@ -25,7 +25,7 @@ final class ContentMapperTest extends TestCase
 
     public function testGetFormType(): void
     {
-        self::assertSame(ContentBrowserType::class, $this->mapper->getFormType());
+        self::assertSame(ContentBrowserIntegerType::class, $this->mapper->getFormType());
     }
 
     public function testMapOptions(): void

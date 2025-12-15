@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\Form\Extension;
 
-use Netgen\ContentBrowser\Form\Type\ContentBrowserType;
+use Netgen\ContentBrowser\Form\Type\ContentBrowserIntegerType;
 use Netgen\Layouts\API\Values\Block\Block;
 use Netgen\Layouts\Ibexa\Block\BlockDefinition\Handler\ComponentHandler;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -15,7 +15,7 @@ final class ComponentContentExtension extends AbstractTypeExtension
 {
     public static function getExtendedTypes(): iterable
     {
-        yield ContentBrowserType::class;
+        yield ContentBrowserIntegerType::class;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

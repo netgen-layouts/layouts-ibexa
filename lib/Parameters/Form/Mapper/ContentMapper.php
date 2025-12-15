@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\Parameters\Form\Mapper;
 
-use Netgen\ContentBrowser\Form\Type\ContentBrowserType;
+use Netgen\ContentBrowser\Form\Type\ContentBrowserIntegerType;
 use Netgen\Layouts\Parameters\Form\Mapper;
 use Netgen\Layouts\Parameters\ParameterDefinition;
 
@@ -14,7 +14,7 @@ final class ContentMapper extends Mapper
 {
     public function getFormType(): string
     {
-        return ContentBrowserType::class;
+        return ContentBrowserIntegerType::class;
     }
 
     public function mapOptions(ParameterDefinition $parameterDefinition): array

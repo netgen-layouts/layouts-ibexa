@@ -62,9 +62,16 @@ final class TagsType extends ParameterType
             ->allowedTypes('bool');
     }
 
-    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): mixed
+    /**
+     * @return int[]|int|null
+     */
+    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): array|int|null
     {
-        return is_array($value) ? array_map(intval(...), $value) : $value;
+        if ($value === null) {
+            return null;
+        }
+
+        return is_array($value) ? array_map(intval(...), $value) : (int) $value;
     }
 
     public function export(ParameterDefinition $parameterDefinition, mixed $value): ?string
@@ -99,7 +106,7 @@ final class TagsType extends ParameterType
             new Constraints\All(
                 constraints: [
                     new Constraints\NotBlank(),
-                    new Constraints\Type(type: 'numeric'),
+                    new Constraints\Type(type: 'int'),
                     new Constraints\Positive(),
                     new IbexaConstraints\Tag(allowInvalid: $parameterDefinition->getOption('allow_invalid')),
                 ],

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\Tests\Form\Extension;
 
-use Netgen\ContentBrowser\Form\Type\ContentBrowserType;
+use Netgen\ContentBrowser\Form\Type\ContentBrowserIntegerType;
 use Netgen\Layouts\API\Values\Block\Block;
 use Netgen\Layouts\Block\BlockDefinition;
 use Netgen\Layouts\Ibexa\Block\BlockDefinition\Handler\ComponentHandler;
@@ -27,7 +27,7 @@ final class ComponentContentExtensionTest extends TestCase
 
     public function testGetExtendedTypes(): void
     {
-        self::assertSame([ContentBrowserType::class], [...$this->extension::getExtendedTypes()]);
+        self::assertSame([ContentBrowserIntegerType::class], [...$this->extension::getExtendedTypes()]);
     }
 
     public function testBuildView(): void

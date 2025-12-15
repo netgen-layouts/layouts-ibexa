@@ -29,7 +29,7 @@ final class Content extends TargetType implements ValueObjectProviderInterface
     {
         return [
             new Constraints\NotBlank(),
-            new Constraints\Type(type: 'numeric'),
+            new Constraints\Type(type: 'int'),
             new Constraints\PositiveOrZero(),
             new IbexaConstraints\Content(allowInvalid: true),
         ];

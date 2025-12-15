@@ -263,16 +263,12 @@ final class LocationTypeTest extends TestCase
             [12, 'article', false, false],
             [-12, 'user', false, false],
             [0, 'user', false, false],
-            ['12', 'user', false, false],
-            ['', 'user', false, false],
             [null, 'user', false, true],
             [12, 'user', true, true],
             [12, 'image', true, true],
             [12, 'article', true, false],
             [-12, 'user', true, false],
             [0, 'user', true, false],
-            ['12', 'user', true, false],
-            ['', 'user', true, false],
             [null, 'user', true, false],
         ];
     }

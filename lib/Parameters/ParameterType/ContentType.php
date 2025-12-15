@@ -79,7 +79,7 @@ final class ContentType extends ParameterType implements ValueObjectProviderInte
     protected function getValueConstraints(ParameterDefinition $parameterDefinition, mixed $value): array
     {
         return [
-            new Constraints\Type(type: 'numeric'),
+            new Constraints\Type(type: 'int'),
             new Constraints\Positive(),
             new IbexaConstraints\Content(
                 allowedTypes: $parameterDefinition->getOption('allowed_types'),

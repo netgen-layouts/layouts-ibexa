@@ -80,7 +80,7 @@ final class ContentValidatorTest extends ValidatorTestCase
     public function testValidateThrowsUnexpectedTypeExceptionWithInvalidValue(): void
     {
         $this->expectException(UnexpectedTypeException::class);
-        $this->expectExceptionMessage('Expected argument of type "scalar", "array" given');
+        $this->expectExceptionMessage('Expected argument of type "int", "array" given');
 
         $this->assertValid(true, []);
     }

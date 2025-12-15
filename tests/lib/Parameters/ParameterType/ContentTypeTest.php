@@ -270,16 +270,12 @@ final class ContentTypeTest extends TestCase
             [12, 52, false, false],
             [-12, 24, false, false],
             [0, 24, false, false],
-            ['12', 24, false, false],
-            ['', 24, false, false],
             [null, 24, false, true],
             [12, 24, true, true],
             [12, 42, true, true],
             [12, 52, true, false],
             [-12, 24, true, false],
             [0, 24, true, false],
-            ['12', 24, true, false],
-            ['', 24, true, false],
             [null, 24, true, false],
         ];
     }
