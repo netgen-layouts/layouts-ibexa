@@ -21,10 +21,6 @@ use function array_first;
 
 final class LayoutWizardType extends AbstractType
 {
-    public const string ACTION_TYPE_NEW_LAYOUT = 'new_layout';
-
-    public const string ACTION_TYPE_COPY_LAYOUT = 'copy_layout';
-
     public function __construct(
         private LayoutService $layoutService,
         private LayoutTypeRegistry $layoutTypeRegistry,
@@ -39,7 +35,7 @@ final class LayoutWizardType extends AbstractType
             'validation_groups',
             static fn (FormInterface $form): array => [
                 'Default',
-                $form->get('action')->getData(),
+                $form->get('action')->getData()->value,
             ],
         );
     }
@@ -50,15 +46,16 @@ final class LayoutWizardType extends AbstractType
 
         $builder->add(
             'action',
-            Type\ChoiceType::class,
+            Type\EnumType::class,
             [
+                'class' => ActionType::class,
                 'label' => false,
                 'expanded' => true,
-                'data' => self::ACTION_TYPE_NEW_LAYOUT,
-                'choices' => [
-                    'layout_wizard.action.new_layout' => self::ACTION_TYPE_NEW_LAYOUT,
-                    'layout_wizard.action.copy_layout' => self::ACTION_TYPE_COPY_LAYOUT,
-                ],
+                'data' => ActionType::NewLayout,
+                'choice_label' => static fn (ActionType $actionType): string => match ($actionType) {
+                    ActionType::NewLayout => 'layout_wizard.action.new_layout',
+                    ActionType::CopyLayout => 'layout_wizard.action.copy_layout',
+                },
             ],
         );
 
@@ -76,7 +73,7 @@ final class LayoutWizardType extends AbstractType
                 'expanded' => true,
                 'data' => array_first($layoutTypes),
                 'constraints' => [
-                    new Constraints\NotBlank(groups: [self::ACTION_TYPE_NEW_LAYOUT]),
+                    new Constraints\NotBlank(groups: [ActionType::NewLayout->value]),
                 ],
             ],
         );

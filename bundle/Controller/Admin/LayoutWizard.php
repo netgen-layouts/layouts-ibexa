@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\LayoutsIbexaBundle\Controller\Admin;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Netgen\Bundle\LayoutsIbexaBundle\Form\Admin\Type\ActionType;
 use Netgen\Bundle\LayoutsIbexaBundle\Form\Admin\Type\LayoutWizardType;
 use Netgen\Layouts\API\Service\LayoutService;
 use Netgen\Layouts\API\Values\Layout\Layout;
@@ -47,7 +48,7 @@ final class LayoutWizard extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $layout = $form->get('action')->getData() === LayoutWizardType::ACTION_TYPE_NEW_LAYOUT ?
+            $layout = $form->get('action')->getData() === ActionType::NewLayout ?
                 $this->createNewLayout($form, $request->getLocale()) :
                 $this->copyLayout($form, $form->get('layout')->getData());
 
@@ -122,7 +123,7 @@ final class LayoutWizard extends Controller
     private function createNewLayout(FormInterface $form, string $locale): Layout
     {
         $createStruct = $this->layoutService->newLayoutCreateStruct(
-            $this->layoutTypeRegistry->getLayoutType($form->get('layout_type')->getData()->getIdentifier()),
+            $this->layoutTypeRegistry->getLayoutType($form->get('layout_type')->getData()->identifier),
             $form->get('layout_name')->getData(),
             $locale,
         );
