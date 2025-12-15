@@ -7,7 +7,7 @@ namespace Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper;
 use Netgen\ContentBrowser\Form\Type\ContentBrowserIntegerType;
 use Netgen\Layouts\Layout\Resolver\Form\TargetType\Mapper;
 
-final class Subtree extends Mapper
+final class ChildrenMapper extends Mapper
 {
     public function getFormType(): string
     {

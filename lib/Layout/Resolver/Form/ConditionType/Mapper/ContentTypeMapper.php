@@ -7,7 +7,7 @@ namespace Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper;
 use Netgen\Layouts\Ibexa\Form\ContentTypeType;
 use Netgen\Layouts\Layout\Resolver\Form\ConditionType\Mapper;
 
-final class ContentType extends Mapper
+final class ContentTypeMapper extends Mapper
 {
     public function getFormType(): string
     {

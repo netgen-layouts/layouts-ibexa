@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\Tests\Layout\Resolver\Form\TargetType\Mapper;
 
-use Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\SemanticPathInfo;
+use Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\SemanticPathInfoPrefixMapper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-#[CoversClass(SemanticPathInfo::class)]
-final class SemanticPathInfoTest extends TestCase
+#[CoversClass(SemanticPathInfoPrefixMapper::class)]
+final class SemanticPathInfoPrefixMapperTest extends TestCase
 {
-    private SemanticPathInfo $mapper;
+    private SemanticPathInfoPrefixMapper $mapper;
 
     protected function setUp(): void
     {
-        $this->mapper = new SemanticPathInfo();
+        $this->mapper = new SemanticPathInfoPrefixMapper();
     }
 
     public function testGetFormType(): void

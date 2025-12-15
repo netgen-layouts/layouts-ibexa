@@ -4,19 +4,24 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\Tests\Layout\Resolver\Form\ConditionType\Mapper;
 
-use Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\SiteAccess;
+use Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\SiteAccessGroupMapper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-#[CoversClass(SiteAccess::class)]
-final class SiteAccessTest extends TestCase
+#[CoversClass(SiteAccessGroupMapper::class)]
+final class SiteAccessGroupMapperTest extends TestCase
 {
-    private SiteAccess $mapper;
+    private SiteAccessGroupMapper $mapper;
 
     protected function setUp(): void
     {
-        $this->mapper = new SiteAccess(['cro', 'eng']);
+        $this->mapper = new SiteAccessGroupMapper(
+            [
+                'frontend' => ['eng'],
+                'backend' => ['admin'],
+            ],
+        );
     }
 
     public function testGetFormType(): void
@@ -28,7 +33,7 @@ final class SiteAccessTest extends TestCase
     {
         self::assertSame(
             [
-                'choices' => ['cro' => 'cro', 'eng' => 'eng'],
+                'choices' => ['frontend' => 'frontend', 'backend' => 'backend'],
                 'choice_translation_domain' => false,
                 'multiple' => true,
                 'expanded' => true,

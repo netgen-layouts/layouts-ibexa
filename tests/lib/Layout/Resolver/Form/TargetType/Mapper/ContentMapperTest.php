@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Netgen\Layouts\Ibexa\Tests\Layout\Resolver\Form\TargetType\Mapper;
 
 use Netgen\ContentBrowser\Form\Type\ContentBrowserIntegerType;
-use Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\Children;
+use Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\ContentMapper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(Children::class)]
-final class ChildrenTest extends TestCase
+#[CoversClass(ContentMapper::class)]
+final class ContentMapperTest extends TestCase
 {
-    private Children $mapper;
+    private ContentMapper $mapper;
 
     protected function setUp(): void
     {
-        $this->mapper = new Children();
+        $this->mapper = new ContentMapper();
     }
 
     public function testGetFormType(): void
@@ -28,7 +28,7 @@ final class ChildrenTest extends TestCase
     {
         self::assertSame(
             [
-                'item_type' => 'ibexa_location',
+                'item_type' => 'ibexa_content',
             ],
             $this->mapper->getFormOptions(),
         );

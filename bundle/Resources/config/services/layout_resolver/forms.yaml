@@ -1,49 +1,49 @@
 services:
     netgen_layouts.ibexa.layout_resolver.target_type.form_mapper.children:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\Children
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\ChildrenMapper
         tags:
             - { name: netgen_layouts.target_type.form_mapper, target_type: ibexa_children }
 
     netgen_layouts.ibexa.layout_resolver.target_type.form_mapper.subtree:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\Subtree
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\SubtreeMapper
         tags:
             - { name: netgen_layouts.target_type.form_mapper, target_type: ibexa_subtree }
 
     netgen_layouts.ibexa.layout_resolver.target_type.form_mapper.location:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\Location
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\LocationMapper
         tags:
             - { name: netgen_layouts.target_type.form_mapper, target_type: ibexa_location }
 
     netgen_layouts.ibexa.layout_resolver.target_type.form_mapper.content:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\Content
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\ContentMapper
         tags:
             - { name: netgen_layouts.target_type.form_mapper, target_type: ibexa_content }
 
     netgen_layouts.ibexa.layout_resolver.target_type.form_mapper.semantic_path_info:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\SemanticPathInfo
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\SemanticPathInfoMapper
         tags:
             - { name: netgen_layouts.target_type.form_mapper, target_type: ibexa_semantic_path_info }
 
     netgen_layouts.ibexa.layout_resolver.target_type.form_mapper.semantic_path_info_prefix:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\SemanticPathInfoPrefix
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\SemanticPathInfoPrefixMapper
         tags:
             - { name: netgen_layouts.target_type.form_mapper, target_type: ibexa_semantic_path_info_prefix }
 
     netgen_layouts.ibexa.layout_resolver.condition_type.form_mapper.site_access:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\SiteAccess
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\SiteAccessMapper
         arguments:
             - "%ibexa.site_access.list%"
         tags:
             - { name: netgen_layouts.condition_type.form_mapper, condition_type: ibexa_site_access }
 
     netgen_layouts.ibexa.layout_resolver.condition_type.form_mapper.site_access_group:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\SiteAccessGroup
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\SiteAccessGroupMapper
         arguments:
             - "%ibexa.site_access.groups%"
         tags:
             - { name: netgen_layouts.condition_type.form_mapper, condition_type: ibexa_site_access_group }
 
     netgen_layouts.ibexa.layout_resolver.condition_type.form_mapper.content_type:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\ContentType
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\ContentTypeMapper
         tags:
             - { name: netgen_layouts.condition_type.form_mapper, condition_type: ibexa_content_type }

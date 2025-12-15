@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use function array_combine;
 
-final class SiteAccess extends Mapper
+final class SiteAccessMapper extends Mapper
 {
     /**
      * @param string[] $siteAccessList

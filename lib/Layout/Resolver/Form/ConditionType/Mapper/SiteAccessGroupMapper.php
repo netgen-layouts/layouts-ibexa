@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use function array_combine;
 use function array_keys;
 
-final class SiteAccessGroup extends Mapper
+final class SiteAccessGroupMapper extends Mapper
 {
     /**
      * @param array<string, string[]> $siteAccessGroupList

@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Netgen\Layouts\Ibexa\Tests\Layout\Resolver\Form\ConditionType\Mapper;
 
 use Netgen\Layouts\Ibexa\Form\ContentTypeType;
-use Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\ContentType;
+use Netgen\Layouts\Ibexa\Layout\Resolver\Form\ConditionType\Mapper\ContentTypeMapper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(ContentType::class)]
-final class ContentTypeTest extends TestCase
+#[CoversClass(ContentTypeMapper::class)]
+final class ContentTypeMapperTest extends TestCase
 {
-    private ContentType $mapper;
+    private ContentTypeMapper $mapper;
 
     protected function setUp(): void
     {
-        $this->mapper = new ContentType();
+        $this->mapper = new ContentTypeMapper();
     }
 
     public function testGetFormType(): void

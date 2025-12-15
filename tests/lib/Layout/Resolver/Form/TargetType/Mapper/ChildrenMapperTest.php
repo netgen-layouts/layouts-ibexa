@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Netgen\Layouts\Ibexa\Tests\Layout\Resolver\Form\TargetType\Mapper;
 
 use Netgen\ContentBrowser\Form\Type\ContentBrowserIntegerType;
-use Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\Subtree;
+use Netgen\Layouts\Ibexa\Layout\Resolver\Form\TargetType\Mapper\ChildrenMapper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(Subtree::class)]
-final class SubtreeTest extends TestCase
+#[CoversClass(ChildrenMapper::class)]
+final class ChildrenMapperTest extends TestCase
 {
-    private Subtree $mapper;
+    private ChildrenMapper $mapper;
 
     protected function setUp(): void
     {
-        $this->mapper = new Subtree();
+        $this->mapper = new ChildrenMapper();
     }
 
     public function testGetFormType(): void
