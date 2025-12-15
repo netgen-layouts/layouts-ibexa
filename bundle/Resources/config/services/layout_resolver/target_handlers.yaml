@@ -5,12 +5,12 @@ services:
             - { name: netgen_layouts.target_type.doctrine_handler, target_type: ibexa_location }
 
     netgen_layouts.ibexa.layout_resolver.target_handler.doctrine.content:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetHandler\Doctrine\Location
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetHandler\Doctrine\Content
         tags:
             - { name: netgen_layouts.target_type.doctrine_handler, target_type: ibexa_content }
 
     netgen_layouts.ibexa.layout_resolver.target_handler.doctrine.children:
-        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetHandler\Doctrine\Location
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetHandler\Doctrine\Children
         tags:
             - { name: netgen_layouts.target_type.doctrine_handler, target_type: ibexa_children }
 
@@ -20,12 +20,12 @@ services:
             - { name: netgen_layouts.target_type.doctrine_handler, target_type: ibexa_subtree }
 
     netgen_layouts.ibexa.layout_resolver.target_handler.doctrine.semantic_path_info:
-        class: Netgen\Layouts\Layout\Resolver\TargetHandler\Doctrine\Route
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetHandler\Doctrine\SemanticPathInfo
         tags:
             - { name: netgen_layouts.target_type.doctrine_handler, target_type: ibexa_semantic_path_info }
 
     netgen_layouts.ibexa.layout_resolver.target_handler.doctrine.semantic_path_info_prefix:
-        class: Netgen\Layouts\Layout\Resolver\TargetHandler\Doctrine\RoutePrefix
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetHandler\Doctrine\SemanticPathInfoPrefix
         arguments:
             - "@database_connection"
         tags:
