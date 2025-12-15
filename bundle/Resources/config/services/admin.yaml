@@ -127,8 +127,6 @@ services:
         class: Netgen\Layouts\Ibexa\AdminUI\Tab\LocationView\LayoutsTab
         arguments:
             - "@twig"
-            - "@translator"
-            - "@event_dispatcher"
             - "@Ibexa\\Contracts\\Core\\Repository\\PermissionService"
             - "@security.authorization_checker"
         tags:

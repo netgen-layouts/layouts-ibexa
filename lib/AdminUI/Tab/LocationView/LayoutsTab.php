@@ -4,26 +4,20 @@ declare(strict_types=1);
 
 namespace Netgen\Layouts\Ibexa\AdminUI\Tab\LocationView;
 
-use Ibexa\Contracts\AdminUi\Tab\AbstractEventDispatchingTab;
 use Ibexa\Contracts\AdminUi\Tab\ConditionalTabInterface;
+use Ibexa\Contracts\AdminUi\Tab\TabInterface;
 use Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException;
 use Ibexa\Contracts\Core\Repository\PermissionService;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-final class LayoutsTab extends AbstractEventDispatchingTab implements ConditionalTabInterface
+final class LayoutsTab implements TabInterface, ConditionalTabInterface
 {
     public function __construct(
-        Environment $twig,
-        TranslatorInterface $translator,
-        EventDispatcherInterface $eventDispatcher,
+        private Environment $twig,
         private PermissionService $permissionService,
         private AuthorizationCheckerInterface $authorizationChecker,
-    ) {
-        parent::__construct($twig, $translator, $eventDispatcher);
-    }
+    ) {}
 
     public function getIdentifier(): string
     {
@@ -45,13 +39,11 @@ final class LayoutsTab extends AbstractEventDispatchingTab implements Conditiona
         }
     }
 
-    public function getTemplate(): string
+    public function renderView(array $parameters): string
     {
-        return '@ibexadesign/content/tab/nglayouts/tab.html.twig';
-    }
-
-    public function getTemplateParameters(array $contextParameters = []): array
-    {
-        return $contextParameters;
+        return $this->twig->render(
+            '@ibexadesign/content/tab/nglayouts/tab.html.twig',
+            $parameters,
+        );
     }
 }
