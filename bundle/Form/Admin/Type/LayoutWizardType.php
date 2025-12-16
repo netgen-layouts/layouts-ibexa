@@ -18,6 +18,7 @@ use Symfony\Component\Uid\NilUuid;
 use Symfony\Component\Validator\Constraints;
 
 use function array_first;
+use function sprintf;
 
 final class LayoutWizardType extends AbstractType
 {
@@ -52,10 +53,10 @@ final class LayoutWizardType extends AbstractType
                 'label' => false,
                 'expanded' => true,
                 'data' => ActionType::NewLayout,
-                'choice_label' => static fn (ActionType $actionType): string => match ($actionType) {
-                    ActionType::NewLayout => 'layout_wizard.action.new_layout',
-                    ActionType::CopyLayout => 'layout_wizard.action.copy_layout',
-                },
+                'choice_label' => static fn (ActionType $actionType): string => sprintf(
+                    'layout_wizard.action.%s',
+                    $actionType->value,
+                ),
             ],
         );
 
