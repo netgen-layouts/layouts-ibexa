@@ -5,7 +5,7 @@ includes:
 
 parameters:
     ignoreErrors:
-        # Symfony
+        # PHPStan
 
         - '#with generic interface Symfony\\Component\\Form\\\w+ but does not specify its types: TData#'
         - '#extends generic class Symfony\\Component\\Form\\\w+ but does not specify its types: TData#'
