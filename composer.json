@@ -23,6 +23,7 @@
         "netgen/layouts-coding-standard": "^3.0",
         "phpunit/phpunit": "^12.5",
         "phpstan/phpstan": "^2.1",
+        "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpstan/phpstan-symfony": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
@@ -31,7 +32,10 @@
         "netgen/tagsbundle": "^6.0"
     },
     "config": {
-        "allow-plugins": false
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "*": false
+        }
     },
     "suggest": {
         "netgen/layouts-ibexa-site-api": "Integrate Netgen Layouts with Ibexa CMS Site API to boost your site-building productivity with Ibexa CMS"
