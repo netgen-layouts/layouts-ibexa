@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace Netgen\Layouts\Ibexa\Tests\Layout\Resolver\TargetType;
 
 use Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\SemanticPathInfoPrefix;
+use Netgen\Layouts\Ibexa\Tests\TestCase\ValidatorTestCaseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validation;
 
 #[CoversClass(SemanticPathInfoPrefix::class)]
 final class SemanticPathInfoPrefixTest extends TestCase
 {
+    use ValidatorTestCaseTrait;
+
     private SemanticPathInfoPrefix $targetType;
 
     protected function setUp(): void
@@ -29,7 +31,7 @@ final class SemanticPathInfoPrefixTest extends TestCase
     #[DataProvider('validationDataProvider')]
     public function testValidation(mixed $value, bool $isValid): void
     {
-        $validator = Validation::createValidator();
+        $validator = $this->createValidator();
 
         $errors = $validator->validate($value, $this->targetType->getConstraints());
         self::assertSame($isValid, $errors->count() === 0);

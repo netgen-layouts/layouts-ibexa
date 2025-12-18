@@ -6,7 +6,7 @@ namespace Netgen\Layouts\Ibexa\Tests\Parameters\ParameterType;
 
 use Ibexa\Core\Base\Exceptions\NotFoundException;
 use Netgen\Layouts\Ibexa\Parameters\ParameterType\TagsType;
-use Netgen\Layouts\Ibexa\Tests\Validator\TagsServiceValidatorFactory;
+use Netgen\Layouts\Ibexa\Tests\TestCase\ValidatorTestCaseTrait;
 use Netgen\Layouts\Tests\Parameters\ParameterType\ParameterTypeTestTrait;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\Core\Repository\TagsService;
@@ -15,12 +15,12 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidArgumentException;
-use Symfony\Component\Validator\Validation;
 
 #[CoversClass(TagsType::class)]
 final class TagsTypeTest extends TestCase
 {
     use ParameterTypeTestTrait;
+    use ValidatorTestCaseTrait;
 
     private Stub&TagsService $tagsServiceStub;
 
@@ -310,12 +310,11 @@ final class TagsTypeTest extends TestCase
                 );
         }
 
-        $parameter = $this->getParameterDefinition(['min' => 1, 'max' => 3], $required);
-        $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new TagsServiceValidatorFactory($this->tagsServiceStub))
-            ->getValidator();
+        $validator = $this->createValidator(null, $this->tagsServiceStub);
 
-        $errors = $validator->validate($values, $this->type->getConstraints($parameter, $values));
+        $parameterDefinition = $this->getParameterDefinition(['min' => 1, 'max' => 3], $required);
+
+        $errors = $validator->validate($values, $this->type->getConstraints($parameterDefinition, $values));
         self::assertSame($isValid, $errors->count() === 0);
     }
 

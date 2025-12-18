@@ -11,17 +11,18 @@ use Ibexa\Core\Repository\Values\Content\Content;
 use Ibexa\Core\Repository\Values\ContentType\ContentType as IbexaContentType;
 use Netgen\Layouts\Ibexa\ContentProvider\ContentExtractorInterface;
 use Netgen\Layouts\Ibexa\Layout\Resolver\ConditionType\ContentType;
-use Netgen\Layouts\Ibexa\Tests\Validator\RepositoryValidatorFactory;
+use Netgen\Layouts\Ibexa\Tests\TestCase\ValidatorTestCaseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validation;
 
 #[CoversClass(ContentType::class)]
 final class ContentTypeTest extends TestCase
 {
+    use ValidatorTestCaseTrait;
+
     private Stub&Repository $repositoryStub;
 
     private ContentType $conditionType;
@@ -64,9 +65,7 @@ final class ContentTypeTest extends TestCase
             ->with(self::identicalTo('identifier'))
             ->willReturn(new IbexaContentType());
 
-        $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
-            ->getValidator();
+        $validator = $this->createValidator($this->repositoryStub);
 
         $errors = $validator->validate(['identifier'], $this->conditionType->getConstraints());
         self::assertCount(0, $errors);
@@ -79,9 +78,7 @@ final class ContentTypeTest extends TestCase
             ->with(self::identicalTo('unknown'))
             ->willThrowException(new NotFoundException('content type', 'unknown'));
 
-        $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
-            ->getValidator();
+        $validator = $this->createValidator($this->repositoryStub);
 
         $errors = $validator->validate(['unknown'], $this->conditionType->getConstraints());
         self::assertNotCount(0, $errors);

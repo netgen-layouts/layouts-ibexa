@@ -10,18 +10,19 @@ use Ibexa\Core\Repository\Repository;
 use Ibexa\Core\Repository\Values\Content\Location as IbexaLocation;
 use Netgen\Layouts\Ibexa\ContentProvider\ContentExtractorInterface;
 use Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\Location;
-use Netgen\Layouts\Ibexa\Tests\Validator\RepositoryValidatorFactory;
+use Netgen\Layouts\Ibexa\Tests\TestCase\ValidatorTestCaseTrait;
 use Netgen\Layouts\Ibexa\Utils\RemoteIdConverter;
 use Netgen\Layouts\Layout\Resolver\ValueObjectProviderInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validation;
 
 #[CoversClass(Location::class)]
 final class LocationTest extends TestCase
 {
+    use ValidatorTestCaseTrait;
+
     private Stub&Repository $repositoryStub;
 
     private Stub&LocationService $locationServiceStub;
@@ -69,9 +70,7 @@ final class LocationTest extends TestCase
             ->with(self::identicalTo(42))
             ->willReturn(new IbexaLocation());
 
-        $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
-            ->getValidator();
+        $validator = $this->createValidator($this->repositoryStub);
 
         $errors = $validator->validate(42, $this->targetType->getConstraints());
         self::assertCount(0, $errors);
@@ -84,9 +83,7 @@ final class LocationTest extends TestCase
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
 
-        $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
-            ->getValidator();
+        $validator = $this->createValidator($this->repositoryStub);
 
         $errors = $validator->validate(42, $this->targetType->getConstraints());
         self::assertCount(0, $errors);

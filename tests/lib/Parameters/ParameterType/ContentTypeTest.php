@@ -12,7 +12,7 @@ use Ibexa\Core\Repository\Repository;
 use Ibexa\Core\Repository\Values\Content\Content;
 use Ibexa\Core\Repository\Values\ContentType\ContentType as IbexaContentType;
 use Netgen\Layouts\Ibexa\Parameters\ParameterType\ContentType;
-use Netgen\Layouts\Ibexa\Tests\Validator\RepositoryValidatorFactory;
+use Netgen\Layouts\Ibexa\Tests\TestCase\ValidatorTestCaseTrait;
 use Netgen\Layouts\Parameters\ParameterDefinition;
 use Netgen\Layouts\Parameters\ValueObjectProviderInterface;
 use Netgen\Layouts\Tests\Parameters\ParameterType\ParameterTypeTestTrait;
@@ -21,7 +21,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidArgumentException;
-use Symfony\Component\Validator\Validation;
 
 use function is_int;
 
@@ -29,6 +28,7 @@ use function is_int;
 final class ContentTypeTest extends TestCase
 {
     use ParameterTypeTestTrait;
+    use ValidatorTestCaseTrait;
 
     private Stub&Repository $repositoryStub;
 
@@ -250,12 +250,10 @@ final class ContentTypeTest extends TestCase
                 );
         }
 
-        $parameter = $this->getParameterDefinition(['allowed_types' => ['user', 'image']], $required);
-        $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
-            ->getValidator();
+        $parameterDefinition = $this->getParameterDefinition(['allowed_types' => ['user', 'image']], $required);
+        $validator = $this->createValidator($this->repositoryStub);
 
-        $errors = $validator->validate($value, $this->type->getConstraints($parameter, $value));
+        $errors = $validator->validate($value, $this->type->getConstraints($parameterDefinition, $value));
         self::assertSame($isValid, $errors->count() === 0);
     }
 

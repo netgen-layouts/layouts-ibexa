@@ -9,7 +9,7 @@ use Ibexa\Core\Repository\Repository;
 use Ibexa\Core\Repository\Values\ObjectState\ObjectState as IbexaObjectState;
 use Ibexa\Core\Repository\Values\ObjectState\ObjectStateGroup;
 use Netgen\Layouts\Ibexa\Parameters\ParameterType\ObjectStateType;
-use Netgen\Layouts\Ibexa\Tests\Validator\RepositoryValidatorFactory;
+use Netgen\Layouts\Ibexa\Tests\TestCase\ValidatorTestCaseTrait;
 use Netgen\Layouts\Parameters\ParameterDefinition;
 use Netgen\Layouts\Tests\Parameters\ParameterType\ParameterTypeTestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -17,7 +17,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidArgumentException;
-use Symfony\Component\Validator\Validation;
 
 use function is_array;
 
@@ -25,6 +24,7 @@ use function is_array;
 final class ObjectStateTypeTest extends TestCase
 {
     use ParameterTypeTestTrait;
+    use ValidatorTestCaseTrait;
 
     private Stub&Repository $repositoryStub;
 
@@ -191,12 +191,10 @@ final class ObjectStateTypeTest extends TestCase
             );
 
         $options = $value !== null ? ['multiple' => is_array($value)] : [];
-        $parameter = $this->getParameterDefinition($options, $required);
-        $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
-            ->getValidator();
+        $parameterDefinition = $this->getParameterDefinition($options, $required);
+        $validator = $this->createValidator($this->repositoryStub);
 
-        $errors = $validator->validate($value, $this->type->getConstraints($parameter, $value));
+        $errors = $validator->validate($value, $this->type->getConstraints($parameterDefinition, $value));
         self::assertSame($isValid, $errors->count() === 0);
     }
 
@@ -204,12 +202,10 @@ final class ObjectStateTypeTest extends TestCase
     public function testValidationWithEmptyValues(mixed $value, bool $required, bool $isValid): void
     {
         $options = $value !== null ? ['multiple' => is_array($value)] : [];
-        $parameter = $this->getParameterDefinition($options, $required);
-        $validator = Validation::createValidatorBuilder()
-            ->setConstraintValidatorFactory(new RepositoryValidatorFactory($this->repositoryStub))
-            ->getValidator();
+        $parameterDefinition = $this->getParameterDefinition($options, $required);
+        $validator = $this->createValidator($this->repositoryStub);
 
-        $errors = $validator->validate($value, $this->type->getConstraints($parameter, $value));
+        $errors = $validator->validate($value, $this->type->getConstraints($parameterDefinition, $value));
         self::assertSame($isValid, $errors->count() === 0);
     }
 
