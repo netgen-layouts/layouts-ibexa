@@ -70,7 +70,7 @@ final class TagValidatorTest extends ValidatorTestCase
         $this->assertValid(true, []);
     }
 
-    protected function getValidator(): ConstraintValidatorInterface
+    protected function getConstraintValidator(): ConstraintValidatorInterface
     {
         $this->tagsServiceStub = self::createStub(TagsService::class);
 

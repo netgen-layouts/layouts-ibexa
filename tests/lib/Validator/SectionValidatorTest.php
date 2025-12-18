@@ -95,7 +95,7 @@ final class SectionValidatorTest extends ValidatorTestCase
         ];
     }
 
-    protected function getValidator(): ConstraintValidatorInterface
+    protected function getConstraintValidator(): ConstraintValidatorInterface
     {
         $this->sectionServiceStub = self::createStub(SectionService::class);
         $this->repositoryStub = self::createStub(Repository::class);

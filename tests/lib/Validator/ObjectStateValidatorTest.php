@@ -142,7 +142,7 @@ final class ObjectStateValidatorTest extends ValidatorTestCase
         ];
     }
 
-    protected function getValidator(): ConstraintValidatorInterface
+    protected function getConstraintValidator(): ConstraintValidatorInterface
     {
         $this->objectStateServiceStub = self::createStub(ObjectStateService::class);
         $this->repositoryStub = self::createStub(Repository::class);

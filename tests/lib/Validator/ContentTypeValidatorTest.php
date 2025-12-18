@@ -111,7 +111,7 @@ final class ContentTypeValidatorTest extends ValidatorTestCase
         ];
     }
 
-    protected function getValidator(): ConstraintValidatorInterface
+    protected function getConstraintValidator(): ConstraintValidatorInterface
     {
         $this->contentTypeServiceStub = self::createStub(ContentTypeService::class);
         $this->repositoryStub = self::createStub(Repository::class);

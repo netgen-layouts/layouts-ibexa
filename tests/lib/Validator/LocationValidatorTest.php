@@ -99,7 +99,7 @@ final class LocationValidatorTest extends ValidatorTestCase
         $this->assertValid(true, []);
     }
 
-    protected function getValidator(): ConstraintValidatorInterface
+    protected function getConstraintValidator(): ConstraintValidatorInterface
     {
         $this->locationServiceStub = self::createStub(LocationService::class);
         $this->repositoryStub = self::createStub(Repository::class);
