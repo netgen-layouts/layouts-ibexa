@@ -15,7 +15,7 @@ final class LocationProvider implements ValueObjectProviderInterface
         private Repository $repository,
     ) {}
 
-    public function getValueObject(mixed $value): ?Location
+    public function getValueObject(int|string $value): ?Location
     {
         try {
             return $this->repository->sudo(

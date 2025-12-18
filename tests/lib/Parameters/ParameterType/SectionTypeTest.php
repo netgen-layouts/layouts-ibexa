@@ -146,12 +146,7 @@ final class SectionTypeTest extends TestCase
             ],
             [
                 [
-                    'sections' => 42,
-                ],
-            ],
-            [
-                [
-                    'sections' => [42],
+                    'sections' => 'section1',
                 ],
             ],
         ];
@@ -237,13 +232,13 @@ final class SectionTypeTest extends TestCase
                 false,
             ],
             [
-                42,
-                42,
+                'section1',
+                'section1',
                 false,
             ],
             [
-                [42, 43],
-                42,
+                ['section1', 'section2'],
+                'section1',
                 false,
             ],
             [
@@ -257,13 +252,13 @@ final class SectionTypeTest extends TestCase
                 true,
             ],
             [
-                42,
-                [42],
+                'section1',
+                ['section1'],
                 true,
             ],
             [
-                [42, 43],
-                [42, 43],
+                ['section1', 'section2'],
+                ['section1', 'section2'],
                 true,
             ],
         ];
@@ -283,8 +278,8 @@ final class SectionTypeTest extends TestCase
         return [
             [null, true],
             [[], true],
-            [42, false],
-            [[42], false],
+            ['section1', false],
+            [['section1'], false],
             [0, false],
             ['42', false],
             ['', false],

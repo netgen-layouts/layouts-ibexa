@@ -118,11 +118,11 @@ final class ObjectStateTypeTest extends TestCase
             ],
             [
                 [
-                    'states' => [42],
+                    'states' => ['state1'],
                 ],
                 [
                     'multiple' => false,
-                    'states' => [42],
+                    'states' => ['state1'],
                 ],
             ],
         ];
@@ -142,6 +142,11 @@ final class ObjectStateTypeTest extends TestCase
             [
                 [
                     'undefined_value' => 'Value',
+                ],
+            ],
+            [
+                [
+                    'states' => 'state1',
                 ],
             ],
         ];
@@ -268,13 +273,13 @@ final class ObjectStateTypeTest extends TestCase
                 false,
             ],
             [
-                42,
-                42,
+                'state1',
+                'state1',
                 false,
             ],
             [
-                [42, 43],
-                42,
+                ['state1', 'state2'],
+                'state1',
                 false,
             ],
             [
@@ -288,13 +293,13 @@ final class ObjectStateTypeTest extends TestCase
                 true,
             ],
             [
-                42,
-                [42],
+                'state1',
+                ['state1'],
                 true,
             ],
             [
-                [42, 43],
-                [42, 43],
+                ['state1', 'state2'],
+                ['state1', 'state2'],
                 true,
             ],
         ];
@@ -314,8 +319,8 @@ final class ObjectStateTypeTest extends TestCase
         return [
             [null, true],
             [[], true],
-            [42, false],
-            [[42], false],
+            ['state1', false],
+            [['state1'], false],
             [0, false],
             ['42', false],
             ['', false],

@@ -40,17 +40,17 @@ final class Location extends TargetType implements ValueObjectProviderInterface
         return $this->contentExtractor->extractLocation($request)?->id;
     }
 
-    public function getValueObject(mixed $value): ?object
+    public function getValueObject(int|string $value): ?object
     {
         return $this->valueObjectProvider->getValueObject($value);
     }
 
-    public function export(mixed $value): ?string
+    public function export(int|string $value): ?string
     {
         return $this->remoteIdConverter->toLocationRemoteId((int) $value);
     }
 
-    public function import(mixed $value): int
+    public function import(int|string|null $value): int
     {
         return $this->remoteIdConverter->toLocationId((string) $value) ?? 0;
     }

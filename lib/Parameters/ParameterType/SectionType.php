@@ -38,7 +38,10 @@ final class SectionType extends ParameterType
             ->allowedTypes('string[]');
     }
 
-    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): mixed
+    /**
+     * @return string[]|string|null
+     */
+    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): array|string|null
     {
         if ($value === null || $value === []) {
             return null;

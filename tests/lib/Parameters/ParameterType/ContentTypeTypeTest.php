@@ -118,11 +118,11 @@ final class ContentTypeTypeTest extends TestCase
             ],
             [
                 [
-                    'types' => [42],
+                    'types' => ['type1'],
                 ],
                 [
                     'multiple' => false,
-                    'types' => [42],
+                    'types' => ['type1'],
                 ],
             ],
         ];
@@ -142,6 +142,11 @@ final class ContentTypeTypeTest extends TestCase
             [
                 [
                     'undefined_value' => 'Value',
+                ],
+            ],
+            [
+                [
+                    'types' => 'type1',
                 ],
             ],
         ];
@@ -227,13 +232,13 @@ final class ContentTypeTypeTest extends TestCase
                 false,
             ],
             [
-                42,
-                42,
+                'type1',
+                'type1',
                 false,
             ],
             [
-                [42, 43],
-                42,
+                ['type1', 'type2'],
+                'type1',
                 false,
             ],
             [
@@ -247,13 +252,13 @@ final class ContentTypeTypeTest extends TestCase
                 true,
             ],
             [
-                42,
-                [42],
+                'type1',
+                ['type1'],
                 true,
             ],
             [
-                [42, 43],
-                [42, 43],
+                ['type1', 'type2'],
+                ['type1', 'type2'],
                 true,
             ],
         ];
@@ -273,10 +278,10 @@ final class ContentTypeTypeTest extends TestCase
         return [
             [null, true],
             [[], true],
-            [42, false],
-            [[42], false],
+            ['type1', false],
+            [['type1'], false],
             [0, false],
-            ['42', false],
+            [42, false],
             ['', false],
         ];
     }
