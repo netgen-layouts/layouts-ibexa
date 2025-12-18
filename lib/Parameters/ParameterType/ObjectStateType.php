@@ -41,7 +41,7 @@ final class ObjectStateType extends ParameterType
     /**
      * @return string[]|string|null
      */
-    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): array|string|null
+    public function fromHash(ParameterDefinition $parameterDefinition, mixed $value): string|array|null
     {
         if ($value === null || $value === []) {
             return null;
