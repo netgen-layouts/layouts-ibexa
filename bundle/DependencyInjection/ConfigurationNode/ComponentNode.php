@@ -30,9 +30,7 @@ final class ComponentNode implements ConfigurationNodeInterface
                     ->scalarPrototype()
                         ->cannotBeEmpty()
                         ->validate()
-                            ->ifTrue(
-                                static fn (mixed $v): bool => !is_int($v) && !is_string($v),
-                            )
+                            ->ifTrue(static fn (mixed $v): bool => !is_int($v) && !is_string($v))
                             ->thenInvalid('Parent location needs to be a string or an integer.')
                         ->end()
                     ->end()
