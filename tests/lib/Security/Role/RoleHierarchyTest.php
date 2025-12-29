@@ -40,6 +40,9 @@ final class RoleHierarchyTest extends TestCase
         }
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function getReachableRolesDataProvider(): iterable
     {
         return [

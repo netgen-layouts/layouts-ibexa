@@ -67,7 +67,7 @@ final class SemanticPathInfoTest extends TestCase
     }
 
     /**
-     * Provider for testing target type validation.
+     * @return iterable<mixed>
      */
     public static function validationDataProvider(): iterable
     {

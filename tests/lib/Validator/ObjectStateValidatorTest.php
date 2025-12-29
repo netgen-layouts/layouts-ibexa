@@ -118,6 +118,9 @@ final class ObjectStateValidatorTest extends ValidatorTestCase
         $this->assertValid(true, 'state');
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function validateDataProvider(): iterable
     {
         return [

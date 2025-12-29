@@ -51,6 +51,9 @@ final class ConfigureHttpCachePassTest extends AbstractContainerBuilderTestCase
         $this->assertContainerBuilderNotHasAlias('netgen_layouts.http_cache.client');
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function processDataProvider(): iterable
     {
         return [

@@ -67,6 +67,9 @@ final class RepositoryAccessVoterTest extends TestCase
         self::assertSame($voteResult, $result);
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function voteDataProvider(): iterable
     {
         return [

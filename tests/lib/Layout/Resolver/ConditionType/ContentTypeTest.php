@@ -119,6 +119,9 @@ final class ContentTypeTest extends TestCase
         self::assertFalse($this->conditionType->matches($request, ['article']));
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function matchesDataProvider(): iterable
     {
         return [

@@ -84,7 +84,7 @@ final class LocationTypeTest extends TestCase
     }
 
     /**
-     * Provider for testing valid parameter attributes.
+     * @return iterable<mixed>
      */
     public static function validOptionsDataProvider(): iterable
     {
@@ -136,7 +136,7 @@ final class LocationTypeTest extends TestCase
     }
 
     /**
-     * Provider for testing invalid parameter attributes.
+     * @return iterable<mixed>
      */
     public static function invalidOptionsDataProvider(): iterable
     {
@@ -251,7 +251,7 @@ final class LocationTypeTest extends TestCase
     }
 
     /**
-     * Provider for testing valid parameter values.
+     * @return iterable<mixed>
      */
     public static function validationDataProvider(): iterable
     {
@@ -283,6 +283,9 @@ final class LocationTypeTest extends TestCase
         );
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function fromHashDataProvider(): iterable
     {
         return [
@@ -308,7 +311,7 @@ final class LocationTypeTest extends TestCase
     }
 
     /**
-     * Provider for testing if the value is empty.
+     * @return iterable<mixed>
      */
     public static function emptyDataProvider(): iterable
     {

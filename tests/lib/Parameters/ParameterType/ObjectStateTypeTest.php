@@ -77,7 +77,7 @@ final class ObjectStateTypeTest extends TestCase
     }
 
     /**
-     * Provider for testing valid parameter attributes.
+     * @return iterable<mixed>
      */
     public static function validOptionsDataProvider(): iterable
     {
@@ -129,7 +129,7 @@ final class ObjectStateTypeTest extends TestCase
     }
 
     /**
-     * Provider for testing invalid parameter attributes.
+     * @return iterable<mixed>
      */
     public static function invalidOptionsDataProvider(): iterable
     {
@@ -209,6 +209,9 @@ final class ObjectStateTypeTest extends TestCase
         self::assertSame($isValid, $errors->count() === 0);
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function validationDataProvider(): iterable
     {
         return [
@@ -229,6 +232,9 @@ final class ObjectStateTypeTest extends TestCase
         ];
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function validationWithEmptyValuesDataProvider(): iterable
     {
         return [
@@ -255,6 +261,9 @@ final class ObjectStateTypeTest extends TestCase
         );
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function fromHashDataProvider(): iterable
     {
         return [
@@ -308,7 +317,7 @@ final class ObjectStateTypeTest extends TestCase
     }
 
     /**
-     * Provider for testing if the value is empty.
+     * @return iterable<mixed>
      */
     public static function emptyDataProvider(): iterable
     {

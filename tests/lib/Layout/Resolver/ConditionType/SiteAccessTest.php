@@ -55,7 +55,7 @@ final class SiteAccessTest extends TestCase
     }
 
     /**
-     * Provider for testing condition type validation.
+     * @return iterable<mixed>
      */
     public static function validationDataProvider(): iterable
     {
@@ -69,6 +69,9 @@ final class SiteAccessTest extends TestCase
         ];
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public static function matchesDataProvider(): iterable
     {
         return [
