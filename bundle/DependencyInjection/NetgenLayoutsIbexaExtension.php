@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\LayoutsIbexaBundle\DependencyInjection;
 
-use Jean85\PrettyVersions;
+use Composer\InstalledVersions;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\DelegatingLoader;
@@ -19,6 +19,7 @@ use Symfony\Component\Yaml\Yaml;
 
 use function array_key_exists;
 use function file_get_contents;
+use function mb_substr;
 
 final class NetgenLayoutsIbexaExtension extends Extension implements PrependExtensionInterface
 {
@@ -63,7 +64,7 @@ final class NetgenLayoutsIbexaExtension extends Extension implements PrependExte
     {
         $container->setParameter(
             'netgen_layouts_ibexa.asset_version',
-            PrettyVersions::getVersion('netgen/layouts-ibexa')->getShortReference(),
+            mb_substr(InstalledVersions::getReference('netgen/layouts-ibexa') ?? '', 0, 8),
         );
 
         $prependConfigs = [
