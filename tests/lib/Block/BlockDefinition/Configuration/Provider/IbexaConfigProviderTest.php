@@ -39,10 +39,9 @@ final class IbexaConfigProviderTest extends TestCase
 
     public function testProvideViewTypes(): void
     {
-        $blockUuid = Uuid::v4();
         $block = Block::fromArray(
             [
-                'id' => $blockUuid,
+                'id' => Uuid::v7(),
                 'parameters' => new ParameterList(
                     [
                         'content_type_identifier' => Parameter::fromArray(
