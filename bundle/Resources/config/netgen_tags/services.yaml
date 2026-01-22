@@ -9,7 +9,7 @@ services:
     netgen_layouts.ibexa.parameters.form_mapper.tags:
         class: Netgen\Layouts\Ibexa\Parameters\Form\Mapper\TagsMapper
         tags:
-            - { name: netgen_layouts.parameter_type.form_mapper, type: netgen_tags }
+            - { name: netgen_layouts.parameter_type.form_mapper, parameter_type: netgen_tags }
 
     netgen_layouts.ibexa.validator.tags:
         class: Netgen\Layouts\Ibexa\Validator\TagValidator

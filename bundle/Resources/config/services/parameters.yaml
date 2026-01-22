@@ -45,24 +45,24 @@ services:
     netgen_layouts.ibexa.parameters.form_mapper.location:
         class: Netgen\Layouts\Ibexa\Parameters\Form\Mapper\LocationMapper
         tags:
-            - { name: netgen_layouts.parameter_type.form_mapper, type: ibexa_location }
+            - { name: netgen_layouts.parameter_type.form_mapper, parameter_type: ibexa_location }
 
     netgen_layouts.ibexa.parameters.form_mapper.content:
         class: Netgen\Layouts\Ibexa\Parameters\Form\Mapper\ContentMapper
         tags:
-            - { name: netgen_layouts.parameter_type.form_mapper, type: ibexa_content }
+            - { name: netgen_layouts.parameter_type.form_mapper, parameter_type: ibexa_content }
 
     netgen_layouts.ibexa.parameters.form_mapper.content_type:
         class: Netgen\Layouts\Ibexa\Parameters\Form\Mapper\ContentTypeMapper
         tags:
-            - { name: netgen_layouts.parameter_type.form_mapper, type: ibexa_content_type }
+            - { name: netgen_layouts.parameter_type.form_mapper, parameter_type: ibexa_content_type }
 
     netgen_layouts.ibexa.parameters.form_mapper.section:
         class: Netgen\Layouts\Ibexa\Parameters\Form\Mapper\SectionMapper
         tags:
-            - { name: netgen_layouts.parameter_type.form_mapper, type: ibexa_section }
+            - { name: netgen_layouts.parameter_type.form_mapper, parameter_type: ibexa_section }
 
     netgen_layouts.ibexa.parameters.form_mapper.object_state:
         class: Netgen\Layouts\Ibexa\Parameters\Form\Mapper\ObjectStateMapper
         tags:
-            - { name: netgen_layouts.parameter_type.form_mapper, type: ibexa_object_state }
+            - { name: netgen_layouts.parameter_type.form_mapper, parameter_type: ibexa_object_state }
