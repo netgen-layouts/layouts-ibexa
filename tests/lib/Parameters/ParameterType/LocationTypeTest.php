@@ -44,7 +44,6 @@ final class LocationTypeTest extends TestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );
@@ -183,7 +182,6 @@ final class LocationTypeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willReturn(new Location(['remoteId' => 'abc']));
 
         self::assertSame('abc', $this->type->export($this->getParameterDefinition(), 42));
@@ -193,7 +191,6 @@ final class LocationTypeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
 
         self::assertNull($this->type->export($this->getParameterDefinition(), 42));
@@ -203,7 +200,6 @@ final class LocationTypeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocationByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(new Location(['id' => 42]));
 
         self::assertSame(42, $this->type->import($this->getParameterDefinition(), 'abc'));
@@ -213,7 +209,6 @@ final class LocationTypeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocationByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('location', 'abc'));
 
         self::assertNull($this->type->import($this->getParameterDefinition(), 'abc'));
@@ -225,22 +220,21 @@ final class LocationTypeTest extends TestCase
         if ($value !== null) {
             $this->locationServiceStub
                 ->method('loadLocation')
-                ->with(self::identicalTo((int) $value))
-                ->willReturnCallback(
-                    static fn (): Location => match (true) {
-                        is_int($value) && $value > 0 => new Location(
-                            [
-                                'id' => $value,
-                                'content' => new Content(
-                                    [
-                                        'contentType' => new ContentType(['identifier' => $type]),
-                                    ],
-                                ),
-                            ],
-                        ),
-                        default => throw new NotFoundException('location', $value),
-                    },
-                );
+                    ->willReturnCallback(
+                        static fn (): Location => match (true) {
+                            is_int($value) && $value > 0 => new Location(
+                                [
+                                    'id' => $value,
+                                    'content' => new Content(
+                                        [
+                                            'contentType' => new ContentType(['identifier' => $type]),
+                                        ],
+                                    ),
+                                ],
+                            ),
+                            default => throw new NotFoundException('location', $value),
+                        },
+                    );
         }
 
         $parameterDefinition = $this->getParameterDefinition(['allowed_types' => ['user', 'image']], $required);
@@ -327,7 +321,6 @@ final class LocationTypeTest extends TestCase
 
         $this->valueObjectProviderStub
             ->method('getValueObject')
-            ->with(self::identicalTo(42))
             ->willReturn($location);
 
         /** @var \Netgen\Layouts\Ibexa\Parameters\ParameterType\LocationType $type */

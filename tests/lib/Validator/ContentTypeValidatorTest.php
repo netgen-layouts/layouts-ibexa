@@ -44,7 +44,6 @@ final class ContentTypeValidatorTest extends ValidatorTestCase
     {
         $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
-            ->with(self::identicalTo($identifier))
             ->willReturn(
                 new IbexaContentType(
                     [
@@ -74,7 +73,6 @@ final class ContentTypeValidatorTest extends ValidatorTestCase
     {
         $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
-            ->with(self::identicalTo('unknown'))
             ->willThrowException(new NotFoundException('content type', 'unknown'));
 
         $this->assertValid(false, 'unknown');
@@ -121,7 +119,6 @@ final class ContentTypeValidatorTest extends ValidatorTestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );

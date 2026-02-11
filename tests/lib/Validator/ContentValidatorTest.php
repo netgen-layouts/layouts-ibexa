@@ -37,7 +37,6 @@ final class ContentValidatorTest extends ValidatorTestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['id' => 42, 'contentTypeId' => 24]));
 
         $this->assertValid(true, 42);
@@ -47,7 +46,6 @@ final class ContentValidatorTest extends ValidatorTestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['id' => 42, 'contentTypeId' => 52]));
 
         $this->assertValid(false, 42);
@@ -57,7 +55,6 @@ final class ContentValidatorTest extends ValidatorTestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
 
         $this->assertValid(false, 42);
@@ -102,7 +99,6 @@ final class ContentValidatorTest extends ValidatorTestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Netgen\Layouts\Ibexa\Tests\Item\ValueUrlGenerator;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
-use Ibexa\Core\MVC\Symfony\Routing\UrlAliasRouter;
 use Ibexa\Core\Repository\Values\Content\Location;
 use Netgen\Layouts\Ibexa\Item\ValueUrlGenerator\LocationValueUrlGenerator;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -31,10 +30,6 @@ final class LocationValueUrlGeneratorTest extends TestCase
     {
         $this->urlGeneratorStub
             ->method('generate')
-            ->with(
-                self::identicalTo(UrlAliasRouter::URL_ALIAS_ROUTE_NAME),
-                self::identicalTo(['locationId' => 42]),
-            )
             ->willReturn('/location/path');
 
         self::assertSame('/location/path', $this->urlGenerator->generateDefaultUrl(new Location(['id' => 42])));
@@ -44,10 +39,6 @@ final class LocationValueUrlGeneratorTest extends TestCase
     {
         $this->urlGeneratorStub
             ->method('generate')
-            ->with(
-                self::identicalTo('ibexa.content.view'),
-                self::identicalTo(['contentId' => 24, 'locationId' => 42]),
-            )
             ->willReturn('/admin/location/path');
 
         $location = new Location(['id' => 42, 'contentInfo' => new ContentInfo(['id' => 24])]);

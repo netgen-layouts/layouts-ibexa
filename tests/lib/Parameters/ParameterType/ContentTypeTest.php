@@ -56,7 +56,6 @@ final class ContentTypeTest extends TestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );
@@ -199,7 +198,6 @@ final class ContentTypeTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['remoteId' => 'abc']));
 
         self::assertSame('abc', $this->type->export($this->getParameterDefinition(), 42));
@@ -209,7 +207,6 @@ final class ContentTypeTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('contentInfo', 42));
 
         self::assertNull($this->type->export($this->getParameterDefinition(), 42));
@@ -219,7 +216,6 @@ final class ContentTypeTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(new ContentInfo(['id' => 42]));
 
         self::assertSame(42, $this->type->import($this->getParameterDefinition(), 'abc'));
@@ -229,7 +225,6 @@ final class ContentTypeTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('contentInfo', 'abc'));
 
         self::assertNull($this->type->import($this->getParameterDefinition(), 'abc'));
@@ -241,13 +236,12 @@ final class ContentTypeTest extends TestCase
         if ($value !== null) {
             $this->contentServiceStub
                 ->method('loadContentInfo')
-                ->with(self::identicalTo((int) $value))
-                ->willReturnCallback(
-                    static fn (): ContentInfo => match (true) {
-                        is_int($value) && $value > 0 => new ContentInfo(['id' => $value, 'contentTypeId' => $type]),
-                        default => throw new NotFoundException('content', $value),
-                    },
-                );
+                    ->willReturnCallback(
+                        static fn (): ContentInfo => match (true) {
+                            is_int($value) && $value > 0 => new ContentInfo(['id' => $value, 'contentTypeId' => $type]),
+                            default => throw new NotFoundException('content', $value),
+                        },
+                    );
         }
 
         $parameterDefinition = $this->getParameterDefinition(['allowed_types' => ['user', 'image']], $required);
@@ -334,7 +328,6 @@ final class ContentTypeTest extends TestCase
 
         $this->valueObjectProviderStub
             ->method('getValueObject')
-            ->with(self::identicalTo(42))
             ->willReturn($content);
 
         /** @var \Netgen\Layouts\Ibexa\Parameters\ParameterType\ContentType $type */

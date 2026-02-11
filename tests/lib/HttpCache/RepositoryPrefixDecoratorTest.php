@@ -8,13 +8,14 @@ use Ibexa\HttpCache\RepositoryTagPrefix;
 use Netgen\Layouts\HttpCache\ClientInterface;
 use Netgen\Layouts\Ibexa\HttpCache\RepositoryPrefixDecorator;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(RepositoryPrefixDecorator::class)]
 final class RepositoryPrefixDecoratorTest extends TestCase
 {
-    private Stub&ClientInterface $clientStub;
+    private MockObject&ClientInterface $clientMock;
 
     private Stub&RepositoryTagPrefix $repositoryTagPrefixStub;
 
@@ -22,11 +23,11 @@ final class RepositoryPrefixDecoratorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->clientStub = self::createStub(ClientInterface::class);
+        $this->clientMock = $this->createMock(ClientInterface::class);
         $this->repositoryTagPrefixStub = self::createStub(RepositoryTagPrefix::class);
 
         $this->repositoryPrefixDecorator = new RepositoryPrefixDecorator(
-            $this->clientStub,
+            $this->clientMock,
             $this->repositoryTagPrefixStub,
         );
     }
@@ -37,7 +38,8 @@ final class RepositoryPrefixDecoratorTest extends TestCase
             ->method('getRepositoryPrefix')
             ->willReturn('prefix_');
 
-        $this->clientStub
+        $this->clientMock
+            ->expects($this->once())
             ->method('purge')
             ->with(self::identicalTo(['prefix_tag-1', 'prefix_tag-2']));
 
@@ -46,7 +48,8 @@ final class RepositoryPrefixDecoratorTest extends TestCase
 
     public function testCommit(): void
     {
-        $this->clientStub
+        $this->clientMock
+            ->expects($this->once())
             ->method('commit')
             ->willReturn(true);
 

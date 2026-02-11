@@ -52,7 +52,6 @@ final class IbexaRuntimeTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContent')
-            ->with(self::identicalTo(42))
             ->willThrowException(new Exception());
 
         self::assertSame('', $this->runtime->getContentName(42));
@@ -76,7 +75,6 @@ final class IbexaRuntimeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(22))
             ->willThrowException(new Exception());
 
         self::assertSame([], $this->runtime->getLocationPath(22));
@@ -100,7 +98,6 @@ final class IbexaRuntimeTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContent')
-            ->with(self::identicalTo(22))
             ->willThrowException(new Exception());
 
         self::assertSame([], $this->runtime->getContentPath(22));
@@ -154,7 +151,6 @@ final class IbexaRuntimeTest extends TestCase
     {
         $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
-            ->with(self::identicalTo('some_type'))
             ->willThrowException(new Exception());
 
         self::assertSame('', $this->runtime->getContentTypeName('some_type'));
@@ -169,7 +165,6 @@ final class IbexaRuntimeTest extends TestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );

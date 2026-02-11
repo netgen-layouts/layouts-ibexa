@@ -42,7 +42,6 @@ final class SubtreeTest extends TestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );
@@ -67,7 +66,6 @@ final class SubtreeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willReturn(new Location());
 
         $validator = $this->createValidator($this->repositoryStub);
@@ -80,7 +78,6 @@ final class SubtreeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
 
         $validator = $this->createValidator($this->repositoryStub);
@@ -101,7 +98,6 @@ final class SubtreeTest extends TestCase
 
         $this->contentExtractorStub
             ->method('extractLocation')
-            ->with(self::identicalTo($request))
             ->willReturn($location);
 
         self::assertSame([1, 2, 42], $this->targetType->provideValue($request));
@@ -113,7 +109,6 @@ final class SubtreeTest extends TestCase
 
         $this->contentExtractorStub
             ->method('extractLocation')
-            ->with(self::identicalTo($request))
             ->willReturn(null);
 
         self::assertNull($this->targetType->provideValue($request));
@@ -125,7 +120,6 @@ final class SubtreeTest extends TestCase
 
         $this->valueObjectProviderStub
             ->method('getValueObject')
-            ->with(self::identicalTo(42))
             ->willReturn($location);
 
         self::assertSame($location, $this->targetType->getValueObject(42));
@@ -135,7 +129,6 @@ final class SubtreeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willReturn(new Location(['remoteId' => 'abc']));
 
         self::assertSame('abc', $this->targetType->export(42));
@@ -145,7 +138,6 @@ final class SubtreeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
 
         self::assertNull($this->targetType->export(42));
@@ -155,7 +147,6 @@ final class SubtreeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocationByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(new Location(['id' => 42]));
 
         self::assertSame(42, $this->targetType->import('abc'));
@@ -165,7 +156,6 @@ final class SubtreeTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocationByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('location', 'abc'));
 
         self::assertSame(0, $this->targetType->import('abc'));

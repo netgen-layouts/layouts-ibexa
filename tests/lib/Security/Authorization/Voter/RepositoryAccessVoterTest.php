@@ -53,11 +53,7 @@ final class RepositoryAccessVoterTest extends TestCase
         if (count($repoAccess) > 0) {
             $this->accessDecisionManagerStub
                 ->method('decide')
-                ->with(
-                    self::identicalTo($tokenStub),
-                    self::isArray(),
-                    self::isNull(),
-                )->willReturnCallback(
+                ->willReturnCallback(
                     static fn (TokenInterface $token, array $attributes): bool => $repoAccess[$attributes[0]->function],
                 );
         }

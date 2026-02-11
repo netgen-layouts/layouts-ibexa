@@ -56,7 +56,6 @@ final class IbexaConfigProviderTest extends TestCase
 
         $this->configResolverStub
             ->method('getParameter')
-            ->with(self::identicalTo('content_view'), self::isNull(), self::identicalTo('cro'))
             ->willReturn(
                 [
                     'view_style_1' => [

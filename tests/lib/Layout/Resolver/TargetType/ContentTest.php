@@ -44,7 +44,6 @@ final class ContentTest extends TestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );
@@ -69,7 +68,6 @@ final class ContentTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo());
 
         $validator = $this->createValidator($this->repositoryStub);
@@ -82,7 +80,6 @@ final class ContentTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
 
         $validator = $this->createValidator($this->repositoryStub);
@@ -111,7 +108,6 @@ final class ContentTest extends TestCase
 
         $this->contentExtractorStub
             ->method('extractContent')
-            ->with(self::identicalTo($request))
             ->willReturn($content);
 
         self::assertSame(42, $this->targetType->provideValue($request));
@@ -123,7 +119,6 @@ final class ContentTest extends TestCase
 
         $this->contentExtractorStub
             ->method('extractContent')
-            ->with(self::identicalTo($request))
             ->willReturn(null);
 
         self::assertNull($this->targetType->provideValue($request));
@@ -135,7 +130,6 @@ final class ContentTest extends TestCase
 
         $this->valueObjectProviderStub
             ->method('getValueObject')
-            ->with(self::identicalTo(42))
             ->willReturn($content);
 
         self::assertSame($content, $this->targetType->getValueObject(42));
@@ -145,7 +139,6 @@ final class ContentTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['remoteId' => 'abc']));
 
         self::assertSame('abc', $this->targetType->export(42));
@@ -155,7 +148,6 @@ final class ContentTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
 
         self::assertNull($this->targetType->export(42));
@@ -165,7 +157,6 @@ final class ContentTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(new ContentInfo(['id' => 42]));
 
         self::assertSame(42, $this->targetType->import('abc'));
@@ -175,7 +166,6 @@ final class ContentTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('content', 'abc'));
 
         self::assertSame(0, $this->targetType->import('abc'));

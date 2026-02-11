@@ -37,7 +37,6 @@ final class LocationValidatorTest extends ValidatorTestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willReturn(
                 new IbexaLocation(
                     [
@@ -54,7 +53,6 @@ final class LocationValidatorTest extends ValidatorTestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willReturn(
                 new IbexaLocation(
                     [
@@ -71,7 +69,6 @@ final class LocationValidatorTest extends ValidatorTestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
 
         $this->assertValid(false, 42);
@@ -106,7 +103,6 @@ final class LocationValidatorTest extends ValidatorTestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );

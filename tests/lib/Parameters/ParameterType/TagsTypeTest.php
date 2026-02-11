@@ -30,7 +30,6 @@ final class TagsTypeTest extends TestCase
 
         $this->tagsServiceStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->tagsServiceStub),
             );
@@ -263,7 +262,6 @@ final class TagsTypeTest extends TestCase
     {
         $this->tagsServiceStub
             ->method('loadTag')
-            ->with(self::identicalTo(42))
             ->willReturn(new Tag(['remoteId' => 'abc']));
 
         self::assertSame('abc', $this->type->export($this->getParameterDefinition(), 42));
@@ -273,7 +271,6 @@ final class TagsTypeTest extends TestCase
     {
         $this->tagsServiceStub
             ->method('loadTag')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('tag', 42));
 
         self::assertNull($this->type->export($this->getParameterDefinition(), 42));
@@ -283,7 +280,6 @@ final class TagsTypeTest extends TestCase
     {
         $this->tagsServiceStub
             ->method('loadTagByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(new Tag(['id' => 42]));
 
         self::assertSame(42, $this->type->import($this->getParameterDefinition(), 'abc'));
@@ -293,7 +289,6 @@ final class TagsTypeTest extends TestCase
     {
         $this->tagsServiceStub
             ->method('loadTagByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('tag', 'abc'));
 
         self::assertNull($this->type->import($this->getParameterDefinition(), 'abc'));

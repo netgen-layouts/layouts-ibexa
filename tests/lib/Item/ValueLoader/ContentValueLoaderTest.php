@@ -38,7 +38,6 @@ final class ContentValueLoaderTest extends TestCase
 
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(52))
             ->willReturn($contentInfo);
 
         self::assertSame($contentInfo, $this->valueLoader->load(52));
@@ -48,7 +47,6 @@ final class ContentValueLoaderTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(52))
             ->willThrowException(new Exception());
 
         self::assertNull($this->valueLoader->load(52));
@@ -58,7 +56,6 @@ final class ContentValueLoaderTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(52))
             ->willReturn(
                 new ContentInfo(
                     [
@@ -75,7 +72,6 @@ final class ContentValueLoaderTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(52))
             ->willReturn(
                 new ContentInfo(
                     [
@@ -99,7 +95,6 @@ final class ContentValueLoaderTest extends TestCase
 
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn($contentInfo);
 
         self::assertSame($contentInfo, $this->valueLoader->loadByRemoteId('abc'));
@@ -109,7 +104,6 @@ final class ContentValueLoaderTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willThrowException(new Exception());
 
         self::assertNull($this->valueLoader->loadByRemoteId('abc'));
@@ -119,7 +113,6 @@ final class ContentValueLoaderTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(
                 new ContentInfo(
                     [
@@ -136,7 +129,6 @@ final class ContentValueLoaderTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(
                 new ContentInfo(
                     [

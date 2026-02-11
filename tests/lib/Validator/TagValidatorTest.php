@@ -32,7 +32,6 @@ final class TagValidatorTest extends ValidatorTestCase
     {
         $this->tagsServiceStub
             ->method('loadTag')
-            ->with(self::identicalTo(42))
             ->willReturn(new APITag(['id' => 42]));
 
         $this->assertValid(true, 42);
@@ -47,7 +46,6 @@ final class TagValidatorTest extends ValidatorTestCase
     {
         $this->tagsServiceStub
             ->method('loadTag')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('tag', 42));
 
         $this->assertValid(false, 42);
@@ -76,7 +74,6 @@ final class TagValidatorTest extends ValidatorTestCase
 
         $this->tagsServiceStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->tagsServiceStub),
             );

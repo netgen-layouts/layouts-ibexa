@@ -39,7 +39,6 @@ final class ContentTypeTest extends TestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );
@@ -62,7 +61,6 @@ final class ContentTypeTest extends TestCase
     {
         $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
-            ->with(self::identicalTo('identifier'))
             ->willReturn(new IbexaContentType());
 
         $validator = $this->createValidator($this->repositoryStub);
@@ -75,7 +73,6 @@ final class ContentTypeTest extends TestCase
     {
         $this->contentTypeServiceStub
             ->method('loadContentTypeByIdentifier')
-            ->with(self::identicalTo('unknown'))
             ->willThrowException(new NotFoundException('content type', 'unknown'));
 
         $validator = $this->createValidator($this->repositoryStub);
@@ -101,7 +98,6 @@ final class ContentTypeTest extends TestCase
 
         $this->contentExtractorStub
             ->method('extractContent')
-            ->with(self::identicalTo($request))
             ->willReturn($content);
 
         self::assertSame($matches, $this->conditionType->matches($request, $value));
@@ -113,7 +109,6 @@ final class ContentTypeTest extends TestCase
 
         $this->contentExtractorStub
             ->method('extractContent')
-            ->with(self::identicalTo($request))
             ->willReturn(null);
 
         self::assertFalse($this->conditionType->matches($request, ['article']));

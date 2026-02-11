@@ -64,7 +64,6 @@ final class ContextProviderTest extends TestCase
 
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willReturn(
                 new ContentInfo(
                     [

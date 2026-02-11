@@ -36,7 +36,6 @@ final class ConfigResolverConfigurationTest extends TestCase
     {
         $this->configResolverStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(true);
 
         self::assertTrue($this->configuration->hasParameter('some_param'));
@@ -46,12 +45,10 @@ final class ConfigResolverConfigurationTest extends TestCase
     {
         $this->configResolverStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
         $this->fallbackConfigurationStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'))
             ->willReturn(true);
 
         self::assertTrue($this->configuration->hasParameter('some_param'));
@@ -61,12 +58,10 @@ final class ConfigResolverConfigurationTest extends TestCase
     {
         $this->configResolverStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
         $this->fallbackConfigurationStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'))
             ->willReturn(false);
 
         self::assertFalse($this->configuration->hasParameter('some_param'));
@@ -76,12 +71,10 @@ final class ConfigResolverConfigurationTest extends TestCase
     {
         $this->configResolverStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(true);
 
         $this->configResolverStub
             ->method('getParameter')
-            ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn('some_param_value');
 
         self::assertSame('some_param_value', $this->configuration->getParameter('some_param'));
@@ -91,17 +84,14 @@ final class ConfigResolverConfigurationTest extends TestCase
     {
         $this->configResolverStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
         $this->fallbackConfigurationStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'))
             ->willReturn(true);
 
         $this->fallbackConfigurationStub
             ->method('getParameter')
-            ->with(self::identicalTo('some_param'))
             ->willReturn('some_param_value');
 
         self::assertSame('some_param_value', $this->configuration->getParameter('some_param'));
@@ -114,12 +104,10 @@ final class ConfigResolverConfigurationTest extends TestCase
 
         $this->configResolverStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'), self::identicalTo('netgen_layouts'))
             ->willReturn(false);
 
         $this->fallbackConfigurationStub
             ->method('hasParameter')
-            ->with(self::identicalTo('some_param'))
             ->willReturn(false);
 
         $this->configuration->getParameter('some_param');

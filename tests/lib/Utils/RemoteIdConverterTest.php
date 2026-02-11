@@ -32,7 +32,6 @@ final class RemoteIdConverterTest extends TestCase
         $repositoryStub = self::createStub(Repository::class);
         $repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 static fn (callable $callback): mixed => $callback($repositoryStub),
             );
@@ -52,7 +51,6 @@ final class RemoteIdConverterTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocationByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(new Location(['id' => 42]));
 
         self::assertSame(42, $this->converter->toLocationId('abc'));
@@ -62,7 +60,6 @@ final class RemoteIdConverterTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocationByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('location', 'abc'));
 
         self::assertNull($this->converter->toLocationId('abc'));
@@ -72,7 +69,6 @@ final class RemoteIdConverterTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willReturn(new Location(['remoteId' => 'abc']));
 
         self::assertSame('abc', $this->converter->toLocationRemoteId(42));
@@ -82,7 +78,6 @@ final class RemoteIdConverterTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('location', 42));
 
         self::assertNull($this->converter->toLocationRemoteId(42));
@@ -92,7 +87,6 @@ final class RemoteIdConverterTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(new ContentInfo(['id' => 42]));
 
         self::assertSame(42, $this->converter->toContentId('abc'));
@@ -102,7 +96,6 @@ final class RemoteIdConverterTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfoByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willThrowException(new NotFoundException('content', 'abc'));
 
         self::assertNull($this->converter->toContentId('abc'));
@@ -112,7 +105,6 @@ final class RemoteIdConverterTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willReturn(new ContentInfo(['remoteId' => 'abc']));
 
         self::assertSame('abc', $this->converter->toContentRemoteId(42));
@@ -122,7 +114,6 @@ final class RemoteIdConverterTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContentInfo')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
 
         self::assertNull($this->converter->toContentRemoteId(42));

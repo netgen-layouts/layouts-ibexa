@@ -34,7 +34,6 @@ final class ContentProviderTest extends TestCase
 
         $repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 static fn (callable $callback): mixed => $callback($repositoryStub),
             );
@@ -59,7 +58,6 @@ final class ContentProviderTest extends TestCase
 
         $this->contentServiceStub
             ->method('loadContent')
-            ->with(self::identicalTo(42))
             ->willReturn($content);
 
         self::assertSame($content, $this->valueObjectProvider->getValueObject(42));
@@ -74,7 +72,6 @@ final class ContentProviderTest extends TestCase
     {
         $this->contentServiceStub
             ->method('loadContent')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('content', 42));
 
         self::assertNull($this->valueObjectProvider->getValueObject(42));
@@ -94,7 +91,6 @@ final class ContentProviderTest extends TestCase
 
         $this->contentServiceStub
             ->method('loadContent')
-            ->with(self::identicalTo(42))
             ->willReturn($content);
 
         self::assertNull($this->valueObjectProvider->getValueObject(42));

@@ -48,12 +48,10 @@ final class PageLayoutResolverTest extends TestCase
 
         $this->configResolverStub
             ->method('hasParameter')
-            ->with(self::identicalTo('page_layout'))
             ->willReturn(true);
 
         $this->configResolverStub
             ->method('getParameter')
-            ->with(self::identicalTo('page_layout'))
             ->willReturn('resolved_layout.html.twig');
 
         self::assertSame('resolved_layout.html.twig', $this->resolver->resolvePageLayout());

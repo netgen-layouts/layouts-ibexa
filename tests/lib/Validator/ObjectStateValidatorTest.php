@@ -152,7 +152,6 @@ final class ObjectStateValidatorTest extends ValidatorTestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );

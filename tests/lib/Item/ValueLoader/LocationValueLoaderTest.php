@@ -42,7 +42,6 @@ final class LocationValueLoaderTest extends TestCase
 
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(52))
             ->willReturn($location);
 
         self::assertSame($location, $this->valueLoader->load(52));
@@ -52,7 +51,6 @@ final class LocationValueLoaderTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(52))
             ->willThrowException(new Exception());
 
         self::assertNull($this->valueLoader->load(52));
@@ -62,7 +60,6 @@ final class LocationValueLoaderTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(52))
             ->willReturn(
                 new Location(
                     [
@@ -93,7 +90,6 @@ final class LocationValueLoaderTest extends TestCase
 
         $this->locationServiceStub
             ->method('loadLocationByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn($location);
 
         self::assertSame($location, $this->valueLoader->loadByRemoteId('abc'));
@@ -103,7 +99,6 @@ final class LocationValueLoaderTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocationByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willThrowException(new Exception());
 
         self::assertNull($this->valueLoader->loadByRemoteId('abc'));
@@ -113,7 +108,6 @@ final class LocationValueLoaderTest extends TestCase
     {
         $this->locationServiceStub
             ->method('loadLocationByRemoteId')
-            ->with(self::identicalTo('abc'))
             ->willReturn(
                 new Location(
                     [

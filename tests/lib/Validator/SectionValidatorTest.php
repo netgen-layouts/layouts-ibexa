@@ -40,7 +40,6 @@ final class SectionValidatorTest extends ValidatorTestCase
     {
         $this->sectionServiceStub
             ->method('loadSectionByIdentifier')
-            ->with(self::identicalTo($identifier))
             ->willReturn(
                 new IbexaSection(
                     [
@@ -62,7 +61,6 @@ final class SectionValidatorTest extends ValidatorTestCase
     {
         $this->sectionServiceStub
             ->method('loadSectionByIdentifier')
-            ->with(self::identicalTo('unknown'))
             ->willThrowException(new NotFoundException('section', 'unknown'));
 
         $this->assertValid(false, 'unknown');
@@ -105,7 +103,6 @@ final class SectionValidatorTest extends ValidatorTestCase
 
         $this->repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->repositoryStub),
             );

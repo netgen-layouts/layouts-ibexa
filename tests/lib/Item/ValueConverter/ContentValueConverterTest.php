@@ -24,7 +24,6 @@ final class ContentValueConverterTest extends TestCase
         $locationServiceStub = self::createStub(LocationService::class);
         $locationServiceStub
             ->method('loadLocation')
-            ->with(self::isInt())
             ->willReturnCallback(
                 static fn (int $id): Location => new Location(['id' => $id, 'invisible' => false]),
             );
@@ -32,7 +31,6 @@ final class ContentValueConverterTest extends TestCase
         $contentServiceStub = self::createStub(ContentService::class);
         $contentServiceStub
             ->method('loadContentByContentInfo')
-            ->with(self::isInstanceOf(ContentInfo::class))
             ->willReturn(
                 new Content(
                     [

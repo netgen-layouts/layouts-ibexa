@@ -80,7 +80,6 @@ final class LocaleProviderTest extends TestCase
 
         $this->localeConverterStub
             ->method('convertToPOSIX')
-            ->with(self::identicalTo('unknown'))
             ->willReturn(null);
 
         $availableLocales = $this->localeProvider->getAvailableLocales();
@@ -92,12 +91,10 @@ final class LocaleProviderTest extends TestCase
     {
         $this->configResolverStub
             ->method('getParameter')
-            ->with(self::identicalTo('languages'))
             ->willReturn(['eng-GB', 'ger-DE', 'unknown', 'cro-HR']);
 
         $this->languageServiceStub
             ->method('loadLanguageListByCode')
-            ->with(self::identicalTo(['eng-GB', 'ger-DE', 'unknown', 'cro-HR']))
             ->willReturn(
                 [
                     new Language(['languageCode' => 'eng-GB', 'enabled' => true]),
@@ -124,12 +121,10 @@ final class LocaleProviderTest extends TestCase
     {
         $this->configResolverStub
             ->method('getParameter')
-            ->with(self::identicalTo('languages'))
             ->willReturn(['eng-GB']);
 
         $this->languageServiceStub
             ->method('loadLanguageListByCode')
-            ->with(self::identicalTo(['eng-GB']))
             ->willReturn(
                 [
                     new Language(['languageCode' => 'eng-GB', 'enabled' => true]),
@@ -138,7 +133,6 @@ final class LocaleProviderTest extends TestCase
 
         $this->localeConverterStub
             ->method('convertToPOSIX')
-            ->with(self::identicalTo('eng-GB'))
             ->willReturn(null);
 
         $requestLocales = $this->localeProvider->getRequestLocales(Request::create(''));
@@ -150,12 +144,10 @@ final class LocaleProviderTest extends TestCase
     {
         $this->configResolverStub
             ->method('getParameter')
-            ->with(self::identicalTo('languages'))
             ->willReturn(['eng-GB']);
 
         $this->languageServiceStub
             ->method('loadLanguageListByCode')
-            ->with(self::identicalTo(['eng-GB']))
             ->willReturn(
                 [
                     new Language(['languageCode' => 'eng-GB', 'enabled' => true]),
@@ -164,7 +156,6 @@ final class LocaleProviderTest extends TestCase
 
         $this->localeConverterStub
             ->method('convertToPOSIX')
-            ->with(self::identicalTo('eng-GB'))
             ->willReturn('unknown');
 
         $requestLocales = $this->localeProvider->getRequestLocales(Request::create(''));

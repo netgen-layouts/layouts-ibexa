@@ -46,7 +46,6 @@ final class ContentProviderTest extends TestCase
 
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willReturn($location);
 
         self::assertSame($content, $this->contentProvider->provideContent());
@@ -65,7 +64,6 @@ final class ContentProviderTest extends TestCase
 
         $this->locationServiceStub
             ->method('loadLocation')
-            ->with(self::identicalTo(42))
             ->willReturn($location);
 
         self::assertSame($location, $this->contentProvider->provideLocation());
