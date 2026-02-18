@@ -77,9 +77,10 @@ $(function () {
   LayoutMapped.prototype.deleteRule = function (e) {
     e.preventDefault();
     const self = this;
+    const basePath = document.querySelector('[name="nglayouts-base-path"]').getAttribute('content').replace(/\/$/, '');
     $.ajax({
       type: 'DELETE',
-      url: `/nglayouts/ibexa/admin/layouts/rules/${this.ruleId}/delete`,
+      url: `${basePath}/ibexa/admin/layouts/rules/${this.ruleId}/delete`,
       headers: {
         'X-CSRF-Token': this.layouts.csrf,
       },
