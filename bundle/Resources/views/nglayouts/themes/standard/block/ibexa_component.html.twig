@@ -4,7 +4,7 @@
     {% if not block.parameter('content').isEmpty %}
         {{ render(
             controller(
-                'ibexa_content:viewAction', {
+                'ibexa_content::viewAction', {
                     'contentId': block.parameter('content').value,
                     'viewType': block.viewType,
                     'layout': false,
