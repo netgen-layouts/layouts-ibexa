@@ -357,7 +357,7 @@ $(function () {
   });
 
   $(document).on('click', (e) => {
-    if ($(e.target).closest('.dropdown').length === 0 && $(e.target).closest('.layout-dropdown').length === 0 && !($(e.target).dataset.bsToggle === 'dropdown')) {
+    if ($(e.target).closest('.dropdown').length === 0 && $(e.target).closest('.layout-dropdown').length === 0 && !(e.target.dataset.bsToggle === 'dropdown')) {
       $('.dropdown-menu').removeClass('show');
       $('.layout-dropdown').removeClass('show');
     }
