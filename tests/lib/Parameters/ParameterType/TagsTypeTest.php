@@ -71,8 +71,7 @@ final class TagsTypeTest extends TestCase
     {
         return [
             [
-                [
-                ],
+                [],
                 [
                     'min' => null,
                     'max' => null,
