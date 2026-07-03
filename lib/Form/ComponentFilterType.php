@@ -32,6 +32,7 @@ final class ComponentFilterType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var array<string, int> $parentLocationsConfig */
         $parentLocationsConfig = $this->configResolver->getParameter(
             'ibexa_component.parent_locations',
             'netgen_layouts',
